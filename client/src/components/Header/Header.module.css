@@ -1,3 +1,20 @@
 .navStyles {
-  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.8rem 0.6rem;
+}
+.loginBtn {
+  font-size: 1.25rem;
+  color: var(--dark-blue);
+}
+.logoLink {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.logo {
+  margin: 0;
+  color: var(--dark-blue);
 }
