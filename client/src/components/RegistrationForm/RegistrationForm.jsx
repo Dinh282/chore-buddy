@@ -21,7 +21,7 @@ export default function Registration() {
   const [duplicateEmailError, setDuplicateEmailError] = useState(false);
   const [register] = useMutation(REGISTER_USER);
 
-  const handleFormSubmit = async (values) => {
+  const handleFormSubmit = async () => {
     try {
       setDuplicateEmailError(false);
       const formValues = await form.validateFields();
@@ -82,6 +82,20 @@ export default function Registration() {
         >
           <Input
             placeholder="Last name"
+          />
+        </Form.Item>
+        <Form.Item
+          label="Family name"
+          name="family"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your family name',
+            },
+          ]}
+        >
+          <Input
+            placeholder="Family name"
           />
         </Form.Item>
         <Form.Item
