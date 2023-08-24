@@ -1,11 +1,8 @@
 import ImageCard from '../components/ImageCard/ImageCard';
 
-
 function Landing() {
   return (
-    <>
-      <ImageCard />
-    </>
+    <ImageCard />
   )
 }
 
