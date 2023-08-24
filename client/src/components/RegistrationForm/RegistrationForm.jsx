@@ -11,9 +11,7 @@ import {
 } from 'antd';
 const { Title, Text } = Typography;
 import styles from './RegistrationForm.module.css';
-
 import { REGISTER_USER } from '../../graphql/mutations';
-
 import { useCurrentUserContext } from '../../context/CurrentUser';
 
 export default function Registration() {

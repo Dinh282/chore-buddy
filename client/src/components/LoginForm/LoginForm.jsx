@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -6,31 +5,28 @@ import {
   Card,
   Form,
   Input,
-  Button
+  Button,
+  message
 } from 'antd';
-const { Title } = Typography;
+const { Title, Text } = Typography;
 import styles from './LoginForm.module.css';
-
 import { LOGIN_USER } from '../../graphql/mutations';
-
 import { useCurrentUserContext } from '../../context/CurrentUser';
 
 export default function Login() {
   const { loginUser } = useCurrentUserContext();
   const navigate = useNavigate();
-  const [formState, setFormState] = useState({
-    email: '',
-    password: ''
-  });
-
+  const [form] = Form.useForm();
   const [login, { error }] = useMutation(LOGIN_USER);
 
-  const handleFormSubmit = async (values) => {
+  const handleFormSubmit = async () => {
     try {
+      const formValues = await form.validateFields();
+      const { email, password } = formValues;
       const mutationResponse = await login({
         variables: {
-          email: values.email,
-          password: values.password
+          email,
+          password,
         },
       });
       const { token, user } = mutationResponse.data.login;
@@ -38,22 +34,14 @@ export default function Login() {
       navigate('/dashboard');
     } catch (e) {
       console.log(e);
+      message.error("Login Unsuccessful.");
     }
-  };
-
-  const handleChange = event => {
-    const { name, value } = event.target;
-    setFormState({ ...formState, [name]: value });
   };
 
   return (
     <Card bordered={false} style={{ width: 300 }} className={styles.loginForm}>
-      {error ? (
-        <div>
-          <p className="error-text">The provided credentials are incorrect</p>
-        </div>
-      ) : null}
       <Form
+        form={form}
         id="login-form"
         onFinish={handleFormSubmit}
         layout="vertical"
@@ -65,7 +53,7 @@ export default function Login() {
           rules={[
             {
               required: true,
-              message: 'Please enter your username!',
+              message: 'Please enter your email!',
             },
           ]}
         >
@@ -73,8 +61,6 @@ export default function Login() {
             placeholder="youremail@test.com"
             name="email"
             type="email"
-            value={formState.email}
-            onChange={handleChange}
           />
         </Form.Item>
         <Form.Item
@@ -91,10 +77,13 @@ export default function Login() {
             placeholder="******"
             name="password"
             type="password"
-            value={formState.password}
-            onChange={handleChange}
           />
         </Form.Item>
+        {error ? (
+        <div style={{ paddingBottom: '20px' }}>
+          <p className="error-text"><Text type='danger'>The provided credentials are incorrect </Text></p>
+        </div>
+      ) : null}
         <Button type="primary" htmlType="submit">
           Login
         </Button>
