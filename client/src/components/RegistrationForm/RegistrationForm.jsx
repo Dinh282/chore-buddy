@@ -85,6 +85,20 @@ export default function Registration() {
           />
         </Form.Item>
         <Form.Item
+          label="Family name"
+          name="family"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your family name',
+            },
+          ]}
+        >
+          <Input
+            placeholder="Family name"
+          />
+        </Form.Item>
+        <Form.Item
           label="Email"
           name="email"
           rules={[
