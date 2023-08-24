@@ -29,7 +29,7 @@ function Header() {
 
   return (
     <nav className={styles.navStyles}>
-      <Link className={styles.logoLink} to="/dashboard">
+      <Link className={styles.logoLink} to={isLoggedIn() ? "/dashboard" : "/"}>
           <h4 className={styles.logo}>ChoreBuddy</h4>
         </Link>
       {isLoggedIn() ? (
