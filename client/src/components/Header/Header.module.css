@@ -1,9 +1,8 @@
 .navStyles {
-  color: black;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0.8rem 0.6rem;
+  padding: 0.8rem 0.6rem;
 }
 .loginBtn {
   font-size: 1.25rem;
