@@ -1,28 +1,30 @@
-const typeDefs = `#graphql
+const { gql } = require('apollo-server-express');
+
+const typeDefs = gql`
   type User {
     _id: ID
     firstName: String
     lastName: String
     email: String
     password: String
-    balance: Number
+    balance: Int
     isChoreBuddy: Boolean
   }
 
   type Chore {
-    _id:ID
+    _id: ID
     title: String
     description: String
-    family: ID
-    assignee: ID
-    rewardAmount:Number
+    family: Family
+    assignee: User
+    rewardAmount: Int
     isComplete: Boolean
   }
 
   type Family {
-    _id:ID
-    familyName:String
-    members:[User]
+    _id: ID
+    familyName: String
+    members: [User]
   }
 
   type Auth {
@@ -33,19 +35,21 @@ const typeDefs = `#graphql
   type Query {
     currentUser(email: String!): User
     unassignedChores(family:String!, assigned:String!): Chore
-    user(_id:ID!,isChoreBuddy:Boolean!):User
+    getUser(_id:ID!,isChoreBuddy:Boolean!):User
+    getChildChores: [Chore]
+    getFamily:
   }
 
   type Mutation {
-    register(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    registerParent(firstName: String!, lastName: String!, email: String!, password: String!, isChoreBuddy: Boolean): Auth
     login(email: String!, password: String!): Auth
-    choreAssignment(_id:ID!,assignee:ID ) : Chore
-    editChild(_id:ID!, balance:Number!):User
-    deleteChild(_id:ID!):User
-    createFamily(familyName:String!):Family
-    updateFamily(_id:ID,members:ID):Family
-    createChore(title:String, description:String, family:ID, rewardAmount:Number) :Chore
-    editchore(_id:ID, assignee:ID):Chore
+    createChild(firstName: String!, lastName: String!, email: String!, password: String!, isChoreBuddy: Boolean): User
+    editChild(_id: ID!, balance: Int): User
+    deleteChild(_id: ID!): User
+    createFamily(familyName: String!): Family
+    updateFamily(_id: ID, members: [ID]): Family
+    createChore(title:String, description: String, family: ID, rewardAmount: Int): Chore
+    choreAssignment(_id:ID!, assignee: ID ): Chore
   }
 `;
 
