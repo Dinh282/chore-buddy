@@ -1,6 +1,14 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  Typography,
+  Card,
+  Form,
+  Input,
+  Button
+} from 'antd';
+const { Title } = Typography;
 import styles from './LoginForm.module.css';
 
 import { LOGIN_USER } from '../../graphql/mutations';
@@ -17,13 +25,12 @@ export default function Login() {
 
   const [login, { error }] = useMutation(LOGIN_USER);
 
-  const handleFormSubmit = async event => {
-    event.preventDefault();
+  const handleFormSubmit = async (values) => {
     try {
       const mutationResponse = await login({
         variables: {
-          email: formState.email,
-          password: formState.password
+          email: values.email,
+          password: values.password
         },
       });
       const { token, user } = mutationResponse.data.login;
@@ -40,43 +47,63 @@ export default function Login() {
   };
 
   return (
-    <>
+    <Card bordered={false} style={{ width: 300 }} className={styles.loginForm}>
       {error ? (
         <div>
           <p className="error-text">The provided credentials are incorrect</p>
         </div>
       ) : null}
-      <form id="login-form" onSubmit={handleFormSubmit} className={styles.loginForm}>
-        <h2>Login</h2>
-        <label htmlFor="email">
-          Email:
-          <input
+      <Form
+        id="login-form"
+        onFinish={handleFormSubmit}
+        layout="vertical"
+      >
+        <Title>Login</Title>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter your username!',
+            },
+          ]}
+        >
+          <Input
             placeholder="youremail@test.com"
             name="email"
             type="email"
             value={formState.email}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="password">
-          Password
-          <input
+        </Form.Item>
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter your password!',
+            },
+          ]}
+        >
+          <Input.Password
             placeholder="******"
             name="password"
             type="password"
             value={formState.password}
             onChange={handleChange}
           />
-        </label>
-        <button type="submit">
+        </Form.Item>
+        <Button type="primary" htmlType="submit">
           Login
-        </button>
+        </Button>
         <p>
           Need an account? Sign up
           {' '}
           <Link to="/register">here</Link>
         </p>
-      </form>
-    </>
+      </Form>
+    </Card>
   );
 }

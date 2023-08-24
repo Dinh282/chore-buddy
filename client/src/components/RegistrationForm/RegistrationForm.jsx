@@ -2,6 +2,15 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  Typography,
+  Card,
+  Form,
+  Input,
+  Button
+} from 'antd';
+const { Title } = Typography;
+import styles from './RegistrationForm.module.css';
 
 import { REGISTER_USER } from '../../graphql/mutations';
 
@@ -19,15 +28,14 @@ export default function Registration() {
 
   const [register, { error }] = useMutation(REGISTER_USER);
 
-  const handleFormSubmit = async event => {
-    event.preventDefault();
+  const handleFormSubmit = async (values) => {
     try {
       const mutationResponse = await register({
         variables: {
-          firstName: formState.firstName,
-          lastName: formState.lastName,
-          email: formState.email,
-          password: formState.password,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          password: values.password,
         },
       });
       const { token, user } = mutationResponse.data.register;
@@ -45,63 +53,99 @@ export default function Registration() {
   };
 
   return (
-    <>
+    <Card bordered={false} style={{ width: 300 }} className={styles.registrationForm}>
       {error ? (
         <div>
           <p className="error-text">The provided credentials are incorrect</p>
         </div>
       ) : null}
-      <form id="registration-form" onSubmit={handleFormSubmit}>
-        <h2>Register</h2>
-        <label htmlFor="firstName">
-          First name:
-          <input
-            type="text"
+      <Form
+        id="registration-form"
+        onFinish={handleFormSubmit}
+        layout="vertical"
+      >
+        <Title>Register</Title>
+        <Form.Item
+          label="First name"
+          name="firstName"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your first name',
+            },
+          ]}
+        >
+          <Input
             id="firstName"
             name="firstName"
+            placeholder="First name"
             value={formState.firstName}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="lastName">
-          Last name:
-          <input
-            type="text"
+        </Form.Item>
+        <Form.Item
+          label="Last name"
+          name="lastName"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your last name',
+            },
+          ]}
+        >
+          <Input
             id="lastName"
             name="lastName"
+            placeholder="Last name"
             value={formState.lastName}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="email">
-          Email:
-          <input
+        </Form.Item>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your email address, this will be your username',
+            },
+          ]}
+        >
+          <Input
             placeholder="youremail@test.com"
             name="email"
             type="email"
             value={formState.email}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="password">
-          Password
-          <input
+        </Form.Item>
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your password!',
+            },
+          ]}
+        >
+          <Input.Password
             placeholder="******"
             name="password"
             type="password"
             value={formState.password}
             onChange={handleChange}
           />
-        </label>
-        <button type="submit">
+        </Form.Item>
+        <Button type="primary" htmlType="submit">
           Sign Up
-        </button>
+        </Button>
         <p>
           Already have an account? Login
           {' '}
-          <Link to="/register">here</Link>
+          <Link to="/login">here</Link>
         </p>
-      </form>
-    </>
+      </Form>
+    </Card>
   );
 }

@@ -1,21 +1,45 @@
 import { Link } from 'react-router-dom';
 import { useCurrentUserContext } from '../../context/CurrentUser';
+import { Button, Dropdown, Typography } from 'antd';
+import { UserOutlined, LoginOutlined } from '@ant-design/icons';
+const { Text } = Typography;
 import styles from './Header.module.css';
 
- function Header() {
+
+
+function Header() {
   const { isLoggedIn, logoutUser } = useCurrentUserContext();
+
+  const items = [
+    {
+      key: '1',
+      label: (
+        <Link to="/dashboard">
+          <Text>Dashboard</Text>
+        </Link>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <Button type="text" onClick={logoutUser}>Logout</Button>
+      ),
+    },
+  ];
 
   return (
     <nav className={styles.navStyles}>
       {isLoggedIn() ? (
         <>
-          <Link to="/dashboard">Dashboard</Link>
-          <button type="button" onClick={logoutUser}>Logout</button>
+          <Dropdown menu={{ items }} placement="bottomRight">
+            <UserOutlined />
+          </Dropdown>
         </>
       ) : (
         <>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Sign Up</Link>
+          <Link to="/login">
+            <LoginOutlined />
+          </Link>
         </>
       )}
     </nav>

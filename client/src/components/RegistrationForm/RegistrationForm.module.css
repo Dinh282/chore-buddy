@@ -1,4 +1,4 @@
-.loginForm {
+.registrationForm {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -6,10 +6,10 @@
     margin: 3rem auto;
 }
 
-.loginForm h1 {
+.registrationForm h1 {
     margin-top: 0;
 }
 
-.loginForm p:last-of-type {
+.registrationForm p:last-of-type {
     margin-bottom: 0;
 }

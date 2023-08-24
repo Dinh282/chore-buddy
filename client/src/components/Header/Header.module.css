@@ -1,3 +1,14 @@
 .navStyles {
-    color: black;
+  height: 50px;
+  background-color: #70aeab;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.navStyles > a,
+.navStyles > button {
+  margin-left: 1rem;
+  text-decoration: none;
 }
