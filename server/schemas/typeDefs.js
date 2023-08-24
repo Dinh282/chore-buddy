@@ -35,9 +35,9 @@ const typeDefs = gql`
   type Query {
     currentUser(email: String!): User
     unassignedChores(family:String!, assigned:String!): Chore
-    getUser(_id:ID!,isChoreBuddy:Boolean!):User
+    getUser(_id:ID!, isChoreBuddy:Boolean!):User
     getChildChores: [Chore]
-    getFamily:
+    getFamily(_id: ID!): Family
   }
 
   type Mutation {
