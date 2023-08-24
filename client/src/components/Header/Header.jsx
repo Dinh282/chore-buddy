@@ -31,8 +31,11 @@ function Header() {
     <nav className={styles.navStyles}>
       {isLoggedIn() ? (
         <>
+        <Link className={styles.logoLink} to="/dashboard">
+          <h4 className={styles.logo}>ChoreBuddy</h4>
+        </Link>
           <Dropdown menu={{ items }} placement="bottomRight">
-            <UserOutlined />
+            <UserOutlined className={styles.btn} />
           </Dropdown>
         </>
       ) : (
@@ -41,7 +44,7 @@ function Header() {
           <h4 className={styles.logo}>ChoreBuddy</h4>
         </Link>
           <Link to="/login">
-            <LoginOutlined className={styles.loginBtn}/>
+            <LoginOutlined className={styles.btn}/>
           </Link>
         </>
       )}
