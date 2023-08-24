@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
+import styles from './LoginForm.module.css';
 
-import { LOGIN_USER } from '../graphql/mutations';
+import { LOGIN_USER } from '../../graphql/mutations';
 
-import { useCurrentUserContext } from '../context/CurrentUser';
+import { useCurrentUserContext } from '../../context/CurrentUser';
 
 export default function Login() {
   const { loginUser } = useCurrentUserContext();
@@ -45,7 +46,7 @@ export default function Login() {
           <p className="error-text">The provided credentials are incorrect</p>
         </div>
       ) : null}
-      <form id="login-form" onSubmit={handleFormSubmit}>
+      <form id="login-form" onSubmit={handleFormSubmit} className={styles.loginForm}>
         <h2>Login</h2>
         <label htmlFor="email">
           Email:

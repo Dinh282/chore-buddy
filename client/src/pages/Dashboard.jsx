@@ -1,6 +1,16 @@
+import { Col, Row } from 'antd';
+
+import Parent from '../components/Parent/Parent';
+import Child from '../components/Child/';
+
 function Dashboard() {
   return (
-    <h1 className="page-title">Dashboard</h1>
+    <Row>
+      <Col span={24}>
+        <Parent />
+        <Child /> 
+      </Col>
+    </Row>
   )
 }
 

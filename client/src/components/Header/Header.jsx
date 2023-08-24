@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useCurrentUserContext } from '../context/CurrentUser';
+import { useCurrentUserContext } from '../../context/CurrentUser';
+import styles from './Header.module.css';
 
  function Header() {
   const { isLoggedIn, logoutUser } = useCurrentUserContext();
 
   return (
-    <nav>
+    <nav className={styles.navStyles}>
       {isLoggedIn() ? (
         <>
           <Link to="/dashboard">Dashboard</Link>
