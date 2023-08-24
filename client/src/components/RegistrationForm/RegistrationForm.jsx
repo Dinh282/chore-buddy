@@ -34,7 +34,7 @@ export default function Registration() {
           password,
         },
       });
-      const { token, user } = mutationResponse.data.registerParent;
+      const { token, user } = mutationResponse.data.register;
       loginUser(user, token);
       navigate('/dashboard');
     } catch (e) {
