@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
   firstName: {
@@ -9,6 +9,11 @@ const userSchema = new Schema({
     trim: true,
   },
   lastName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  username: {
     type: String,
     required: true,
     trim: true,
@@ -24,6 +29,10 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  balance: {
+    type: Number,
+    
+  }
 });
 
 userSchema.pre('save', async function (next) {
