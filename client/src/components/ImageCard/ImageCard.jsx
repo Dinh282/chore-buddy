@@ -1,6 +1,11 @@
 import './ImageCard.css'
+import { useNavigate } from 'react-router-dom'
 
 function ImageCard() {
+  const navigate = useNavigate()
+  function handleClick() {
+   navigate('/login')
+  }
   return (
     <>
     <section className="landing">
@@ -10,7 +15,7 @@ function ImageCard() {
         <div className="card-header-div">
         <h1 className="card-header">Chorebuddy</h1>
         <p className="card-message">Your Partner in Productivity</p>
-        <button className="card-btn">Get Started</button>
+        <button onClick={handleClick} className="card-btn">Get Started</button>
         <div>
       </div>
     </div>
