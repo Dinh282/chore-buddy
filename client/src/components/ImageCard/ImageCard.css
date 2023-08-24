@@ -1,0 +1,34 @@
+.landing {
+  display: flex;
+  flex-direction: column;
+  min-height: 85svh;
+  background-color: #d1e8e4;
+}
+.card-header-div {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.card-header {
+  color: #313866;
+  font-size: 2.5rem;
+  margin: 2rem 0;
+}
+.card-message {
+  color: #313866;
+  margin: 0;
+}
+.card-img {
+  max-width: 80%;
+}
+.card-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 7rem;
+}
+.card-btn {
+  margin-top: 2rem;
+  width: 40%;
+  background-color: #313866;
+}

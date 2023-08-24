@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 // Schema to create Family model
 const familySchema = new Schema({
-  name: {
+  familyName: {
     type: String,
     required: true,
     max_length: 50,
