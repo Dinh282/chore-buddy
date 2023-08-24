@@ -29,20 +29,17 @@ function Header() {
 
   return (
     <nav className={styles.navStyles}>
-      {isLoggedIn() ? (
-        <>
-        <Link className={styles.logoLink} to="/dashboard">
+      <Link className={styles.logoLink} to="/dashboard">
           <h4 className={styles.logo}>ChoreBuddy</h4>
         </Link>
+      {isLoggedIn() ? (
+        <>
           <Dropdown menu={{ items }} placement="bottomRight">
             <UserOutlined className={styles.btn} />
           </Dropdown>
         </>
       ) : (
         <>
-        <Link className={styles.logoLink} to="/">
-          <h4 className={styles.logo}>ChoreBuddy</h4>
-        </Link>
           <Link to="/login">
             <LoginOutlined className={styles.btn}/>
           </Link>
