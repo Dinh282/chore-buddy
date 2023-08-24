@@ -37,8 +37,11 @@ function Header() {
         </>
       ) : (
         <>
+        <Link className={styles.logoLink} to="/">
+          <h4 className={styles.logo}>ChoreBuddy</h4>
+        </Link>
           <Link to="/login">
-            <LoginOutlined />
+            <LoginOutlined className={styles.loginBtn}/>
           </Link>
         </>
       )}

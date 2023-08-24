@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 function ImageCard() {
   const navigate = useNavigate()
   function handleClick() {
-   navigate('/login')
+   navigate('/register')
   }
   return (
     <>
