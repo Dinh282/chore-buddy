@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-// Schema to create User model
+// Schema to create Chore model
 const choreSchema = new Schema({
   title: {
     type: String,

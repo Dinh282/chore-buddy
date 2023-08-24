@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-// Schema to create User model
+// Schema to create Family model
 const familySchema = new Schema({
   name: {
     type: String,
