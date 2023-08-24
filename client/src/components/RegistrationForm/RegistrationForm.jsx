@@ -9,57 +9,48 @@ import {
   Input,
   Button
 } from 'antd';
-const { Title } = Typography;
+const { Title, Text } = Typography;
 import styles from './RegistrationForm.module.css';
-
 import { REGISTER_USER } from '../../graphql/mutations';
-
 import { useCurrentUserContext } from '../../context/CurrentUser';
 
 export default function Registration() {
   const { loginUser } = useCurrentUserContext();
   const navigate = useNavigate();
-  const [formState, setFormState] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
-
-  const [register, { error }] = useMutation(REGISTER_USER);
+  const [form] = Form.useForm();
+  const [duplicateEmailError, setDuplicateEmailError] = useState(false);
+  const [register] = useMutation(REGISTER_USER);
 
   const handleFormSubmit = async (values) => {
     try {
+      setDuplicateEmailError(false);
+      const formValues = await form.validateFields();
+      const { firstName, lastName, email, password } = formValues;
       const mutationResponse = await register({
         variables: {
-          firstName: values.firstName,
-          lastName: values.lastName,
-          email: values.email,
-          password: values.password,
+          firstName,
+          lastName,
+          email,
+          password,
         },
       });
       const { token, user } = mutationResponse.data.register;
       loginUser(user, token);
       navigate('/dashboard');
     } catch (e) {
+      if (e?.message.includes("duplicate key error")) {
+        // If error message indicates duplicate key error, set duplicateEmailError to true to alert user
+        setDuplicateEmailError(true);
     // eslint-disable-next-line no-console
       console.log(e);
+      }
     }
-  };
-
-  const handleChange = event => {
-    const { name, value } = event.target;
-    setFormState({ ...formState, [name]: value });
   };
 
   return (
     <Card bordered={false} style={{ width: 300 }} className={styles.registrationForm}>
-      {error ? (
-        <div>
-          <p className="error-text">The provided credentials are incorrect</p>
-        </div>
-      ) : null}
       <Form
+        form={form}
         id="registration-form"
         onFinish={handleFormSubmit}
         layout="vertical"
@@ -76,11 +67,7 @@ export default function Registration() {
           ]}
         >
           <Input
-            id="firstName"
-            name="firstName"
-            placeholder="First name"
-            value={formState.firstName}
-            onChange={handleChange}
+     placeholder="First name"
           />
         </Form.Item>
         <Form.Item
@@ -94,11 +81,7 @@ export default function Registration() {
           ]}
         >
           <Input
-            id="lastName"
-            name="lastName"
             placeholder="Last name"
-            value={formState.lastName}
-            onChange={handleChange}
           />
         </Form.Item>
         <Form.Item
@@ -113,10 +96,6 @@ export default function Registration() {
         >
           <Input
             placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            value={formState.email}
-            onChange={handleChange}
           />
         </Form.Item>
         <Form.Item
@@ -127,16 +106,20 @@ export default function Registration() {
               required: true,
               message: 'Please input your password!',
             },
+            { min: 5, message: "Password must be at least 5 characters" },
           ]}
         >
           <Input.Password
             placeholder="******"
-            name="password"
-            type="password"
-            value={formState.password}
-            onChange={handleChange}
           />
         </Form.Item>
+        {duplicateEmailError && (
+          <Form.Item>
+            <Text type="danger">
+              An account with that email already exists.
+            </Text>
+          </Form.Item>
+        )}
         <Button type="primary" htmlType="submit">
           Sign Up
         </Button>
