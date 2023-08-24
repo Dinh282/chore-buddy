@@ -1,6 +1,11 @@
+import ImageCard from '../components/ImageCard/ImageCard';
+
+
 function Landing() {
   return (
-    <h1 className="page-title">Landing</h1>
+    <>
+      <ImageCard />
+    </>
   )
 }
 
