@@ -14,7 +14,7 @@ const choreSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "family",
   },
-  //reference the user model
+  // reference the user model
   assignee: {
     type: Schema.Types.ObjectId,
     ref: "user",
