@@ -31,8 +31,8 @@ const resolvers = {
         firstName: `${firstName}`,
       }));
       let allChores = {};
-      childrenIdsName.map(({id, firstName}) => {
-        let chores = Chore.findAll({assignee: id});
+      childrenIdsName.map(async ({id, firstName}) => {
+        let chores = await Chore.findAll({assignee: id});
         Object.defineProperty(allChores, firstName, {value: chores});
       })
       return allChores;
