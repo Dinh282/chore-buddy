@@ -5,12 +5,11 @@ import { ChoreContext } from '../../context/ChoreContext';
 
 const ChoreList = () => {
     const { users, activeUser, setUsers } = useContext(ChoreContext);
+
     const currentUser = users[activeUser];
 
-    if (!currentUser) return <div>No active user selected.</div>;
-
     const toggleChoreChecked = (choreToToggle) => {
-        // Create a new array with the updated chore item
+        
         const updatedChores = currentUser.chores.map(chore => {
             if (chore.task === choreToToggle.task) {
                 return { ...chore, isChecked: !chore.isChecked };
@@ -18,7 +17,6 @@ const ChoreList = () => {
             return chore;
         });
 
-        // Update the users in the context
         setUsers({
             ...users,
             [activeUser]: {

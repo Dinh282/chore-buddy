@@ -10,8 +10,10 @@ import {
   Card,
   FloatButton,
   Modal,
-  Tooltip
+  Tooltip,
+  Typography
 } from 'antd';
+const { Title } = Typography;
 import { PlusOutlined, UserAddOutlined, CheckSquareOutlined } from '@ant-design/icons';
 import styles from "./Parent.module.css";
 
@@ -41,7 +43,7 @@ const ParentInner = () => {
 
   const isObjectEmpty = (obj) => {
     return Object.keys(obj).length === 0;
-  } 
+  }
   
   return (
     <>
@@ -49,20 +51,28 @@ const ParentInner = () => {
 
         <Col span={16} className={styles.gutterRow}>
           <Card bordered={false} className={styles.choreList}>
-            <Tabs
-              defaultActiveKey="1"
-              onChange={key => setActiveUser(Object.keys(users)[key])}
-              items={Object.keys(users).map((userName, index) => ({
-                label: userName,
-                key: String(index),
-                children: <ChoreList />
-              }))}
-            />
+            <Title className={styles.title}>Chores</Title>
+            {Object.keys(users).length ? (
+              <Tabs
+                defaultActiveKey="1"
+                onChange={key => setActiveUser(Object.keys(users)[key])}
+                items={Object.keys(users).map((userName, index) => ({
+                  label: userName,
+                  key: String(index),
+                  children: <ChoreList />
+                }))}
+              />
+            ) : (
+              <p>No children created</p>
+            )}
           </Card>
         </Col>
 
         <Col span={8} className={styles.gutterRow}>
-          <Earnings />
+          <Card bordered={false}>
+            <Title className={styles.title}>Earnings</Title>
+            <Earnings />
+          </Card>
         </Col>
 
       </Row>
@@ -85,7 +95,7 @@ const ParentInner = () => {
         )}
         <Tooltip placement="left" title='Add a child'>
           <FloatButton
-            onClick={() => addUser(prompt("Enter new user name"))}
+            onClick={() => addUser(prompt("Enter child's name:"))}
             icon={<UserAddOutlined />}
           />
         </Tooltip>
@@ -95,8 +105,9 @@ const ParentInner = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        footer={null}
       >
-        <CreateChoreList />
+        <CreateChoreList onCloseModal={handleOk} />
       </Modal>
     </>
   );

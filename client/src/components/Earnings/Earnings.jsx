@@ -1,9 +1,8 @@
-// components/Earnings.js
 import { useContext } from 'react';
 import { ChoreContext } from '../../context/ChoreContext';
-import { Card, Typography } from 'antd';
+import { Typography } from 'antd';
 
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 const Earnings = () => {
     const { users } = useContext(ChoreContext);
@@ -16,14 +15,13 @@ const Earnings = () => {
     }
 
     return (
-        <Card bordered={false}>
-            <Title>Earnings</Title>
+        <>
             {Object.entries(users).map(([userName, userData]) => (
                 <Paragraph key={userName}>
                     {userName}: ${computeTotalEarned(userData.chores)}
                 </Paragraph>
             ))}
-        </Card>
+        </>
     );
 }
 
