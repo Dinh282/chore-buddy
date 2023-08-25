@@ -34,15 +34,15 @@ export default function Registration() {
           password,
         },
       });
-      const { token, user } = mutationResponse.data.register;
+      const { token, user } = mutationResponse.data.registerParent;
       loginUser(user, token);
       navigate('/dashboard');
     } catch (e) {
       if (e?.message.includes("duplicate key error")) {
         // If error message indicates duplicate key error, set duplicateEmailError to true to alert user
         setDuplicateEmailError(true);
-    // eslint-disable-next-line no-console
-      console.log(e);
+        // eslint-disable-next-line no-console
+        console.log(e);
       }
     }
   };
@@ -67,7 +67,7 @@ export default function Registration() {
           ]}
         >
           <Input
-     placeholder="First name"
+            placeholder="First name"
           />
         </Form.Item>
         <Form.Item
