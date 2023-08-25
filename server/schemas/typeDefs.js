@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
@@ -42,10 +42,20 @@ const typeDefs = gql`
     getChildrenInFamily(_id: ID!): [User]
     ##this is the family id
     getAllChildrenChores(_id: ID!): [Chore]
+    unassignedChores(family: String!, assignee: ID!): [Chore]
+    getUser(_id: ID!, isChoreBuddy: Boolean!): User
+    getChildChores(assignee: ID!): [Chore]
+    getChildrenInFamily(_id: ID!): User
   }
 
   type Mutation {
-    register(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    register(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+      family:String!
+    ): Auth
     login(email: String!, password: String!): Auth
     createChild(firstName: String!, lastName: String!, email: String!, password: String!, familyId: ID!): User
     editChild(_id: ID!, balance: Int): User
