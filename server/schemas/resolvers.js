@@ -7,16 +7,20 @@ const resolvers = {
 
     unassignedChores: async (parent, { family, assignee }) =>
       Chore.find({ family, assignee }),
-
-    getFamily: async (parent, { _id }) => Family.findOne({ _id }),
   },
 
   Mutation: {
-    registerParent: async (
+    register: async (
       parent,
-      { firstName, lastName, email, password }
+      { firstName, lastName, email, password, family }
     ) => {
-      const user = await User.create({ firstName, lastName, email, password });
+      const user = await User.create({
+        firstName,
+        lastName,
+        email,
+        password,
+        family,
+      });
       const token = signToken(user);
       return { token, currentUser: user };
     },

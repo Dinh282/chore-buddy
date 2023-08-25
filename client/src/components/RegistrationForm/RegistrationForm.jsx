@@ -25,16 +25,17 @@ export default function Registration() {
     try {
       setDuplicateEmailError(false);
       const formValues = await form.validateFields();
-      const { firstName, lastName, email, password } = formValues;
+      const { firstName, lastName, email, password, family } = formValues;
       const mutationResponse = await register({
         variables: {
           firstName,
           lastName,
           email,
           password,
+          family
         },
       });
-      const { token, user } = mutationResponse.data.registerParent;
+      const { token, user } = mutationResponse.data.register;
       loginUser(user, token);
       navigate('/dashboard');
     } catch (e) {

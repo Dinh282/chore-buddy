@@ -36,16 +36,17 @@ const typeDefs = gql`
     currentUser(email: String!): User
     unassignedChores(family: String!, assignee: ID!): [Chore]
     getUser(_id: ID!, isChoreBuddy: Boolean!): User
-    getChildChores: [Chore]
+    getChildChores(assignee: ID!): [Chore]
     getChildrenInFamily(_id: ID!): User
   }
 
   type Mutation {
-    registerParent(
+    register(
       firstName: String!
       lastName: String!
       email: String!
       password: String!
+      family:String!
     ): Auth
     login(email: String!, password: String!): Auth
     createChild(
