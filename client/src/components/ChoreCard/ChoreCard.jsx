@@ -4,7 +4,8 @@ import {
   Card,
   Form,
   Input,
-  Button
+  Button,
+  Select
 } from 'antd';
 // import { CREATE_CHORE } from '../../graphql/mutations';
 // const [createChore] = useMutation(REGISTER_USER)
@@ -29,6 +30,7 @@ function ChoreCard() {
   //     }
   //   };
   // }
+
   return (
     
     <>
@@ -53,20 +55,21 @@ function ChoreCard() {
         >
           <Input placeholder="Chore"/>
         </Form.Item>
-
-        <Form.Item
-          label="Reward"
+        
+        <Form.Item label="Reward">
+        <Select
+          className={styles.select}
+          defaultValue="$5"
           name="rewardAmount"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your last name',
-            },
+          options={[
+            {value: '$0', label:'$0'},
+            {value: '$5', label:'$5'},
+            {value: '$10', label:'$10'},
+            {value: '$15', label:'$15'},
+            {value: '$20', label:'$20'}
           ]}
-        >
-          <Input placeholder="Last name"/>
+        />
         </Form.Item>
-
         <Form.Item
           label="Custom-reward"
           name="custom-reward"
