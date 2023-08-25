@@ -16,7 +16,7 @@ mutation login($email: String!, $password: String!) {
 
 export const REGISTER_USER = gql`
 mutation register($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-  registerParent(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
+  register(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
     currentUser {
       firstName
       lastName
