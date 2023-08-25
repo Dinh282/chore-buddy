@@ -1,5 +1,7 @@
+
 const { User, Chore, Family } = require('../models');
 const { signToken, AuthenticationError } = require('../utils');
+
 
 const resolvers = {
   Query: {
@@ -34,15 +36,27 @@ const resolvers = {
         Object.defineProperty(allChores, firstName, {value: chores});
       })
       return allChores;
-    }
+    },
+    unassignedChores: async (parent, { family, assignee }) =>
+      Chore.find({ family, assignee }),
   },
 
   Mutation: {
-    register: async (parent, { firstName, lastName, email, password }) => {
-      const user = await User.create({ firstName, lastName, email, password });
+    register: async (
+      parent,
+      { firstName, lastName, email, password, family }
+    ) => {
+      const user = await User.create({
+        firstName,
+        lastName,
+        email,
+        password,
+        family,
+      });
       const token = signToken(user);
       return { token, currentUser: user };
     },
+
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -60,6 +74,7 @@ const resolvers = {
 
       return { token, currentUser: user };
     },
+
     createChild: async(parent, {firstName, lastName, email, password, familyId }) => {
       const newChild = await User.create({firstName, lastName, email, password, isChoreBuddy: true});
       await Family.findOneAndUpdate(
@@ -78,7 +93,54 @@ const resolvers = {
         {isCompleted: true},
         {new: true})
       return completedChore
-    }
+    },
+    editChild: async (parent, { _id, balance }, context) => {
+      if (context.user) {
+        const child = await User.findOneAndUpdate(
+          { _id },
+          { balance },
+          { new: true }
+        );
+        return child;
+      }
+      throw AuthenticationError;
+    },
+    deleteChild: async (parent, { _id }, context) => {
+      if (context.user) {
+        return User.findOneAndDelete({ _id });
+      }
+      throw AuthenticationError;
+    },
+    createChore: async (
+      parent,
+      { title, description, family, rewardAmount, isComplete },
+      context
+    ) => {
+      if (context.user) {
+        const chore = await Chore.create({
+          title,
+          description,
+          family,
+          rewardAmount,
+          isComplete,
+        });
+        return chore;
+      }
+      throw AuthenticationError;
+    },
+    choreAssignment: async (parent, { _id }, context) => {
+      if (context.user) {
+        const chore = await Chore.findByIdAndUpdate(
+          { _id },
+          { assignee: context.user._id },
+          {
+            new: true,
+          }
+        );
+        return chore;
+      }
+      throw AuthenticationError;
+    },
   },
 };
 

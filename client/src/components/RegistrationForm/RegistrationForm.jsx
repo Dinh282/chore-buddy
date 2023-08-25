@@ -25,13 +25,14 @@ export default function Registration() {
     try {
       setDuplicateEmailError(false);
       const formValues = await form.validateFields();
-      const { firstName, lastName, email, password } = formValues;
+      const { firstName, lastName, email, password, family } = formValues;
       const mutationResponse = await register({
         variables: {
           firstName,
           lastName,
           email,
           password,
+          family
         },
       });
       const { token, user } = mutationResponse.data.register;
@@ -41,13 +42,15 @@ export default function Registration() {
       if (e?.message.includes("duplicate key error")) {
         // If error message indicates duplicate key error, set duplicateEmailError to true to alert user
         setDuplicateEmailError(true);
-    // eslint-disable-next-line no-console
-      console.log(e);
+        // eslint-disable-next-line no-console
+        console.log(e);
       }
     }
   };
 
   return (
+    <div className={styles.backgroundContainer}>
+    <div className={styles.blurredBgContainer}></div>
     <Card bordered={false} style={{ width: 300 }} className={styles.registrationForm}>
       <Form
         form={form}
@@ -67,7 +70,7 @@ export default function Registration() {
           ]}
         >
           <Input
-     placeholder="First name"
+            placeholder="First name"
           />
         </Form.Item>
         <Form.Item
@@ -144,5 +147,6 @@ export default function Registration() {
         </p>
       </Form>
     </Card>
+    </div>
   );
 }

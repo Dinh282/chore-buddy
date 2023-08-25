@@ -39,6 +39,8 @@ export default function Login() {
   };
 
   return (
+    <div className={styles.backgroundContainer}>
+    <div className={styles.blurredBgContainer}></div>
     <Card bordered={false} style={{ width: 300 }} className={styles.loginForm}>
       <Form
         form={form}
@@ -94,5 +96,6 @@ export default function Login() {
         </p>
       </Form>
     </Card>
+    </div>
   );
 }
