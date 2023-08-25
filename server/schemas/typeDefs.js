@@ -34,21 +34,26 @@ const typeDefs = gql`
 
   type Query {
     currentUser(email: String!): User
-    unassignedChores(family:String!, assigned:String!): Chore
-    getUser(_id:ID!, isChoreBuddy:Boolean!):User
-    getChildChores: [Chore]
-    getChildrenInFamily(_id: ID!): User
+    unassignedChores(family:String!, assigned:String!): [Chore]
+    getUserFamily: Family
+    #this is the child's id
+    getChildChores(_id: ID!): [Chore]
+    ##this is the family id
+    getChildrenInFamily(_id: ID!): [User]
+    ##this is the family id
+    getAllChildrenChores(_id: ID!): [Chore]
   }
 
   type Mutation {
     register(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    createChild(firstName: String!, lastName: String!, email: String!, password: String!, isChoreBuddy: Boolean): User
+    createChild(firstName: String!, lastName: String!, email: String!, password: String!, familyId: ID!): User
     editChild(_id: ID!, balance: Int): User
     deleteChild(_id: ID!): User
     createFamily(familyName: String!): Family
     createChore(title:String, description: String, family: ID, rewardAmount: Int): Chore
     choreAssignment(_id:ID!, assignee: ID ): Chore
+    editChoreStatus(_id: ID!): Chore
   }
 `;
 
