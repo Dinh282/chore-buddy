@@ -1,5 +1,7 @@
+
 const { User, Chore, Family } = require('../models');
 const { signToken, AuthenticationError } = require('../utils');
+
 
 const resolvers = {
   Query: {
@@ -34,7 +36,9 @@ const resolvers = {
         Object.defineProperty(allChores, firstName, {value: chores});
       })
       return allChores;
-    }
+    },
+    unassignedChores: async (parent, { family, assignee }) =>
+      Chore.find({ family, assignee }),
   },
 
   Mutation: {
@@ -70,6 +74,7 @@ const resolvers = {
 
       return { token, currentUser: user };
     },
+
     createChild: async(parent, {firstName, lastName, email, password, familyId }) => {
       const newChild = await User.create({firstName, lastName, email, password, isChoreBuddy: true});
       await Family.findOneAndUpdate(
@@ -100,14 +105,12 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-
     deleteChild: async (parent, { _id }, context) => {
       if (context.user) {
         return User.findOneAndDelete({ _id });
       }
       throw AuthenticationError;
     },
-
     createChore: async (
       parent,
       { title, description, family, rewardAmount, isComplete },
@@ -125,7 +128,6 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-
     choreAssignment: async (parent, { _id }, context) => {
       if (context.user) {
         const chore = await Chore.findByIdAndUpdate(

@@ -43,9 +43,6 @@ const typeDefs = gql`
     ##this is the family id
     getAllChildrenChores(_id: ID!): [Chore]
     unassignedChores(family: String!, assignee: ID!): [Chore]
-    getUser(_id: ID!, isChoreBuddy: Boolean!): User
-    getChildChores(assignee: ID!): [Chore]
-    getChildrenInFamily(_id: ID!): User
   }
 
   type Mutation {
@@ -64,6 +61,7 @@ const typeDefs = gql`
     createChore(title:String, description: String, family: ID, rewardAmount: Int): Chore
     choreAssignment(_id:ID!, assignee: ID ): Chore
     editChoreStatus(_id: ID!): Chore
+
   }
 `;
 
