@@ -13,13 +13,15 @@ const { Title, Text } = Typography;
 import styles from './RegistrationForm.module.css';
 import { REGISTER_USER } from '../../graphql/mutations';
 import { useCurrentUserContext } from '../../context/CurrentUser';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Registration() {
+export default function Registration({ isVisible}) {
   const { loginUser } = useCurrentUserContext();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [duplicateEmailError, setDuplicateEmailError] = useState(false);
   const [register] = useMutation(REGISTER_USER);
+   isVisible = true;
 
   const handleFormSubmit = async () => {
     try {
@@ -49,9 +51,24 @@ export default function Registration() {
   };
 
   return (
+     <AnimatePresence >
     <div className={styles.backgroundContainer}>
     <div className={styles.blurredBgContainer}></div>
-    <Card bordered={false} style={{ width: 300 }} className={styles.registrationForm}>
+
+    {isVisible && (
+    <motion.div
+      key="registration-form"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0, opacity: 0}}
+      transition={{ duration: .2, delay:  .2 }}
+      >
+        
+    <Card 
+    bordered={false} 
+    style={{ width: 300 }} 
+    className={styles.registrationForm}
+    >
       <Form
         form={form}
         id="registration-form"
@@ -147,6 +164,12 @@ export default function Registration() {
         </p>
       </Form>
     </Card>
+
+     </motion.div>
+)}
+
     </div>
+
+     </AnimatePresence>
   );
 }
