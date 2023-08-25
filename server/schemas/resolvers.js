@@ -37,24 +37,30 @@ const resolvers = {
       })
       return allChores;
     },
-    unassignedChores: async (parent, { family, assignee }) =>
-      Chore.find({ family, assignee }),
+    unassignedChores: async (parent, { familyId }) => {
+      const unassignedChores = await Chore.findAll({ family: familyId, assignee: null });
+      return unassignedChores
+    }
   },
 
   Mutation: {
     register: async (
       parent,
-      { firstName, lastName, email, password, family }
+      { firstName, lastName, email, password, familyName }
     ) => {
-      const user = await User.create({
+      const newFamily = await Family.create({familyName})
+      const newUser = await User.create({
         firstName,
         lastName,
         email,
         password,
-        family,
       });
-      const token = signToken(user);
-      return { token, currentUser: user };
+      await Family.findByIdAndUpdate(
+        {_id: newFamily._id}, {
+        $addToSet: { members: newUser._id },
+      });
+      const token = signToken(newUser);
+      return { token, currentUser: newUser };
     },
 
     login: async (parent, { email, password }) => {
@@ -79,7 +85,8 @@ const resolvers = {
       const newChild = await User.create({firstName, lastName, email, password, isChoreBuddy: true});
       await Family.findOneAndUpdate(
         { _id: familyId },
-        { $addToSet: { members: newChild._id } }
+        { $addToSet: { members: newChild._id } },
+        { new: true }
       );
       return newChild;
     },
@@ -87,11 +94,12 @@ const resolvers = {
       const newFam = await Family.create({familyName})
       return newFam
     },
-    editChoreStatus: async(parent, {_id}) => {
+    completeChore: async(parent, {_id}) => {
       const completedChore = await Chore.findOneAndUpdate(
         { _id },
         {isCompleted: true},
-        {new: true})
+        {new: true}
+      )
       return completedChore
     },
     editChild: async (parent, { _id, balance }, context) => {
@@ -113,7 +121,7 @@ const resolvers = {
     },
     createChore: async (
       parent,
-      { title, description, family, rewardAmount, isComplete },
+      { title, description, family, rewardAmount },
       context
     ) => {
       if (context.user) {
@@ -122,7 +130,7 @@ const resolvers = {
           description,
           family,
           rewardAmount,
-          isComplete,
+          isComplete: false,
         });
         return chore;
       }

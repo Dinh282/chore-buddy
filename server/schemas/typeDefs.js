@@ -34,7 +34,7 @@ const typeDefs = gql`
 
   type Query {
     currentUser(email: String!): User
-    unassignedChores(family:String!, assigned:String!): [Chore]
+    unassignedChores(familyId: ID!): [Chore]
     getUserFamily: Family
     #this is the child's id
     getChildChores(_id: ID!): [Chore]
@@ -42,7 +42,6 @@ const typeDefs = gql`
     getChildrenInFamily(_id: ID!): [User]
     ##this is the family id
     getAllChildrenChores(_id: ID!): [Chore]
-    unassignedChores(family: String!, assignee: ID!): [Chore]
   }
 
   type Mutation {
@@ -51,7 +50,7 @@ const typeDefs = gql`
       lastName: String!
       email: String!
       password: String!
-      family:String!
+      familyName:String!
     ): Auth
     login(email: String!, password: String!): Auth
     createChild(firstName: String!, lastName: String!, email: String!, password: String!, familyId: ID!): User
@@ -60,8 +59,7 @@ const typeDefs = gql`
     createFamily(familyName: String!): Family
     createChore(title:String, description: String, family: ID, rewardAmount: Int): Chore
     choreAssignment(_id:ID!, assignee: ID ): Chore
-    editChoreStatus(_id: ID!): Chore
-
+    completeChore(_id: ID!): Chore
   }
 `;
 
