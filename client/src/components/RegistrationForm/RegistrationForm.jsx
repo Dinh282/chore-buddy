@@ -21,7 +21,7 @@ export default function Registration() {
   const [duplicateEmailError, setDuplicateEmailError] = useState(false);
   const [register] = useMutation(REGISTER_USER);
 
-  const handleFormSubmit = async (values) => {
+  const handleFormSubmit = async () => {
     try {
       setDuplicateEmailError(false);
       const formValues = await form.validateFields();
