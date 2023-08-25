@@ -48,6 +48,8 @@ export default function Registration() {
   };
 
   return (
+    <div className={styles.backgroundContainer}>
+    <div className={styles.blurredBgContainer}></div>
     <Card bordered={false} style={{ width: 300 }} className={styles.registrationForm}>
       <Form
         form={form}
@@ -144,5 +146,6 @@ export default function Registration() {
         </p>
       </Form>
     </Card>
+    </div>
   );
 }
