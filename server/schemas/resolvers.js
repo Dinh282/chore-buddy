@@ -99,28 +99,28 @@ const resolvers = {
       return completedChore
     },
     editChild: async (parent, { childId, balance }, context) => {
-      // if (context.user) {
+      if (context.user) {
         const child = await User.findOneAndUpdate(
           { _id: childId },
           { balance },
           { new: true }
         );
         return child;
-      // }
-      // throw AuthenticationError;
+      }
+      throw AuthenticationError;
     },
     deleteChild: async (parent, { childId }, context) => {
-      // if (context.user) {
+      if (context.user) {
         return User.findOneAndDelete({ _id: childId });
-      // }
-      // throw AuthenticationError;
+      }
+      throw AuthenticationError;
     },
     createChore: async (
       parent,
       { title, family, rewardAmount },
       context
     ) => {
-      // if (context.user) {
+      if (context.user) {
         const chore = await Chore.create({
           title,
           family,
@@ -128,8 +128,8 @@ const resolvers = {
           isComplete: false,
         });
         return chore;
-      // }
-      // throw AuthenticationError;
+      }
+      throw AuthenticationError;
     },
     choreAssignment: async (parent, { choreId }, context) => {
       if (context.user) {
