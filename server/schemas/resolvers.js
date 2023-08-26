@@ -29,11 +29,11 @@ const resolvers = {
       const children = members.filter(member => member.isChoreBuddy === true);
       const childrenIds = children.map(({_id}) => ({id: _id.toHexString()}));
       let allChores = [];
-      childrenIds.forEach(async ({id}) => {
+      await Promise.all(childrenIds.map(async ({id}) => {
         let chores = await Chore.find({assignee: id}).populate('assignee');
         console.log('chores>>>', chores);
         allChores.push(...chores);
-      })
+      }))
       console.log('allChores>>>', allChores);
       return allChores;
     },
