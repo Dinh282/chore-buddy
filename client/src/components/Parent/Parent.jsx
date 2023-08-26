@@ -3,6 +3,8 @@ import { ChoreContext, ChoreProvider } from '../../context/ChoreContext';
 import CreateChoreList from '../CreateChoreList/';
 import ChoreList from '../ChoreList/';
 import Earnings from '../Earnings/';
+import RegisterChoreBuddy from '../RegisterChoreBuddy';
+
 import {
   Col,
   Row,
@@ -27,18 +29,28 @@ function Parent() {
 
 const ParentInner = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
   const { users, setActiveUser, addUser } = useContext(ChoreContext);
 
   const showModal = () => {
     setIsModalOpen(true);
   };
+    const showModal2 = () => {
+    setIsModalOpen2(true);
+  };
 
   const handleOk = () => {
     setIsModalOpen(false);
   };
+  const handleOk2 = () => {
+    setIsModalOpen2(false);
+  };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+   const handleCancel2 = () => {
+    setIsModalOpen2(false);
   };
 
   const isObjectEmpty = (obj) => {
@@ -93,14 +105,25 @@ const ParentInner = () => {
             />
           </Tooltip>
         )}
-        <Tooltip placement="left" title='Add a child'>
+        <Tooltip placement="left" title='Add a chorebuddy'>
           <FloatButton
-            onClick={() => addUser(prompt("Enter child's name:"))}
+          // onClick={() => addUser(prompt("Enter child's name:"))}
+          //   icon={<UserAddOutlined />}
+            onClick={showModal2}
             icon={<UserAddOutlined />}
           />
         </Tooltip>
       </FloatButton.Group>
       
+      <Modal title="Add a chorebuddy"
+        open={isModalOpen2}
+        onOk={handleOk2}
+        onCancel={handleCancel2}
+        footer={null}
+        >
+        <RegisterChoreBuddy onCloseModal={handleOk2}/>
+      </Modal>
+
       <Modal title="Add a chore"
         open={isModalOpen}
         onOk={handleOk}
@@ -109,6 +132,7 @@ const ParentInner = () => {
       >
         <CreateChoreList onCloseModal={handleOk} />
       </Modal>
+      
     </>
   );
 }
