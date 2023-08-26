@@ -1,0 +1,10 @@
+.wrapper {
+    max-width: '600px';
+    margin: '0 auto';
+}
+
+.ant-checkbox-checked {
+    background-color: #1890ff;
+    border-color: #1890ff;
+    text-decoration: line-through;
+}
