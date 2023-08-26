@@ -15,8 +15,20 @@ export const LOGIN_USER = gql`
 `;
 
 export const REGISTER_USER = gql`
-  mutation register($firstName: String!, $lastName: String!, $email: String!, $password: String!, $family:String!) {
-    register(firstName: $firstName, lastName: $lastName, email: $email, password: $password, family:$family) {
+  mutation register(
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $password: String!
+    $family: String!
+  ) {
+    register(
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      password: $password
+      family: $family
+    ) {
       currentUser {
         firstName
         lastName
@@ -26,9 +38,22 @@ export const REGISTER_USER = gql`
   }
 `;
 
+export const CREATE_CHILD = gql`
+  mutation createChild($firstName: String!, $lastName: String!, $email: String!, $password: String!, familyId: ID!) {
+    createChild(firstName: $firstName, lastName: $lastName, email: $email, password: $password, familyId:$familyId) {
+      _id
+      firstName
+      lastName
+      email
+      balance
+      isChoreBuddy
+    }
+  }
+`;
+
 export const EDIT_CHILD = gql`
-  mutation editChild($_id: ID!, $balance: Int) {
-    editChild(_id: $_id, balance: $balance) {
+  mutation editChild($childId: ID!, $balance: Int) {
+    editChild(childId: $childId, balance: $balance) {
       _id
       firstName
       lastName
@@ -40,8 +65,8 @@ export const EDIT_CHILD = gql`
 `;
 
 export const DELETE_CHILD = gql`
-  mutation deleteChild($_id: ID!) {
-    deleteChild(_id: $_id) {
+  mutation deleteChild($childId: ID!) {
+    deleteChild(childId: $childId) {
       _id
       firstName
       lastName
@@ -53,18 +78,21 @@ export const DELETE_CHILD = gql`
 `;
 
 export const CREATE_CHORE = gql`
-  mutation createChore(
-    $title: String
-    $description: String
-    $family: ID
-    $rewardAmount: Int
-  ) {
-    createChore(
-      title: $title
-      description: $description
-      family: $family
-      rewardAmount: $rewardAmount
-    ) {
+  mutation createChore($title: String, $family: ID, $rewardAmount: Int) {
+    createChore(title: $title, family: $family, rewardAmount: $rewardAmount) {
+      _id
+      title
+      family
+      assignee
+      rewardAmount
+      isComplete
+    }
+  }
+`;
+
+export const CHORE_ASSIGNMENT = gql`
+  mutation choreAssignment($choreId: ID!) {
+    choreAssignment(choreId: $choreId) {
       _id
       title
       description
@@ -76,9 +104,9 @@ export const CREATE_CHORE = gql`
   }
 `;
 
-export const CHORE_ASSIGNMENT = gql`
-  mutation choreAssignment($_id: ID!, $assignee: ID) {
-    choreAssignment(_id: $_id, assignee: $assignee) {
+export const COMPLETE_CHORE = gql`
+  mutation completeChore($choreId: ID!) {
+    completeChore(choreId: $choreId) {
       _id
       title
       description
