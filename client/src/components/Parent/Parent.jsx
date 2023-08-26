@@ -119,7 +119,7 @@ const ParentInner = () => {
         onCancel={handleCancel2}
         footer={null}
         >
-        <RegisterChoreBuddy onCloseModal={handleOk2} setIsModalOpen2={setIsModalOpen2}/>
+        <RegisterChoreBuddy onCloseModal2={handleOk2} />
       </Modal>
 
       <Modal title="Add a chore"
