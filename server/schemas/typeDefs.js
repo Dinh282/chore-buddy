@@ -73,8 +73,7 @@ const typeDefs = gql`
       firstName: String!, 
       lastName: String!, 
       email: String!, 
-      password: String!, 
-      familyId: ID!
+      password: String!
     ): User
     
     editChild(

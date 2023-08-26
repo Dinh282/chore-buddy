@@ -80,14 +80,19 @@ const resolvers = {
       return { token, currentUser: user };
     },
 
-    createChild: async(parent, {firstName, lastName, email, password, familyId }) => {
+    createChild: async(parent, {firstName, lastName, email, password }, context) => {
+      if(context.user){
+      const usersFam = await Family.findOne({ members: { $in: context.user._id } });
       const newChild = await User.create({firstName, lastName, email, password, isChoreBuddy: true});
       await Family.findOneAndUpdate(
-        { _id: familyId },
+        { _id: usersFam._id },
         { $addToSet: { members: newChild._id } },
         { new: true }
       );
       return newChild;
+      }
+      throw AuthenticationError;
+
     },
 
     completeChore: async(parent, {choreId}) => {
