@@ -39,7 +39,7 @@ export const REGISTER_USER = gql`
 `;
 
 export const CREATE_CHILD = gql`
-  mutation createChild($firstName: String!, $lastName: String!, $email: String!, $password: String!, familyId: ID!) {
+  mutation createChild($firstName: String!, $lastName: String!, $email: String!, $password: String!, $familyId: ID!) {
     createChild(firstName: $firstName, lastName: $lastName, email: $email, password: $password, familyId:$familyId) {
       _id
       firstName
