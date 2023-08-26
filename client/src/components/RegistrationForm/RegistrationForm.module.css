@@ -1,0 +1,33 @@
+.backgroundContainer {
+    position: relative; 
+    height:100vh;
+}
+    
+.blurredBgContainer {
+    background-image: url('/images/landing.png');
+    background-size: cover;
+    filter: blur(6px); 
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    height:100%;
+  }
+
+.registrationForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 30rem;
+    margin: 3rem auto;
+}
+
+.registrationForm h1 {
+    margin-top: 0;
+}
+
+.registrationForm p:last-of-type {
+    margin-bottom: 0;
+}

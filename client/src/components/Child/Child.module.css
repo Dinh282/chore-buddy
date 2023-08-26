@@ -1,0 +1,11 @@
+.wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0px 50px;
+}
+.gutterRow {
+    padding: 0 8px;
+}
+.title {
+    margin-top: 0;
+}

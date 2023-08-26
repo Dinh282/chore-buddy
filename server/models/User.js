@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
-const { Schema, model } = require('mongoose');
-const bcrypt = require('bcryptjs');
+const { Schema, model } = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema({
   firstName: {
@@ -17,17 +17,24 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    match: [/.+@.+\..+/, 'Must match an email address!'],
+    match: [/.+@.+\..+/, "Must match an email address!"],
   },
   password: {
     type: String,
     required: true,
     minlength: 5,
   },
+  balance: {
+    type: Number,
+    match: [/^[0-9]*\.[0-9]{2}$/, "Must be in dollar format with 2 decimal places!"],
+  },
+  isChoreBuddy: {
+    type: Boolean,
+  },
 });
 
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
@@ -38,6 +45,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-const User = model('User', userSchema);
+const User = model("user", userSchema);
 
 module.exports = User;

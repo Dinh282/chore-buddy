@@ -129,5 +129,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-
+#we don't need to be commiting these files
+package-lock.json
 .DS_Store
