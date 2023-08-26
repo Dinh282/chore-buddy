@@ -7,7 +7,7 @@ const familySchema = new Schema({
     required: true,
     max_length: 50,
   },
-  //reference the user model
+  // reference the user model
   members: [
     {
       type: Schema.Types.ObjectId,
