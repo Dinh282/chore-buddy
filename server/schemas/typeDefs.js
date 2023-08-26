@@ -33,25 +33,25 @@ const typeDefs = gql`
 
   type Query {
     currentUser(
-    email: String!
+      email: String!
     ): User
 
     unassignedChores(
-    familyId: ID!
+      familyId: ID!
     ): [Chore]
 
     getCurrentUserFamily: Family
 
     getChildChores(
-    childId: ID!
+      childId: ID!
     ): [Chore]
 
     getChildrenInFamily(
-    familyId: ID!
+      familyId: ID!
     ): [User]
 
     getAllChildrenChores(
-    familyId: ID!
+      familyId: ID!
     ): [Chore]
   }
 
@@ -65,39 +65,39 @@ const typeDefs = gql`
     ): Auth
 
     login(
-    email: String!, 
-    password: String!): 
-    Auth
+      email: String!, 
+      password: String!
+    ): Auth
 
     createChild(
-    firstName: String!, 
-    lastName: String!, 
-    email: String!, 
-    password: String!, 
-    familyId: ID!
+      firstName: String!, 
+      lastName: String!, 
+      email: String!, 
+      password: String!, 
+      familyId: ID!
     ): User
     
     editChild(
-    childId: ID!, 
-    balance: Int
+      childId: ID!, 
+      balance: Int
     ): User
 
     deleteChild(
-    childId: ID!
+      childId: ID!
     ): User
 
     createChore(
-    title:String, 
-    family: ID, 
-    rewardAmount: Int
+      title:String, 
+      family: ID, 
+      rewardAmount: Int
     ): Chore
     
     choreAssignment(
-    choreId: ID!
+      choreId: ID!
     ): Chore
     
     completeChore(
-    choreId: ID!
+      choreId: ID!
     ): Chore
   }
 `;
