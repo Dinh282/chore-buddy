@@ -1,5 +1,4 @@
-import { useState } from "react";
-// import { ChoreContext } from "../../context/ChoreContext";
+// import { useState } from "react";
 import {
   Form,
   Input,
@@ -8,34 +7,8 @@ import {
 
 
 function RegisterChoreBuddy() {
-    // const { users, activeUser, setUsers } = useContext(ChoreContext);
     const [form] = Form.useForm();
     
-    // const currentUser = users[activeUser];
-
-    // const handleAddChore = (values) => {
-    //     if (!currentUser || !values.title) return;
-    
-    //     let amount;
-    //     if (showCustomAmount && typeof values.customRewardAmount !== 'undefined') {
-    //         amount = values.customRewardAmount;
-    //     } else {
-    //         amount = parseFloat(values.rewardAmount.replace('$', ''));
-    //     }
-    
-    //     const newChore = { task: values.title, money: amount, isChecked: false };
-    
-    //     setUsers({
-    //         ...users,
-    //         [activeUser]: {
-    //             ...currentUser,
-    //             chores: [...currentUser.chores, newChore]
-    //         }
-    //     });
-    //     form.resetFields();
-
-    //     onCloseModal && onCloseModal();
-    // };
     
 
     return (

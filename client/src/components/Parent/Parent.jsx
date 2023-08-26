@@ -107,6 +107,8 @@ const ParentInner = () => {
         )}
         <Tooltip placement="left" title='Add a chorebuddy'>
           <FloatButton
+          // onClick={() => addUser(prompt("Enter child's name:"))}
+          //   icon={<UserAddOutlined />}
             onClick={showModal2}
             icon={<UserAddOutlined />}
           />
