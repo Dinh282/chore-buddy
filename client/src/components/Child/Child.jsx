@@ -21,18 +21,20 @@ const ChildInner = () => {
   return (
     <>
       <Row className={styles.wrapper} justify="center">
-        <Col span={16} className={styles.gutterRow}>
+
+        <Col xs={24} sm={16} className={styles.gutterRow}>
           <Card bordered={false} className={styles.choreList}>
-            <Title className={styles.title}>Child dashboard</Title>
+            <Title className={styles.title}>Chores</Title>
           </Card>
         </Col>
 
-        <Col span={8} className={styles.gutterRow}>
+        <Col xs={24} sm={8} className={styles.gutterRow}>
           <Card bordered={false}>
-            <Title className={styles.title}>My balance</Title>
+            <Title className={styles.title} level={2}>My balance</Title>
             <Earnings />
           </Card>
         </Col>
+
       </Row>
     </>
   )
