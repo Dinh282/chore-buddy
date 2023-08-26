@@ -6,22 +6,19 @@ import {
   Input,
   Button,
 } from 'antd';
+// import { useNavigate } from 'react-router-dom';
 const { Text } = Typography;
-import { REGISTER_USER } from '../../graphql/mutations';
-import { QUERY_CURRENTUSER_FAMILY } from '../../graphql/queries'
+import { CREATE_CHILD } from '../../graphql/mutations';
 import { useCurrentUserContext } from '../../context/CurrentUser';
-
-function RegisterChoreBuddy() {
+// {setIsModalOpen2}
+function RegisterChoreBuddy( {onCloseModal} ) {
     const [form] = Form.useForm();
     const [duplicateEmailError, setDuplicateEmailError] = useState(false);
     const { loginUser } = useCurrentUserContext();
-    const [register] = useMutation(REGISTER_USER);
-    const { data } = useQuery(QUERY_CURRENTUSER_FAMILY);
-    const familyId = data?.getCurrentUserFamily || {};
+    const [register] = useMutation(CREATE_CHILD);
+    // const navigate = useNavigate();
 
-    console.log(familyId)
-    
-    const handleFormSubmit = async () => {
+    const handleFormSubmit = async (  ) => {
     try {
       setDuplicateEmailError(false);
       const formValues = await form.validateFields();
@@ -31,12 +28,16 @@ function RegisterChoreBuddy() {
           firstName,
           lastName,
           email,
-          password,
-          family: data._id
+          password
         },
       });
       const { token, user } = mutationResponse.data.register;
       loginUser(user, token);
+      form.resetFields();
+
+    onCloseModal && onCloseModal();
+    //   setIsModalOpen2(false)
+
     } catch (e) {
       if (e?.message.includes("duplicate key error")) {
         // If error message indicates duplicate key error, set duplicateEmailError to true to alert user
@@ -96,10 +97,11 @@ function RegisterChoreBuddy() {
                 name="password"
                 rules={[
                     { required: true, 
-                    message: 'Please enter your password' }
+                    message: 'Please enter your password' },
+                    { min: 5, message: "Password must be at least 5 characters" },
                 ]}
             >
-            <Input placeholder="******" />
+            <Input.Password placeholder="******" />
 
             </Form.Item>
             {duplicateEmailError && (
