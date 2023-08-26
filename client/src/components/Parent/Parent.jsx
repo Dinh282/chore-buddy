@@ -4,6 +4,8 @@ import CreateChoreList from '../CreateChoreList/';
 import ChoreList from '../ChoreList/';
 import Earnings from '../Earnings/';
 import RegisterChoreBuddy from '../RegisterChoreBuddy';
+import { useQuery } from '@apollo/client';
+import { QUERY_CHILDREN_IN_FAMILY } from '../../graphql/queries';
 
 import {
   Col,
@@ -31,7 +33,8 @@ const ParentInner = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
   const { users, setActiveUser } = useContext(ChoreContext);
-
+  const { data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
+  console.log(data)
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -119,7 +122,7 @@ const ParentInner = () => {
         onCancel={handleCancel2}
         footer={null}
         >
-        <RegisterChoreBuddy onCloseModal={handleOk2} setIsModalOpen2={setIsModalOpen2}/>
+        <RegisterChoreBuddy onCloseModal2={handleOk2} setIsModalOpen2={setIsModalOpen2}/>
       </Modal>
 
       <Modal title="Add a chore"
