@@ -7,9 +7,6 @@ const choreSchema = new Schema({
     required: true,
     max_length: 50,
   },
-  description: {
-    type: String,
-  },
   family: {
     type: Schema.Types.ObjectId,
     ref: "family",

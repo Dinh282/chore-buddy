@@ -6,39 +6,39 @@ const { signToken, AuthenticationError } = require('../utils');
 const resolvers = {
   Query: {
     currentUser: async (parent, { email }) => User.findOne({ email }),
-    getUserFamily: async(parent, args, context) => {
+    getCurrentUserFamily: async(parent, args, context) => {
       if(context.user){
         const usersFam = await Family.findOne({ members: { $in: context.user._id } });
         return usersFam;
       }
+      throw AuthenticationError;
     },
-    getChildChores: async(parent, {_id}, context) => {
-      const chores = await Chore.findAll({assignee: _id})
+    getChildChores: async(parent, {childId}, context) => {
+      const chores = await Chore.find({assignee: childId}).populate('assignee');
       return chores
     },
-    getChildrenInFamily: async(parent, {_id}, context) => {
-      const family = await Family.findOne({_id}).populate('user');
+    getChildrenInFamily: async(parent, {familyId}, context) => {
+      const family = await Family.findOne({_id: familyId}).populate('members');
       const members = family.members
-      const children = members.filter(member => member.isChoreBudy === true);
+      const children = members.filter(member => member.isChoreBuddy === true);
       return children
     },
-    getAllChildrenChores: async(parent, {_id}, context)=> {
-      const family = await Family.findOne({_id}).populate('user')
+    getAllChildrenChores: async(parent, {familyId}, context)=> {
+      const family = await Family.findOne({_id: familyId}).populate('members');
       const members = family.members
-      const children = members.filter(member => member.isChoreBudy === true);
-      const childrenIdsName = children.map(({_id, firstName}) => ({
-        id: _id,
-        firstName: `${firstName}`,
-      }));
-      let allChores = {};
-      childrenIdsName.map(async ({id, firstName}) => {
-        let chores = await Chore.findAll({assignee: id});
-        Object.defineProperty(allChores, firstName, {value: chores});
+      const children = members.filter(member => member.isChoreBuddy === true);
+      const childrenIds = children.map(({_id}) => ({id: _id.toHexString()}));
+      let allChores = [];
+      childrenIds.forEach(async ({id}) => {
+        let chores = await Chore.find({assignee: id}).populate('assignee');
+        console.log('chores>>>', chores)
+        allChores.push(...chores)
       })
+      console.log('allChores>>>', allChores);
       return allChores;
     },
     unassignedChores: async (parent, { familyId }) => {
-      const unassignedChores = await Chore.findAll({ family: familyId, assignee: null });
+      const unassignedChores = await Chore.find({ family: familyId, assignee: null }).populate('assignee');
       return unassignedChores
     }
   },
@@ -46,14 +46,15 @@ const resolvers = {
   Mutation: {
     register: async (
       parent,
-      { firstName, lastName, email, password, familyName }
+      { firstName, lastName, email, password, family }
     ) => {
-      const newFamily = await Family.create({familyName})
+      const newFamily = await Family.create({familyName: family})
       const newUser = await User.create({
         firstName,
         lastName,
         email,
         password,
+        isChoreBuddy: false,
       });
       await Family.findByIdAndUpdate(
         {_id: newFamily._id}, {
@@ -90,60 +91,54 @@ const resolvers = {
       );
       return newChild;
     },
-    createFamily: async(parent, {familyName}) => {
-      const newFam = await Family.create({familyName})
-      return newFam
-    },
-    completeChore: async(parent, {_id}) => {
+
+    completeChore: async(parent, {choreId}) => {
       const completedChore = await Chore.findOneAndUpdate(
-        { _id },
-        {isCompleted: true},
+        { _id: choreId },
+        {isComplete: true},
         {new: true}
       )
       return completedChore
     },
-    editChild: async (parent, { _id, balance }, context) => {
-      if (context.user) {
+    editChild: async (parent, { childId, balance }, context) => {
+      // if (context.user) {
         const child = await User.findOneAndUpdate(
-          { _id },
+          { _id: childId },
           { balance },
           { new: true }
         );
         return child;
-      }
-      throw AuthenticationError;
+      // }
+      // throw AuthenticationError;
     },
-    deleteChild: async (parent, { _id }, context) => {
-      if (context.user) {
-        return User.findOneAndDelete({ _id });
-      }
-      throw AuthenticationError;
+    deleteChild: async (parent, { childId }, context) => {
+      // if (context.user) {
+        return User.findOneAndDelete({ _id: childId });
+      // }
+      // throw AuthenticationError;
     },
     createChore: async (
       parent,
-      { title, description, family, rewardAmount },
+      { title, family, rewardAmount },
       context
     ) => {
-      if (context.user) {
+      // if (context.user) {
         const chore = await Chore.create({
           title,
-          description,
           family,
           rewardAmount,
           isComplete: false,
         });
         return chore;
-      }
-      throw AuthenticationError;
+      // }
+      // throw AuthenticationError;
     },
-    choreAssignment: async (parent, { _id }, context) => {
+    choreAssignment: async (parent, { choreId }, context) => {
       if (context.user) {
         const chore = await Chore.findByIdAndUpdate(
-          { _id },
+          { _id: choreId },
           { assignee: context.user._id },
-          {
-            new: true,
-          }
+          { new: true },
         );
         return chore;
       }
