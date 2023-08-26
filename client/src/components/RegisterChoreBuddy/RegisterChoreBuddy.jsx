@@ -6,19 +6,15 @@ import {
   Input,
   Button,
 } from 'antd';
-// import { useNavigate } from 'react-router-dom';
 const { Text } = Typography;
 import { CREATE_CHILD } from '../../graphql/mutations';
-import { useCurrentUserContext } from '../../context/CurrentUser';
-// {setIsModalOpen2}
-function RegisterChoreBuddy( {onCloseModal} ) {
+
+function RegisterChoreBuddy( {onCloseModal2} ) {
     const [form] = Form.useForm();
     const [duplicateEmailError, setDuplicateEmailError] = useState(false);
-    const { loginUser } = useCurrentUserContext();
     const [register] = useMutation(CREATE_CHILD);
-    // const navigate = useNavigate();
-
-    const handleFormSubmit = async (  ) => {
+    
+    const handleFormSubmit = async ( ) => {
     try {
       setDuplicateEmailError(false);
       const formValues = await form.validateFields();
@@ -31,12 +27,9 @@ function RegisterChoreBuddy( {onCloseModal} ) {
           password
         },
       });
-      const { token, user } = mutationResponse.data.register;
-      loginUser(user, token);
+      mutationResponse.data.register;
       form.resetFields();
-
-    onCloseModal && onCloseModal();
-    //   setIsModalOpen2(false)
+      onCloseModal2 && onCloseModal2();
 
     } catch (e) {
       if (e?.message.includes("duplicate key error")) {
