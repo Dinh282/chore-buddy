@@ -13,6 +13,11 @@
 .title {
     margin-top: 0;
 }
-.choreList {
-    
+@media screen and (max-width: 768px) {
+    .wrapper {
+        padding: 0px 20px;
+    }
+    .choreList {
+        margin-bottom: 20px;
+    }
 }

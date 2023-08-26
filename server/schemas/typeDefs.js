@@ -36,23 +36,15 @@ const typeDefs = gql`
       email: String!
     ): User
 
-    unassignedChores(
-      familyId: ID!
-    ): [Chore]
-
-    getCurrentUserFamily: Family
+    unassignedChores: [Chore]
 
     getChildChores(
       childId: ID!
     ): [Chore]
 
-    getChildrenInFamily(
-      familyId: ID!
-    ): [User]
+    getChildrenInFamily: [User]
 
-    getAllChildrenChores(
-      familyId: ID!
-    ): [Chore]
+    getAllChildrenChores: [Chore]
   }
 
   type Mutation {
@@ -73,8 +65,7 @@ const typeDefs = gql`
       firstName: String!, 
       lastName: String!, 
       email: String!, 
-      password: String!, 
-      familyId: ID!
+      password: String!
     ): User
     
     editChild(
@@ -88,7 +79,6 @@ const typeDefs = gql`
 
     createChore(
       title:String, 
-      family: ID, 
       rewardAmount: Int
     ): Chore
     

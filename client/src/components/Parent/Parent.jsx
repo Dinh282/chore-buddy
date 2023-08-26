@@ -30,7 +30,7 @@ function Parent() {
 const ParentInner = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const { users, setActiveUser, addUser } = useContext(ChoreContext);
+  const { users, setActiveUser } = useContext(ChoreContext);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -61,7 +61,7 @@ const ParentInner = () => {
     <>
       <Row className={styles.wrapper} justify="center">
 
-        <Col span={16} className={styles.gutterRow}>
+        <Col xs={24} sm={16} className={styles.gutterRow}>
           <Card bordered={false} className={styles.choreList}>
             <Title className={styles.title}>Chores</Title>
             {Object.keys(users).length ? (
@@ -75,14 +75,14 @@ const ParentInner = () => {
                 }))}
               />
             ) : (
-              <p>No children created</p>
+              <p>Create a ChoreBuddy and add some chores to get started!</p>
             )}
           </Card>
         </Col>
 
-        <Col span={8} className={styles.gutterRow}>
+        <Col xs={24} sm={8} className={styles.gutterRow}>
           <Card bordered={false}>
-            <Title className={styles.title}>Earnings</Title>
+            <Title className={styles.title} level={2}>My balance</Title>
             <Earnings />
           </Card>
         </Col>
@@ -90,7 +90,7 @@ const ParentInner = () => {
       </Row>
 
       <FloatButton.Group
-        trigger="click"
+        trigger="hover"
         type="primary"
         style={{
           right: 24,
@@ -107,8 +107,6 @@ const ParentInner = () => {
         )}
         <Tooltip placement="left" title='Add a chorebuddy'>
           <FloatButton
-          // onClick={() => addUser(prompt("Enter child's name:"))}
-          //   icon={<UserAddOutlined />}
             onClick={showModal2}
             icon={<UserAddOutlined />}
           />
@@ -121,7 +119,7 @@ const ParentInner = () => {
         onCancel={handleCancel2}
         footer={null}
         >
-        <RegisterChoreBuddy onCloseModal={handleOk2}/>
+        <RegisterChoreBuddy onCloseModal={handleOk2} setIsModalOpen2={setIsModalOpen2}/>
       </Modal>
 
       <Modal title="Add a chore"

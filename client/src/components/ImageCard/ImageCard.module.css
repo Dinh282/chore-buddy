@@ -4,31 +4,35 @@
   min-height: 85svh;
   background-color: var(--light-green);
 }
-.card-header-div {
+.cardHeaderDiv {
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
 }
-.card-header {
+.cardHeader {
   color: var(--dark-blue);
   font-size: 2.5rem;
   margin: 2rem 0;
 }
-.card-message {
-  color: var(--dark-blue);
-  margin: 0;
+.cardMessage {
+  font-size: 1rem;
+  margin: 1rem 0 0;
 }
-.card-img {
+.cardImg {
   max-width: 80%;
 }
-.card-div {
+.cardDiv {
   display: flex;
   justify-content: center;
-  margin-top: 7rem;
 }
-.card-btn {
-  margin-top: 2rem;
-  width: 40%;
-  background-color: var(--dark-blue);
+.cardBtn {
+  background-color: var(--red-dark);
+  color: var(--white);
+  border: none;
+}
+.cardBtn:hover {
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
 }

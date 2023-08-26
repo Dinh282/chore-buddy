@@ -16,17 +16,17 @@ export const LOGIN_USER = gql`
 
 export const REGISTER_USER = gql`
   mutation register(
-    $firstName: String!
-    $lastName: String!
-    $email: String!
-    $password: String!
+    $firstName: String!,
+    $lastName: String!,
+    $email: String!,
+    $password: String!,
     $family: String!
   ) {
     register(
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      password: $password
+      firstName: $firstName,
+      lastName: $lastName,
+      email: $email,
+      password: $password,
       family: $family
     ) {
       currentUser {
@@ -39,8 +39,8 @@ export const REGISTER_USER = gql`
 `;
 
 export const CREATE_CHILD = gql`
-  mutation createChild($firstName: String!, $lastName: String!, $email: String!, $password: String!, familyId: ID!) {
-    createChild(firstName: $firstName, lastName: $lastName, email: $email, password: $password, familyId:$familyId) {
+  mutation createChild($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+    createChild(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
       _id
       firstName
       lastName
@@ -78,11 +78,10 @@ export const DELETE_CHILD = gql`
 `;
 
 export const CREATE_CHORE = gql`
-  mutation createChore($title: String, $family: ID, $rewardAmount: Int) {
-    createChore(title: $title, family: $family, rewardAmount: $rewardAmount) {
+  mutation createChore($title: String, $rewardAmount: Int) {
+    createChore(title: $title, rewardAmount: $rewardAmount) {
       _id
       title
-      family
       assignee
       rewardAmount
       isComplete
