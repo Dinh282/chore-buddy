@@ -12,11 +12,10 @@ export const QUERY_CURRENT_USER = gql`
 `;
 
 export const QUERY_UNASSIGNED_CHORES = gql`
-  query unassignedChores($family: ID!, assignee:ID!) {
+  query unassignedChores($family: ID!, $assignee:ID!) {
     unassignedChores(family:$family, assignee:$assignee) {
       _id
       title
-      description
       family
       assignee
       rewardAmount
@@ -81,5 +80,4 @@ export const QUERY_ALL_CHILDREN_CHORES = gql`
       title
     }
     }
-  }
 `;
