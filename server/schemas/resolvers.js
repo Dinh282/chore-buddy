@@ -31,10 +31,8 @@ const resolvers = {
       let allChores = [];
       await Promise.all(childrenIds.map(async ({id}) => {
         let chores = await Chore.find({assignee: id}).populate('assignee');
-        console.log('chores>>>', chores);
         allChores.push(...chores);
       }))
-      console.log('allChores>>>', allChores);
       return allChores;
     },
     unassignedChores: async (parent, { familyId }) => {
