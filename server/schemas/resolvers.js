@@ -31,8 +31,8 @@ const resolvers = {
       let allChores = [];
       childrenIds.forEach(async ({id}) => {
         let chores = await Chore.find({assignee: id}).populate('assignee');
-        console.log('chores>>>', chores)
-        allChores.push(...chores)
+        console.log('chores>>>', chores);
+        allChores.push(...chores);
       })
       console.log('allChores>>>', allChores);
       return allChores;
