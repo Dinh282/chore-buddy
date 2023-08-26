@@ -14,7 +14,6 @@ const typeDefs = gql`
   type Chore {
     _id: ID
     title: String
-    description: String
     family: Family
     assignee: User
     rewardAmount: Int
@@ -33,34 +32,73 @@ const typeDefs = gql`
   }
 
   type Query {
-    currentUser(email: String!): User
-    unassignedChores(family:String!, assigned:String!): [Chore]
-    getUserFamily: Family
-    #this is the child's id
-    getChildChores(_id: ID!): [Chore]
-    ##this is the family id
-    getChildrenInFamily(_id: ID!): [User]
-    ##this is the family id
-    getAllChildrenChores(_id: ID!): [Chore]
+    currentUser(
+    email: String!
+    ): User
+
+    unassignedChores(
+    familyId: ID!
+    ): [Chore]
+
+    getCurrentUserFamily: Family
+
+    getChildChores(
+    childId: ID!
+    ): [Chore]
+
+    getChildrenInFamily(
+    familyId: ID!
+    ): [User]
+
+    getAllChildrenChores(
+    familyId: ID!
+    ): [Chore]
   }
 
   type Mutation {
     register(
-      firstName: String!
-      lastName: String!
-      email: String!
-      password: String!
-      family:String!
+      firstName: String!,
+      lastName: String!,
+      email: String!,
+      password: String!,
+      family: String!
     ): Auth
-    login(email: String!, password: String!): Auth
-    createChild(firstName: String!, lastName: String!, email: String!, password: String!, familyId: ID!): User
-    editChild(_id: ID!, balance: Int): User
-    deleteChild(_id: ID!): User
-    createFamily(familyName: String!): Family
-    createChore(title:String, description: String, family: ID, rewardAmount: Int): Chore
-    choreAssignment(_id:ID!, assignee: ID ): Chore
-    editChoreStatus(_id: ID!): Chore
 
+    login(
+    email: String!, 
+    password: String!): 
+    Auth
+
+    createChild(
+    firstName: String!, 
+    lastName: String!, 
+    email: String!, 
+    password: String!, 
+    familyId: ID!
+    ): User
+    
+    editChild(
+    childId: ID!, 
+    balance: Int
+    ): User
+
+    deleteChild(
+    childId: ID!
+    ): User
+
+    createChore(
+    title:String, 
+    family: ID, 
+    rewardAmount: Int
+    ): Chore
+    
+    choreAssignment(
+    choreId: ID!
+    ): Chore
+    
+    completeChore(
+    choreId: ID!
+    ): Chore
   }
 `;
 
