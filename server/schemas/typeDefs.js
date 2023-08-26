@@ -42,7 +42,6 @@ const typeDefs = gql`
     getChildrenInFamily(_id: ID!): [User]
     ##this is the family id
     getAllChildrenChores(_id: ID!): [Chore]
-    unassignedChores(family: String!, assignee: ID!): [Chore]
   }
 
   type Mutation {
