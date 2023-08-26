@@ -12,8 +12,8 @@ export const QUERY_CURRENT_USER = gql`
 `;
 
 export const QUERY_UNASSIGNED_CHORES = gql`
-  query unassignedChores($family: ID!, $assignee:ID!) {
-    unassignedChores(family:$family, assignee:$assignee) {
+  query unassignedChores {
+    unassignedChores {
       _id
       title
       family
@@ -52,8 +52,8 @@ export const QUERY_CHILD_CHORES = gql`
   }
 `;
 export const QUERY_CHILDREN_IN_FAMILY = gql`
-  query getChildrenInFamily($familyId: ID!) {
-    getChildrenInFamily(familyId: $familyId) {
+  query getChildrenInFamily {
+    getChildrenInFamily {
       _id
       balance
       email
@@ -64,8 +64,8 @@ export const QUERY_CHILDREN_IN_FAMILY = gql`
   }
 `;
 export const QUERY_ALL_CHILDREN_CHORES = gql`
-  query getAllChildrenChores($familyId: ID!) {
-    getAllChildrenChores(familyId: $familyId) {
+  query getAllChildrenChores {
+    getAllChildrenChores {
       _id
       assignee {
         _id
