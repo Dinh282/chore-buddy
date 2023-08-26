@@ -75,7 +75,7 @@ const ParentInner = () => {
                 }))}
               />
             ) : (
-              <p>No children created</p>
+              <p>Create a ChoreBuddy and add some chores to get started!</p>
             )}
           </Card>
         </Col>
@@ -90,7 +90,7 @@ const ParentInner = () => {
       </Row>
 
       <FloatButton.Group
-        trigger="click"
+        trigger="hover"
         type="primary"
         style={{
           right: 24,
