@@ -27,12 +27,12 @@
   justify-content: center;
 }
 .cardBtn {
-  background-color: var(--dark-blue);
+  background-color: var(--red-dark);
   color: var(--white);
   border: none;
 }
 .cardBtn:hover {
-  background-color: var(--dark-blue);
+  background-color: var(--red);
   color: var(--white);
   border: none;
 }
