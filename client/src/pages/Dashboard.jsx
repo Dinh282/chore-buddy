@@ -8,9 +8,7 @@ import { QUERY_CURRENT_USER } from '../graphql/queries'
 function Dashboard() {
   const { currentUser } = useCurrentUserContext();
   console.log(currentUser)
-  const { loading, data } = useQuery(QUERY_CURRENT_USER, {
-    variables: { email: currentUser.email }
-  })
+  const { loading, data } = useQuery(QUERY_CURRENT_USER)
 
    if (loading) {
     return <div>Loading...</div>;

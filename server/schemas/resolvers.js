@@ -3,7 +3,12 @@ const { signToken, AuthenticationError } = require("../utils");
 
 const resolvers = {
   Query: {
-    getCurrentUser: async (parent, { email }) => User.findOne({ email }),
+    getCurrentUser: async (parent, args, context) => {
+      if (context.user) {
+        const user = await User.findOne({_id: context.user._id})
+        return user;
+      }
+    },
     getChildChores: async (parent, { childId }, context) => {
       const chores = await Chore.find({ assignee: childId }).populate(
         "assignee"
