@@ -30,11 +30,15 @@ function Parent() {
 }
 
 const ParentInner = () => {
+  const { loading, data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
   const { users, setActiveUser } = useContext(ChoreContext);
-  const { data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
-  console.log(data)
+  
+  if(loading) return console.log("loading...");
+    const choreBuddies = data.getChildrenInFamily
+  //   console.log(choreBuddies)
+  console.log(users)
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -62,6 +66,7 @@ const ParentInner = () => {
   
   return (
     <>
+    <h1>{choreBuddies[0].firstName}</h1>
       <Row className={styles.wrapper} justify="center">
 
         <Col xs={24} sm={16} className={styles.gutterRow}>
@@ -80,6 +85,20 @@ const ParentInner = () => {
             ) : (
               <p>Create a ChoreBuddy and add some chores to get started!</p>
             )}
+            {/* {!loading ? 
+            Object.keys(users) ? (
+              <Tabs
+                defaultActiveKey="1"
+                onChange={key => setActiveUser(Object.keys(choreBuddies[0].firstName)[key])}
+                items={Object.keys(choreBuddies).map((choreBuddy, index) => ({
+                  label: choreBuddy.firstName,
+                  key: String(index),
+                  children: <ChoreList />
+                }))}
+              />
+            ) : (
+              <p>Create a ChoreBuddy and add some chores to get started!</p>
+            ) : <p>loading...</p>} */}
           </Card>
         </Col>
 

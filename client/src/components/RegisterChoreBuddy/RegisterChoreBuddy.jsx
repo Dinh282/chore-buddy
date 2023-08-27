@@ -35,6 +35,7 @@ function RegisterChoreBuddy( {onCloseModal2} ) {
       });
       mutationResponse.data.register;
       form.resetFields();
+      addUser()
       onCloseModal2 && onCloseModal2();
 
     } catch (e) {
