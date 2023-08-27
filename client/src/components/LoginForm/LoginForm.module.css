@@ -1,0 +1,58 @@
+.backgroundContainer {
+    position: relative; 
+    height:100vh;
+}
+    
+.blurredBgContainer {
+    background-image: url('/background.png');
+    background-size: cover;
+    filter: blur(6px); 
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    height:100%;
+  }
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 30rem;
+    margin: 3rem auto;
+}
+
+.loginForm h1 {
+    margin-top: 0;
+}
+
+.loginForm p:last-of-type {
+    margin-bottom: 0;
+}
+
+.formText {
+    color: var(--dark);
+    margin: 20px 0 0 !important;
+}
+
+.formTextDark {
+    color: var(--light-gray);
+}
+
+.formItem label {
+    color: var(--dark);
+}
+
+.formItemDark label {
+    color: var(--light-gray) !important;
+}
+
+.loginFormDark {
+    background-color: var(--dark);
+}
+
+.loginFormDark h1 {
+    color: var(--white);
+}

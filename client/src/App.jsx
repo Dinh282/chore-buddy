@@ -5,6 +5,7 @@ import {
   ApolloProvider,
   createHttpLink,
 } from "@apollo/client";
+import { useLocation } from "react-router-dom";
 import { setContext } from "@apollo/client/link/context";
 import { Outlet } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -13,6 +14,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 function App() {
+  const location = useLocation();
+  const isLanding = location.pathname === "/";
   const [cookies] = useCookies(["auth_token"]);
 
   const httpLink = createHttpLink({
@@ -33,11 +36,13 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Header />
-      <main>
-        <Outlet />
-      </main>
-      <Footer />
+      <div className={isLanding ? "landing-background" : ""}>
+        <Header />
+          <main>
+            <Outlet />
+          </main>
+        <Footer />
+      </div>
     </ApolloProvider>
   );
 }

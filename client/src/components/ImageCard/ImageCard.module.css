@@ -1,0 +1,35 @@
+.landing {
+  display: flex;
+  flex-direction: column;
+  min-height: 85vh;
+}
+.cardHeaderDiv {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.cardMessage {
+  font-size: 1rem;
+  margin: 1rem 0 0;
+}
+.cardMessageDark {
+  color: var(--light-gray);
+}
+.cardImg {
+  max-width: 80%;
+}
+.cardDiv {
+  display: flex;
+  justify-content: center;
+}
+.cardBtn {
+  background-color: var(--red-dark);
+  color: var(--white);
+  border: none;
+}
+.cardBtn:hover {
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
+}

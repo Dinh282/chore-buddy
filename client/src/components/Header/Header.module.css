@@ -1,0 +1,56 @@
+.navStyles {
+  background-color: var(--white);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  margin-bottom: 30px;
+}
+.navStylesDark {
+  background-color: var(--dark);
+}
+.navInner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.8rem 50px;
+  max-width: 842px;
+  margin: 0 auto;
+}
+.btn {
+  font-size: 1.25rem;
+  color: var(--dark-blue);
+}
+.btnDark,
+.btnDark svg {
+  color: var(--light-gray);
+}
+.logoLink {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.logo {
+  margin: 0;
+  color: var(--dark-blue);
+}
+.logoutButton,
+.logoutButton:hover {
+  background-color: transparent !important;
+  height: auto;
+  padding: 0;
+}
+.navStyles.onDashboard .logo,
+.navStyles.onDashboard .btn {
+  color: var(--black);
+}
+.themeBtn {
+  padding: 5px;
+  width: 34px;
+  height: 32px;
+}
+.themeBtn:hover {
+  background-color: transparent;
+}
+.themeBtn svg {
+  width: 20px;
+  height: 20px;
+}
