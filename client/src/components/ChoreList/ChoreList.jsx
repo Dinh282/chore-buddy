@@ -5,15 +5,15 @@ import { useQuery } from '@apollo/client';
 import { QUERY_CHILDREN_IN_FAMILY, QUERY_CHILD_CHORES } from '../../graphql/queries';
 
 const ChoreList = (props) => {
-    console.log(props.choreBuddies._id)
+    // console.log(props.choreBuddies._id)
     // const childId = props.choreBuddies._id
     const { users, activeUser, setUsers } = useContext(ChoreContext);
     const { loading, data } = useQuery(QUERY_CHILD_CHORES, {
         variables: { childId: props.choreBuddies._id }
     })
-    console.log(data)
+    // console.log(data)
     const childchores = data?.getChildChores || []
-    console.log(childchores)
+    // console.log(childchores)
     const currentUser = users[activeUser];
 
     const toggleChoreChecked = (choreToToggle) => {

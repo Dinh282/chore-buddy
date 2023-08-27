@@ -16,7 +16,7 @@ const Earnings = () => {
 
     if (loading) return console.log("loading...");
     const choreBuddies = data.getChildrenInFamily
-    console.log(choreBuddies)
+    // console.log(choreBuddies)
 
     // Function to compute the total earned by a chorebuddy
     // const computeTotalEarned = (chores) => {

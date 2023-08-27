@@ -40,7 +40,7 @@ const ParentInner = () => {
 
   if(loading) return console.log("loading...");
     const choreBuddies = data.getChildrenInFamily
-    console.log(choreBuddies)
+    // console.log(choreBuddies)
 
     // const childrenchores = choreBuddies.map((buddies)=>{
     //   const{loading,data} = useQuery(QUERY_CHILD_CHORES,{

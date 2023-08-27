@@ -32,7 +32,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    currentUser(
+    getCurrentUser(
       email: String!
     ): User
 
