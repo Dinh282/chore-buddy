@@ -37,8 +37,8 @@ const ParentInner = () => {
   
   if(loading) return console.log("loading...");
     const choreBuddies = data.getChildrenInFamily
-  //   console.log(choreBuddies)
-  console.log(users)
+    console.log(choreBuddies)
+    
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -66,7 +66,6 @@ const ParentInner = () => {
   
   return (
     <>
-    <h1>{choreBuddies[0].firstName}</h1>
       <Row className={styles.wrapper} justify="center">
 
         <Col xs={24} sm={16} className={styles.gutterRow}>
