@@ -3,7 +3,7 @@ import { QUERY_CHILD_BALANCE } from '../../graphql/queries'
 import { useCurrentUserContext } from '../../context/CurrentUser';
 
 
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { ChoreContext } from '../../context/ChoreContext';
 import { Typography } from 'antd';
 
