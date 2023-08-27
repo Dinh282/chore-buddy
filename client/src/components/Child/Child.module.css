@@ -9,6 +9,12 @@
 .title {
     margin-top: 0;
 }
+.titleDark {
+    color: var(--white) !important;
+}
+.earningsCardDark {
+    background-color: var(--dark);
+}
 @media screen and (max-width: 768px) {
     .wrapper {
         padding: 0px 20px;

@@ -1,11 +1,14 @@
 import { useContext } from 'react';
 import { ChoreContext } from '../../context/ChoreContext';
+import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import { Typography } from 'antd';
+import styles from './Earnings.module.css';
 
 const { Paragraph } = Typography;
 
 const Earnings = () => {
     const { users } = useContext(ChoreContext);
+    const adjustedStyles = useDarkModeStyles(styles);
 
     // Function to compute the total earned by a chorebuddy
     const computeTotalEarned = (chores) => {
@@ -21,12 +24,12 @@ const Earnings = () => {
         <>
             {hasEarnings ? (
                 Object.entries(users).map(([userName, userData]) => (
-                    <Paragraph key={userName}>
+                    <Paragraph key={userName} className={adjustedStyles.text}>
                         {userName}: ${computeTotalEarned(userData.chores)}
                     </Paragraph>
                 ))
             ) : (
-                <Paragraph>No earnings yet.</Paragraph>
+                <Paragraph className={adjustedStyles.text}>No earnings yet.</Paragraph>
             )}
         </>
     );

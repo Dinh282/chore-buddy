@@ -6,3 +6,6 @@
     padding: 0.5rem;
     text-align: center;
 }
+.footerStylesDark span {
+    color: var(--light-gray);
+}

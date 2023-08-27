@@ -1,6 +1,11 @@
 :root {
   --white: #fff;
-  --black: #353d3f;
+  --black: #000;
+  --light-gray: #c3c3c3;
+  --logo-green: #01ca68;
+  --dark: #353d3f;
+  --darker: #212628;
+  --darkest: #101213;
   --dark-blue: #313866;
   --light-green: #c1e4da;
   --mid-green: #70aeaa;
@@ -20,10 +25,23 @@ body {
   background-color: var(--light-green);
 }
 
+body.dark {
+  background-color: var(--darker);
+  color: var(--white);
+}
+
+body.dark .ant-typography {
+  color: var(--light-gray);
+}
+
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.ant-typography a {
+  color: var(--logo-green);
 }
 
 main {

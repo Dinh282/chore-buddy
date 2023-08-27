@@ -7,7 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
-
+import { ThemeProvider } from "./context/ThemeContext";
 import { CurrentUserProvider } from "./context";
 
 import App from "./App";
@@ -41,7 +41,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <CookiesProvider>
       <CurrentUserProvider>
-        <RouterProvider router={router} />
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </CurrentUserProvider>
     </CookiesProvider>
   </React.StrictMode>

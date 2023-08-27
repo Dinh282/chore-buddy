@@ -1,4 +1,3 @@
-// components/ChoreList.js
 import { useContext } from 'react';
 import { List, Checkbox, Button } from 'antd';
 import { ChoreContext } from '../../context/ChoreContext';
