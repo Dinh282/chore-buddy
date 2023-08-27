@@ -12,13 +12,14 @@ function Dashboard() {
   const { loading, data } = useQuery(QUERY_CURRENT_USER, {
     variables: { email: currentUser.email }
   })
-  // console.log('data>>>>.', data)
+   if (loading) {
+    return <div>Loading...</div>;
+  }
+  console.log('data>>>>.', data)
   const user = data?.getCurrentUser || []
   // console.log('cureentuserisChoreBuddy>>>>>', user.isChoreBuddy)
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
+ 
   return (
     <Row>
       <Col span={24}>
