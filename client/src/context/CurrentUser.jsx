@@ -30,7 +30,7 @@ export default function CurrentUserContextProvider({ children }) {
   // console.log('data>>>>.', data)
   // const user = data?.getCurrentUser || []
   // console.log('cureentuserisChoreBuddy>>>>>', user.isChoreBuddy)
-  console.log(initialUser.email)
+  // console.log(initialUser.email)
   const [currentUser, setCurrentUser] = useState(initialUser);
 
   const loginUser = useCallback((user, token) => {
@@ -59,7 +59,7 @@ export default function CurrentUserContextProvider({ children }) {
   }),
     [currentUser, isLoggedIn, loginUser, logoutUser]);
 
-    console.log(currentUser)
+    // console.log(currentUser)
   return (
     <CurrentUserContext.Provider value={contextValue}>
       {children}

@@ -78,7 +78,7 @@ const typeDefs = gql`
     ): User
 
     createChore(
-      title:String, 
+      title: String, 
       rewardAmount: Int
     ): Chore
     

@@ -38,7 +38,7 @@ const ParentInner = () => {
   const adjustedStyles = useDarkModeStyles(styles);
   // const [chores, setChores] = useState({ title: ""})
 
-  if(loading) return console.log("loading...");
+  if(loading) return 'loading...';
     const choreBuddies = data.getChildrenInFamily
     // console.log(choreBuddies)
 
@@ -114,7 +114,7 @@ const ParentInner = () => {
         }}
         icon={<PlusOutlined />}
       >
-        {!isObjectEmpty(users) && (
+        {!isObjectEmpty(choreBuddies) && (
           <Tooltip placement="left" title='Add a chore'>
             <FloatButton
               onClick={showModal}

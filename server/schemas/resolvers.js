@@ -172,6 +172,7 @@ const resolvers = {
       throw AuthenticationError;
     },
     createChore: async (parent, { title, rewardAmount }, context) => {
+      console.log("LOGGED")
       if (context.user) {
         const usersFam = await Family.findOne({
           members: { $in: context.user._id },
