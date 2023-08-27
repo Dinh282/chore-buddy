@@ -56,7 +56,11 @@ const resolvers = {
 
         return unassignedChores
       }
-    }
+    },
+    getChildBalance: async (parent, { childId }) => {
+      const child = await User.findById(childId);
+      return child;
+    },
   },
 
   Mutation: {
@@ -101,7 +105,7 @@ const resolvers = {
     createChild: async(parent, { firstName, lastName, email, password }, context) => {
       if(context.user){
       const usersFam = await Family.findOne({ members: { $in: context.user._id } });
-      const newChild = await User.create({firstName, lastName, email, password, isChoreBuddy: true});
+      const newChild = await User.create({firstName, lastName, email, password, isChoreBuddy: true, balance: 0});
       await Family.findOneAndUpdate(
         { _id: usersFam._id },
         { $addToSet: { members: newChild._id } },

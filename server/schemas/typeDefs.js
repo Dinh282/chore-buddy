@@ -45,6 +45,8 @@ const typeDefs = gql`
     getChildrenInFamily: [User]
 
     getAllChildrenChores: [Chore]
+
+    getChildBalance(childId: ID!): User
   }
 
   type Mutation {

@@ -81,3 +81,13 @@ export const QUERY_ALL_CHILDREN_CHORES = gql`
     }
     }
 `;
+export const QUERY_CHILD_BALANCE = gql`
+  query getChildBalance($childId: ID!) {
+    getChildBalance(childId: $childId) {
+      _id
+      balance
+      firstName
+      lastName
+    }
+  }
+`;
