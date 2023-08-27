@@ -9,13 +9,15 @@ import {
   Input,
   Button
 } from 'antd';
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 import styles from './RegistrationForm.module.css';
 import { REGISTER_USER } from '../../graphql/mutations';
 import { useCurrentUserContext } from '../../context/CurrentUser';
+import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import { motion } from 'framer-motion';
 
 export default function Registration({ isVisible}) {
+  const adjustedStyles = useDarkModeStyles(styles);
   const { loginUser } = useCurrentUserContext();
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -59,12 +61,12 @@ export default function Registration({ isVisible}) {
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: .2, delay:  .2 }}
-      >
+    >
         
     <Card 
-    bordered={false} 
-    style={{ width: 300 }} 
-    className={styles.registrationForm}
+      bordered={false} 
+      style={{ width: 300 }} 
+      className={adjustedStyles.registrationForm}
     >
       <Form
         form={form}
@@ -72,9 +74,10 @@ export default function Registration({ isVisible}) {
         onFinish={handleFormSubmit}
         layout="vertical"
       >
-        <Title>Register</Title>
+        <Title >Register</Title>
         <Form.Item
           label="First name"
+          className={adjustedStyles.formItem}
           name="firstName"
           rules={[
             {
@@ -89,6 +92,7 @@ export default function Registration({ isVisible}) {
         </Form.Item>
         <Form.Item
           label="Last name"
+          className={adjustedStyles.formItem}
           name="lastName"
           rules={[
             {
@@ -103,6 +107,7 @@ export default function Registration({ isVisible}) {
         </Form.Item>
         <Form.Item
           label="Family name"
+          className={adjustedStyles.formItem}
           name="family"
           rules={[
             {
@@ -117,6 +122,7 @@ export default function Registration({ isVisible}) {
         </Form.Item>
         <Form.Item
           label="Email"
+          className={adjustedStyles.formItem}
           name="email"
           rules={[
             {
@@ -131,6 +137,7 @@ export default function Registration({ isVisible}) {
         </Form.Item>
         <Form.Item
           label="Password"
+          className={adjustedStyles.formItem}
           name="password"
           rules={[
             {
@@ -154,11 +161,11 @@ export default function Registration({ isVisible}) {
         <Button type="primary" htmlType="submit">
           Sign Up
         </Button>
-        <p>
+        <Paragraph className={adjustedStyles.formText}>
           Already have an account? Login
           {' '}
           <Link to="/login">here</Link>
-        </p>
+        </Paragraph>
       </Form>
     </Card>
 

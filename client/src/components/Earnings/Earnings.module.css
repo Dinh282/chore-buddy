@@ -1,0 +1,6 @@
+.text {
+    color: var(--darkest);
+}
+.textDark {
+    color: var(--light-gray);
+}

@@ -10,10 +10,11 @@ import {
   Button,
   message
 } from 'antd';
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 import styles from './LoginForm.module.css';
 import { LOGIN_USER } from '../../graphql/mutations';
 import { useCurrentUserContext } from '../../context/CurrentUser';
+import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import { motion } from 'framer-motion';
 
 export default function Login() {
@@ -21,7 +22,8 @@ export default function Login() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [login, { error }] = useMutation(LOGIN_USER);
-  const [isShown, setIsShown] = useState(true)
+  const [isShown, setIsShown] = useState(true);
+  const adjustedStyles = useDarkModeStyles(styles);
 
   const handleClick = () => {
     setIsShown(!isShown)
@@ -57,7 +59,7 @@ export default function Login() {
     animate={{y: 0, opacity: 1, scale: 1}}
     transition={{duration: 0.2, ease: 'easeOut'}}
     >
-    <Card bordered={false} style={{ width: 300 }} className={styles.loginForm}>
+    <Card bordered={false} style={{ width: 300 }} className={adjustedStyles.loginForm}>
       <Form
         form={form}
         id="login-form"
@@ -67,6 +69,7 @@ export default function Login() {
         <Title>Login</Title>
         <Form.Item
           label="Email"
+          className={adjustedStyles.formItem}
           name="email"
           rules={[
             {
@@ -83,6 +86,7 @@ export default function Login() {
         </Form.Item>
         <Form.Item
           label="Password"
+          className={adjustedStyles.formItem}
           name="password"
           rules={[
             {
@@ -105,11 +109,11 @@ export default function Login() {
         <Button type="primary" htmlType="submit">
           Login
         </Button>
-        <p>
+        <Paragraph className={adjustedStyles.formText}>
           Need an account? Sign up
           {' '}
           <Link onClick={handleClick} to="/register">here</Link>
-        </p>
+        </Paragraph>
       </Form>
     </Card>
     </motion.div>)}

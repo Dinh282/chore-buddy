@@ -14,8 +14,7 @@ function Error() {
           <Title>Sorry, page not found.</Title>
           <Paragraph>
             Go to <Link to='/' style={{
-              textDecoration: 'underline',
-              color: 'black'
+              textDecoration: 'underline'
             }}>homepage</Link>.
           </Paragraph>
         </Col>

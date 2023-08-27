@@ -4,7 +4,7 @@
 }
     
 .blurredBgContainer {
-    background-image: url('/images/landing.png');
+    background-image: url('background.png');
     background-size: cover;
     filter: blur(6px); 
     position: absolute;
@@ -14,7 +14,7 @@
     bottom: 0;
     z-index: 0;
     height:100%;
-  }
+}
 
 .registrationForm {
     display: flex;
@@ -28,6 +28,32 @@
     margin-top: 0;
 }
 
+.registrationFormDark h1 {
+    color: var(--white)
+}
+
 .registrationForm p:last-of-type {
     margin-bottom: 0;
+
+}
+
+.registrationFormDark {
+    background-color: var(--dark);
+}
+
+.formItem label {
+    color: var(--dark);
+}
+
+.formItemDark label {
+    color: var(--light-gray) !important;
+}
+
+.formText {
+    color: var(--dark);
+    margin: 20px 0 0 !important;
+}
+
+.formTextDark {
+    color: var(--light-gray);
 }

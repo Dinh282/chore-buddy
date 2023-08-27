@@ -1,4 +1,5 @@
 import { ChoreProvider } from '../../context/ChoreContext';
+import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import {
   Col,
   Row,
@@ -18,6 +19,7 @@ function Child() {
 }
 
 const ChildInner = () => {
+  const adjustedStyles = useDarkModeStyles(styles);
   return (
     <>
       <Row className={styles.wrapper} justify="center">
@@ -29,8 +31,8 @@ const ChildInner = () => {
         </Col>
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
-          <Card bordered={false}>
-            <Title className={styles.title} level={2}>My balance</Title>
+          <Card bordered={false} className={adjustedStyles.earningsCard}>
+            <Title className={adjustedStyles.title} level={2}>My balance</Title>
             <Earnings />
           </Card>
         </Col>

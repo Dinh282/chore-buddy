@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { ChoreContext, ChoreProvider } from '../../context/ChoreContext';
+import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import CreateChoreList from '../CreateChoreList/';
 import ChoreList from '../ChoreList/';
 import Earnings from '../Earnings/';
@@ -15,7 +16,7 @@ import {
   Tooltip,
   Typography
 } from 'antd';
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 import { PlusOutlined, UserAddOutlined, CheckSquareOutlined } from '@ant-design/icons';
 import styles from "./Parent.module.css";
 
@@ -31,6 +32,7 @@ const ParentInner = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
   const { users, setActiveUser } = useContext(ChoreContext);
+  const adjustedStyles = useDarkModeStyles(styles);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -62,8 +64,8 @@ const ParentInner = () => {
       <Row className={styles.wrapper} justify="center">
 
         <Col xs={24} sm={16} className={styles.gutterRow}>
-          <Card bordered={false} className={styles.choreList}>
-            <Title className={styles.title}>Chores</Title>
+          <Card bordered={false} className={adjustedStyles.choreList}>
+            <Title className={adjustedStyles.title}>Chores</Title>
             {Object.keys(users).length ? (
               <Tabs
                 defaultActiveKey="1"
@@ -75,14 +77,14 @@ const ParentInner = () => {
                 }))}
               />
             ) : (
-              <p>Create a ChoreBuddy and add some chores to get started!</p>
+              <Paragraph className={adjustedStyles.text}>Create a ChoreBuddy and add some chores to get started!</Paragraph>
             )}
           </Card>
         </Col>
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
-          <Card bordered={false}>
-            <Title className={styles.title} level={2}>My balance</Title>
+          <Card bordered={false} className={adjustedStyles.earningsCard}>
+            <Title className={adjustedStyles.title} level={2}>My balance</Title>
             <Earnings />
           </Card>
         </Col>

@@ -1,5 +1,6 @@
 import styles from './ImageCard.module.css';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import { Button, Typography } from 'antd';
 import Logo from '../Logo';
 
@@ -7,18 +8,19 @@ const { Paragraph } = Typography;
 
 function ImageCard() {
   const navigate = useNavigate()
+  const adjustedStyles = useDarkModeStyles(styles);
   function handleClick() {
     navigate('/register')
   }
   return (
-    <section className={styles.landing}>
-      <div className={styles.cardHeaderDiv}>
-        <Logo type='default' />
-        <Paragraph className={styles.cardMessage}>Your Partner in Productivity</Paragraph>
-        <Button type='primary' shape='round' onClick={handleClick} className={styles.cardBtn} size='large'>Get Started</Button>
+    <section className={adjustedStyles.landing}>
+      <div className={adjustedStyles.cardHeaderDiv}>
+        <Logo type='default' className={adjustedStyles.logo} />
+        <Paragraph className={adjustedStyles.cardMessage}>Your Partner in Productivity</Paragraph>
+        <Button type='primary' shape='round' onClick={handleClick} className={adjustedStyles.cardBtn} size='large'>Get Started</Button>
       </div>
-      <div className={styles.cardDiv}>
-        <img className={styles.cardImg} src='/images/landing.png'></img>
+      <div className={adjustedStyles.cardDiv}>
+        <img className={adjustedStyles.cardImg} src='/background.png'></img>
       </div>
     </section>
   )
