@@ -13,7 +13,6 @@ const resolvers = {
       const chores = await Chore.find({ assignee: childId }).populate(
         "assignee"
       );
-      console.log("Fetched Chores:", chores);
       return chores;
     },
     getChildrenInFamily: async (parent, args, context) => {

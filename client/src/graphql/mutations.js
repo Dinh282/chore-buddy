@@ -113,9 +113,6 @@ export const TOGGLE_AND_COMPLETE_CHORE = gql`
     toggleAndCompleteChore(choreId: $choreId, isComplete: $isComplete) {
       _id
       title
-      description
-      family
-      assignee
       rewardAmount
       isComplete
     }
