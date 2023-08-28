@@ -39,16 +39,17 @@ const ParentInner = () => {
   const adjustedStyles = useDarkModeStyles(styles);
   const choreBuddies = data?.getChildrenInFamily;
 
-  console.log('Parent choreBuddies>>>>.', choreBuddies)
+  // if(loading) return console.log('loading...')
+  // console.log('Parent choreBuddies>>>>.', choreBuddies)
   
-  console.log('Parent data>>>>.', data)
+  // console.log('Parent data>>>>.', data)
 
   if(loading) return <Spin />;
 
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
     setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[] });
-    console.log("Tab active user:", activeUser);
+    // console.log("Tab active user:", activeUser);
   };
 
   const showModal = () => {
@@ -90,7 +91,7 @@ const ParentInner = () => {
                 items={Object.keys(choreBuddies).map((buddies, index) => ({
                   label: choreBuddies[index].firstName,
                   key: String(index),
-                  children: <ChoreList choreBuddies={choreBuddies[index]} />
+                  children: <ChoreList choreBuddies={choreBuddies[index]} showDeleteButton={true} />
                }))}
               />
             ) : (
@@ -101,7 +102,7 @@ const ParentInner = () => {
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.earningsCard}>
-            <Title className={adjustedStyles.title} level={2}>My balance</Title>
+            <Title className={adjustedStyles.title} level={2}>Children's Balance</Title>
             <Earnings />
           </Card>
         </Col>

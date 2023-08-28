@@ -8,6 +8,7 @@ export const QUERY_CURRENT_USER = gql`
       firstName
       lastName
       isChoreBuddy
+      balance
     }
   }
 `;

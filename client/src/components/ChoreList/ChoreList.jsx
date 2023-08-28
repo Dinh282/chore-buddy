@@ -5,7 +5,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_CHILD_CHORES } from '../../graphql/queries';
 import { TOGGLE_AND_COMPLETE_CHORE } from '../../graphql/mutations';
 
-const ChoreList = ({ choreBuddies }) => {
+const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     const { users, activeUser, setUsers, setActiveUser } = useContext(ChoreContext);
 
     const { loading, data, error } = useQuery(QUERY_CHILD_CHORES, {
@@ -71,13 +71,15 @@ const ChoreList = ({ choreBuddies }) => {
                 <List.Item
                     style={chore.isChecked ? { textDecoration: 'line-through' } : {}}
                     actions={[
-                        <Button
-                            key="delete"
-                            type="link"
-                            onClick={() => deleteChore(chore)}
-                        >
-                            Delete
-                        </Button>
+                        showDeleteButton && (
+                            <Button
+                                key="delete"
+                                type="link"
+                                onClick={() => deleteChore(chore)}
+                            >
+                                Delete
+                            </Button>
+                        ),
                     ]}
                 >
                     <Checkbox
