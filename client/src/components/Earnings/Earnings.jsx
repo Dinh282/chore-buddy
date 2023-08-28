@@ -33,11 +33,11 @@ const Earnings = () => {
 
     // // Function to compute the total earned by a chore buddy
     const computeTotalEarned = (chores) => {
-        if (!chores) return 0;
+      if (!chores) return 0;
 
-        return chores.reduce((acc, chore) => {
-            return chore.isChecked ? acc + chore.rewardAmount : acc;
-        }, 0);
+      return chores.reduce((acc, chore) => {
+        return chore.isChecked ? acc + chore.rewardAmount : acc;
+      }, 0);
     }
 
     // Determine if a chorebuddy has earnings
@@ -57,9 +57,9 @@ const Earnings = () => {
             )}
         </>
     );
-    }else{
-        return(<><Paragraph>${balance}</Paragraph></>)
-    }
+  } else {
+      return(<><Paragraph>${balance}</Paragraph></>)
+  }
 }
 
 export default Earnings;
