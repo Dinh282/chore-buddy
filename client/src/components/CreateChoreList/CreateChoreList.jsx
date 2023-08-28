@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-// import { ChoreContext } from "../../context/ChoreContext";
+import { ChoreContext } from "../../context/ChoreContext";
 import { useMutation } from '@apollo/client';
 
 import {
@@ -10,37 +10,65 @@ import {
   InputNumber
 } from 'antd';
 import { CREATE_CHORE } from '../../graphql/mutations';
+import { QUERY_CHILD_CHORES } from "../../graphql/queries";
 
 function CreateChoreList({ onCloseModal }) {
     const [showCustomAmount, setShowCustomAmount] = useState(false);
-    // const { users, activeUser, setUsers } = useContext(ChoreContext);
+    const { activeUser } = useContext(ChoreContext);
     const [form] = Form.useForm();
-    const [createChore] = useMutation(CREATE_CHORE)
+    const [createChore] = useMutation(CREATE_CHORE, {
+        update: (cache, { data }) => {
+            // Get the newly created chore from the mutation response
+            const newChore = data.createChore;
+        
+            // Read the existing cache data for the active user
+            const existingCache = cache.readQuery({
+                query: QUERY_CHILD_CHORES,
+                variables: { childId: activeUser.id }
+            });
+        
+            // Update the cache with the new chore
+            cache.writeQuery({
+                query: QUERY_CHILD_CHORES,
+                variables: { childId: activeUser.id },
+                data: {
+                    getChildChores: [...existingCache.getChildChores, newChore]
+                }
+            });
+        }
+    });
+      
     
-    // const currentUser = users[activeUser];
+    const currentUser = activeUser;
+    
+    console.log("Active user in CreateChoreList:", currentUser);
 
     const handleAddChore = async () => {
         try {
-        const formValues = await form.validateFields();
-        const { title, rewardAmount, customRewardAmount } = formValues;
-        console.log(formValues)
-        const mutationResponse = await createChore({
-            variables: {
-                title,
-                rewardAmount: rewardAmount || customRewardAmount,
-            },
-        });
-        mutationResponse.data.createChore;
-        form.resetFields();
-        onCloseModal && onCloseModal();
+            const formValues = await form.validateFields();
+            const { title, rewardAmount, customRewardAmount } = formValues;
+            if (!currentUser || !currentUser.id) {
+                console.error("Current user ID is not available!");
+                return;
+            }
+            const mutationResponse = await createChore({
+                variables: {
+                    title,
+                    rewardAmount: rewardAmount || customRewardAmount,
+                    assignee: currentUser.id,
+                },
+            });
+            mutationResponse.data.createChore;
+            form.resetFields();
+            onCloseModal && onCloseModal();
 
-    } catch (error) {
-        if (error) {
-            console.log(error, "error!")
-      }
-    }
-        
+        } catch (error) {
+            if (error) {
+                console.log(error, "error!")
+            }
+        }
     };
+
     const defaultReward = 5;
 
     return (
@@ -70,7 +98,7 @@ function CreateChoreList({ onCloseModal }) {
                             setShowCustomAmount(true);
                         } else {
                             setShowCustomAmount(false);
-                            form.setFieldsValue({ customRewardAmount: undefined });  // Clear custom reward input
+                            form.setFieldsValue({ customRewardAmount: undefined });
                         }
                     }}
                     options={[
