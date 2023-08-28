@@ -24,7 +24,7 @@ function CreateChoreList({ onCloseModal }) {
             // Read the existing cache data for the active user
             const existingCache = cache.readQuery({
                 query: QUERY_CHILD_CHORES,
-                variables: { childId: activeUser.id } // Use the correct variable to identify the user
+                variables: { childId: activeUser.id }
             });
         
             // Update the cache with the new chore
@@ -98,7 +98,7 @@ function CreateChoreList({ onCloseModal }) {
                             setShowCustomAmount(true);
                         } else {
                             setShowCustomAmount(false);
-                            form.setFieldsValue({ customRewardAmount: undefined });  // Clear custom reward input
+                            form.setFieldsValue({ customRewardAmount: undefined });
                         }
                     }}
                     options={[
