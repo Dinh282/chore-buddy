@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd';
+import { Col, Row, Spin } from 'antd';
 import { useCurrentUserContext } from '../context/CurrentUser';
 import Parent from '../components/Parent/Parent';
 import Child from '../components/Child/';
@@ -11,9 +11,9 @@ function Dashboard() {
   const { loading, data } = useQuery(QUERY_CURRENT_USER)
 
    if (loading) {
-    return <div>Loading...</div>;
+    return <Spin />;
   }
-  console.log('data>>>>.', data)
+  
   const user = data?.getCurrentUser || []
 
  
@@ -21,7 +21,7 @@ function Dashboard() {
     <Row>
       <Col span={24}>
         {loading?(
-          <div>Loading...</div> ): ( 
+          <Spin /> ): ( 
           user.isChoreBuddy ? <Child /> : <Parent />)}
       </Col>
     </Row>

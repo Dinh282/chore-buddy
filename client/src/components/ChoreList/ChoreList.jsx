@@ -1,56 +1,67 @@
 import { useContext } from 'react';
 import { List, Checkbox, Button } from 'antd';
 import { ChoreContext } from '../../context/ChoreContext';
-import { useQuery } from '@apollo/client';
-import { QUERY_CHILDREN_IN_FAMILY, QUERY_CHILD_CHORES } from '../../graphql/queries';
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_CHILD_CHORES } from '../../graphql/queries';
+import { TOGGLE_AND_COMPLETE_CHORE } from '../../graphql/mutations';
 
-const ChoreList = (props) => {
-    // console.log(props.choreBuddies._id)
-    // const childId = props.choreBuddies._id
+const ChoreList = ({ choreBuddies }) => {
     const { users, activeUser, setUsers } = useContext(ChoreContext);
-    const { loading, data } = useQuery(QUERY_CHILD_CHORES, {
-        variables: { childId: props.choreBuddies._id }
-    })
-    // console.log(data)
-    const childchores = data?.getChildChores || []
-    // console.log(childchores)
-    const currentUser = users[activeUser];
 
-    const toggleChoreChecked = (choreToToggle) => {
+    const { loading, data, error } = useQuery(QUERY_CHILD_CHORES, {
+        variables: { childId: choreBuddies._id }
+    });
 
-        const updatedChores = currentUser.chores.map(chore => {
-            if (chore.task === choreToToggle.task) {
-                return { ...chore, isChecked: !chore.isChecked };
+    const [toggleAndCompleteChore] = useMutation(TOGGLE_AND_COMPLETE_CHORE);
+
+    if (error) console.error("GraphQL Error:", error);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+
+    const childchores = data?.getChildChores || [];
+
+    console.log("Child chores:", childchores);
+
+    const toggleChoreChecked = async (choreToToggle) => {
+        setUsers(prevUsers => ({
+            ...prevUsers,
+            [activeUser.id]: {
+                ...activeUser,
+                chores: activeUser.chores.map(chore => {
+                    if (chore._id === choreToToggle._id) {
+                        const updatedChore = { ...chore, isChecked: !chore.isChecked };
+                        toggleAndCompleteChore({
+                            variables: {
+                                choreId: chore._id,
+                                isComplete: updatedChore.isChecked
+                            }
+                        });
+                        return updatedChore;
+                    }
+                    return chore;
+                })
             }
-            return chore;
-        });
-
-        setUsers({
-            ...users,
-            [activeUser]: {
-                ...currentUser,
-                chores: updatedChores
-            }
-        });
+        }));
     };
 
     const deleteChore = (choreToDelete) => {
-        const updatedChores = currentUser.chores.filter(chore => chore.task !== choreToDelete.task);
-
-        setUsers({
+        const updatedUsers = {
             ...users,
-            [activeUser]: {
-                ...currentUser,
-                chores: updatedChores
+            [activeUser.id]: {
+                ...activeUser,
+                chores: activeUser.chores.filter(chore => chore._id !== choreToDelete._id)
             }
-        });
+        };
+
+        setUsers(updatedUsers);
     };
 
     return (
         <List
             bordered
             dataSource={childchores}
-            renderItem={(chore=> (
+            renderItem={chore => (
                 <List.Item
                     style={chore.isChecked ? { textDecoration: 'line-through' } : {}}
                     actions={[
@@ -64,13 +75,13 @@ const ChoreList = (props) => {
                     ]}
                 >
                     <Checkbox
-                        checked={chore.isChecked}
+                        checked={chore.isComplete}
                         onChange={() => toggleChoreChecked(chore)}
                     >
-                        {childchores[0].title} - ${chore.money}
+                        {chore.title} - ${chore.rewardAmount}
                     </Checkbox>
                 </List.Item>
-            ))}
+            )}
             locale={{ emptyText: 'No chores yet' }}
         />
     );
