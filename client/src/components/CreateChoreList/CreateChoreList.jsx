@@ -1,5 +1,7 @@
 import { useState, useContext } from "react";
-import { ChoreContext } from "../../context/ChoreContext";
+// import { ChoreContext } from "../../context/ChoreContext";
+import { useMutation } from '@apollo/client';
+
 import {
   Form,
   Input,
@@ -7,39 +9,39 @@ import {
   Select,
   InputNumber
 } from 'antd';
-
+import { CREATE_CHORE } from '../../graphql/mutations';
 
 function CreateChoreList({ onCloseModal }) {
     const [showCustomAmount, setShowCustomAmount] = useState(false);
-    const { users, activeUser, setUsers } = useContext(ChoreContext);
+    // const { users, activeUser, setUsers } = useContext(ChoreContext);
     const [form] = Form.useForm();
+    const [createChore] = useMutation(CREATE_CHORE)
     
-    const currentUser = users[activeUser];
+    // const currentUser = users[activeUser];
 
-    const handleAddChore = (values) => {
-        if (!currentUser || !values.title) return;
-    
-        let amount;
-        if (showCustomAmount && typeof values.customRewardAmount !== 'undefined') {
-            amount = values.customRewardAmount;
-        } else {
-            amount = parseFloat(values.rewardAmount.replace('$', ''));
-        }
-    
-        const newChore = { task: values.title, money: amount, isChecked: false };
-    
-        setUsers({
-            ...users,
-            [activeUser]: {
-                ...currentUser,
-                chores: [...currentUser.chores, newChore]
-            }
+    const handleAddChore = async () => {
+        try {
+        const formValues = await form.validateFields();
+        const { title, rewardAmount, customRewardAmount } = formValues;
+        console.log(formValues)
+        const mutationResponse = await createChore({
+            variables: {
+                title,
+                rewardAmount: rewardAmount || customRewardAmount,
+            },
         });
+        mutationResponse.data.createChore;
         form.resetFields();
-
         onCloseModal && onCloseModal();
+
+    } catch (error) {
+        if (error) {
+            console.log(error, "error!")
+      }
+    }
+        
     };
-    
+    const defaultReward = 5;
 
     return (
         <Form
@@ -48,7 +50,7 @@ function CreateChoreList({ onCloseModal }) {
             layout="vertical"
             onFinish={handleAddChore}
             initialValues={{
-                rewardAmount: '$5'
+                rewardAmount: defaultReward
             }}
         >
             <Form.Item
@@ -72,11 +74,11 @@ function CreateChoreList({ onCloseModal }) {
                         }
                     }}
                     options={[
-                        { value: '$0', label: '$0' },
-                        { value: '$5', label: '$5' },
-                        { value: '$10', label: '$10' },
-                        { value: '$15', label: '$15' },
-                        { value: '$20', label: '$20' },
+                        { value: 0, label: "$0" },
+                        { value: 5, label: "$5" },
+                        { value: 10, label: "$10" },
+                        { value: 15, label: "$15" },
+                        { value: 20, label: "$20" },
                         { value: 'custom', label: 'Custom' }
                     ]}
                 />
