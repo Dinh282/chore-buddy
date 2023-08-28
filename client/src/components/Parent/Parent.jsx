@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { ChoreContext, ChoreProvider } from '../../context/ChoreContext';
 import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import CreateChoreList from '../CreateChoreList/';
@@ -43,7 +43,15 @@ const ParentInner = () => {
   // console.log('Parent choreBuddies>>>>.', choreBuddies)
   
   // console.log('Parent data>>>>.', data)
-
+   
+  useEffect(() => {
+    if (choreBuddies[0]) {
+      const activeBuddy = choreBuddies[0]
+    setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[]})
+    return
+  }
+  }, [])
+  
   if(loading) return <Spin />;
 
   const handleTabChange = (key) => {
@@ -51,9 +59,13 @@ const ParentInner = () => {
 
     setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[] });
     console.log("Tab active user:", activeUser);
-
+ 
   };
-
+  console.log(choreBuddies)
+    
+  
+  console.log('active user >>>>>', activeUser)
+  
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -78,7 +90,7 @@ const ParentInner = () => {
   const isObjectEmpty = (obj) => {
     return Object.keys(obj).length === 0;
   }
-  
+
   return (
     <>
       <Row className={styles.wrapper} justify="center">
