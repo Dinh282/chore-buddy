@@ -9,31 +9,35 @@ import { QUERY_CHILDREN_IN_FAMILY } from '../../graphql/queries';
 const { Paragraph } = Typography;
 
 const Earnings = () => {
-    const { loading, data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
+    const { loading, data, error } = useQuery(QUERY_CHILDREN_IN_FAMILY);
     const { users } = useContext(ChoreContext);
     const adjustedStyles = useDarkModeStyles(styles);
 
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
-    if (loading) return console.log("loading...");
-    const choreBuddies = data.getChildrenInFamily
-    // console.log(choreBuddies)
+    if (error) {
+        return <p>Error: {error.message}</p>;
+    }
 
-    // Function to compute the total earned by a chorebuddy
-    // const computeTotalEarned = (chores) => {
-    //     return chores.reduce((acc, chore) => {
-    //         return chore.isChecked ? acc + chore.money : acc;
-    //     }, 0);
-    // }
+    const choreBuddies = data?.getChildrenInFamily || [];
 
-    // Determine if a chorebuddy has earnings
-    // const hasEarnings = Object.values(users).some(userData => computeTotalEarned(userData.chores) > 0);
+    // Function to compute the total earned by a chore buddy
+    const computeTotalEarned = (chores) => {
+        if (!chores) return 0;
+
+        return chores.reduce((acc, chore) => {
+            return chore.isChecked ? acc + chore.rewardAmount : acc;
+        }, 0);
+    }
 
     return (
         <>
-            {choreBuddies ? (
-                choreBuddies.map((buddies, index) => (
+            {choreBuddies.length > 0 ? (
+                choreBuddies.map((buddy, index) => (
                     <Paragraph key={index} className={adjustedStyles.text}>
-                        {buddies.firstName}: ${buddies.balance}
+                        {buddy.firstName}: ${computeTotalEarned(buddy.chores)}
                     </Paragraph>
                 ))
             ) : (
