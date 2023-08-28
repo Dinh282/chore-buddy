@@ -20,8 +20,6 @@ function Child() {
   )
 }
 
-
-
 const ChildInner = () => {
 const { loading, data } = useQuery(QUERY_CURRENT_USER)
 const currentUserFirstName = data.getCurrentUser.firstName;
@@ -34,6 +32,7 @@ const currentUserFirstName = data.getCurrentUser.firstName;
         <Col xs={24} sm={16} className={styles.gutterRow}>
           <Card bordered={false} className={styles.choreList}>
             <Title className={styles.title}>{currentUserFirstName}'s Chores</Title>
+            {/* <ChildChoresList /> */}
           </Card>
         </Col>
 
@@ -47,6 +46,14 @@ const currentUserFirstName = data.getCurrentUser.firstName;
       </Row>
     </>
   )
+
+  const ChildChoresList = () => {
+
+
+
+  }
+
+
 }
 
 export default Child;
