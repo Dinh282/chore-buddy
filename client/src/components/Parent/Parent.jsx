@@ -90,7 +90,7 @@ const ParentInner = () => {
                 items={Object.keys(choreBuddies).map((buddies, index) => ({
                   label: choreBuddies[index].firstName,
                   key: String(index),
-                  children: <ChoreList choreBuddies={choreBuddies[index]} />
+                  children: <ChoreList choreBuddies={choreBuddies[index]} showDeleteButton={true} />
                }))}
               />
             ) : (

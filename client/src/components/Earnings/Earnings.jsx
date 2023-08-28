@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { ChoreContext } from '../../context/ChoreContext';
 import useDarkModeStyles from '../../hooks/useDarkModeStyles';
-import { Typography } from 'antd';
+import { Typography, Skeleton } from 'antd';
 import styles from './Earnings.module.css';
 import { useQuery } from '@apollo/client';
 import { QUERY_CHILDREN_IN_FAMILY, QUERY_CURRENT_USER } from '../../graphql/queries';
@@ -9,57 +9,63 @@ import { QUERY_CHILDREN_IN_FAMILY, QUERY_CURRENT_USER } from '../../graphql/quer
 const { Paragraph } = Typography;
 
 const Earnings = () => {
-    const { loading, data } = useQuery(QUERY_CURRENT_USER)
-    const isChoreBuddy = data.getCurrentUser.isChoreBuddy;
-    const balance = data.getCurrentUser.balance;
+  const { users } = useContext(ChoreContext);
+  const adjustedStyles = useDarkModeStyles(styles);
 
-    if(!isChoreBuddy){
-    const { loading, data, error } = useQuery(QUERY_CHILDREN_IN_FAMILY)
-    const adjustedStyles = useDarkModeStyles(styles);
-    // const { users } = useContext(ChoreContext);
-    if (loading) return console.log("loading...");
-    const choreBuddies = data.getChildrenInFamily || [];
-    // console.log(data)
- 
-    // if (loading) {
-    //     return <p>Loading...</p>;
-    // }
+  const {
+    loading: userLoading,
+    data: userData,
+    error: userError,
+  } = useQuery(QUERY_CURRENT_USER);
 
-    // if (error) {
-    //     return <p>Error: {error.message}</p>;
-    // }
+  const {
+    loading: childrenLoading,
+    data: childrenData,
+    error: childrenError,
+  } = useQuery(QUERY_CHILDREN_IN_FAMILY);
 
-    // const choreBuddies = data?.getChildrenInFamily || [];
-
-    // // Function to compute the total earned by a chore buddy
-    const computeTotalEarned = (chores) => {
-      if (!chores) return 0;
-
-      return chores.reduce((acc, chore) => {
-        return chore.isChecked ? acc + chore.rewardAmount : acc;
-      }, 0);
-    }
-
-    // Determine if a chorebuddy has earnings
-    // const hasEarnings = Object.values(users).some(userData => computeTotalEarned(userData.chores) > 0);
-
-    return (
-        <>
-            {choreBuddies.length > 0 ? (
-                choreBuddies.map((buddy, index) => (
-                    <Paragraph key={index} className={adjustedStyles.text}>
-                        {buddy.firstName}: ${computeTotalEarned(buddy.chores)}
-                        {/* {buddies.firstName}: ${buddies.balance} */}
-                    </Paragraph>
-                ))
-            ) : (
-                <Paragraph className={adjustedStyles.text}>No earnings yet.</Paragraph>
-            )}
-        </>
-    );
-  } else {
-      return(<><Paragraph>${balance}</Paragraph></>)
+  if (userLoading || childrenLoading) {
+    return <Skeleton active title={false} paragraph={{ rows: 2 }} />;
   }
-}
+
+  if (userError || !userData) {
+    return <div>Error loading user data.</div>;
+  }
+
+  const isChoreBuddy = userData.getCurrentUser.isChoreBuddy;
+  const balance = userData.getCurrentUser.balance;
+
+  if (isChoreBuddy) {
+    return <Paragraph>${balance}</Paragraph>;
+  }
+
+  if (childrenError || !childrenData) {
+    return <div>Error loading children data.</div>;
+  }
+
+  const choreBuddies = childrenData.getChildrenInFamily || [];
+
+  const computeTotalEarned = (chores) => {
+    if (!chores) return 0;
+
+    return chores.reduce((acc, chore) => {
+      return chore.isChecked ? acc + chore.rewardAmount : acc;
+    }, 0);
+  };
+
+  return (
+    <>
+      {choreBuddies.length > 0 ? (
+        choreBuddies.map((buddy, index) => (
+          <Paragraph key={index} className={adjustedStyles.text}>
+            {buddy.firstName}: ${computeTotalEarned(buddy.chores)}
+          </Paragraph>
+        ))
+      ) : (
+        <Paragraph className={adjustedStyles.text}>No earnings yet.</Paragraph>
+      )}
+    </>
+  );
+};
 
 export default Earnings;
