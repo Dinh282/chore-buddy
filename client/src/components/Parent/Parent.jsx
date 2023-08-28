@@ -51,7 +51,8 @@ const ParentInner = () => {
 
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
-    setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName });
+    setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[] });
+    console.log("Tab active user:", activeUser);
   };
 
   const showModal = () => {
@@ -83,7 +84,7 @@ const ParentInner = () => {
     <>
       <Row className={styles.wrapper} justify="center">
 
-        <Col xs={24} sm={16} className={styles.gutterRow}>
+      <Col xs={24} sm={16} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.choreList}>
             <Title className={adjustedStyles.title}>Chores</Title>
             {Object.keys(choreBuddies).length ? (

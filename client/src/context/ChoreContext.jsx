@@ -1,4 +1,5 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
+
 
 export const ChoreContext = createContext({
     activeUser: { id: null, name: null, chores: [] },
@@ -9,6 +10,13 @@ export const ChoreProvider = ({ children }) => {
     const [users, setUsers] = useState({});
     const [activeUser, setActiveUser] = useState({ id: null, name: null, chores: [] });
 
+    useEffect( () =>{      
+        setUsers(prevUsers => ({
+            ...prevUsers,
+            [activeUser.id]:  activeUser          
+        }));
+    }, [activeUser])
+
     const addUser = (name) => {
         setUsers(prevUsers => {
             const updatedUsers = {
@@ -18,7 +26,7 @@ export const ChoreProvider = ({ children }) => {
     
             // Set the child being added, as the active child
             if (Object.keys(updatedUsers).length === 1) {
-                setActiveUser({ id: name, name });
+                setActiveUser({ id: name, name, chores:[] });
             }
     
             return updatedUsers;

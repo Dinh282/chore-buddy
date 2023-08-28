@@ -1,20 +1,24 @@
-import { useState, useContext } from "react";
-import { ChoreContext } from '../../context/ChoreContext';
-import { useMutation } from "@apollo/client";
-import { Form, Typography, Input, Button } from "antd";
+import { useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
+import {
+  Form,
+  Typography,
+  Input,
+  Button,
+} from 'antd';
+// import { useNavigate } from 'react-router-dom';
 const { Text } = Typography;
-import { CREATE_CHILD } from "../../graphql/mutations";
-import { QUERY_CHILDREN_IN_FAMILY } from "../../graphql/queries";
+import { CREATE_CHILD } from '../../graphql/mutations';
+import { useCurrentUserContext } from '../../context/CurrentUser';
+// {setIsModalOpen2}
+function RegisterChoreBuddy( {onCloseModal} ) {
+    const [form] = Form.useForm();
+    const [duplicateEmailError, setDuplicateEmailError] = useState(false);
+    const { loginUser } = useCurrentUserContext();
+    const [register] = useMutation(CREATE_CHILD);
+    // const navigate = useNavigate();
 
-function RegisterChoreBuddy({ onCloseModal2 }) {
-  const [form] = Form.useForm();
-  const [duplicateEmailError, setDuplicateEmailError] = useState(false);
-  const { setActiveUser } = useContext(ChoreContext);
-  const [register] = useMutation(CREATE_CHILD, {
-    refetchQueries: [QUERY_CHILDREN_IN_FAMILY, "getChildrenInFamily"],
-  });
-
-  const handleFormSubmit = async () => {
+    const handleFormSubmit = async (  ) => {
     try {
       setDuplicateEmailError(false);
       const formValues = await form.validateFields();
