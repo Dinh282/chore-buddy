@@ -24,7 +24,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />} errorElement={<Error />}>
       <Route index element={<Landing />} />
       <Route 
-        path="login" 
+        path="/login" 
         element={
           <ProtectedRoute2> 
             <Login />
@@ -32,7 +32,7 @@ const router = createBrowserRouter(
       } 
       />
       <Route 
-        path="register" 
+        path="/register" 
         element={
           <ProtectedRoute2>
             <Register />
@@ -40,7 +40,7 @@ const router = createBrowserRouter(
       } 
       />
       <Route
-        path="dashboard"
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <Dashboard />
