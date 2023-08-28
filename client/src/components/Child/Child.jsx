@@ -37,8 +37,8 @@ const ChildInner = () => {
       <Row className={styles.wrapper} justify="center">
 
         <Col xs={24} sm={16} className={styles.gutterRow}>
-          <Card bordered={false} className={styles.choreList}>
-            <Title className={styles.title}>{currentUserFirstName}&apos;s Chores</Title>
+          <Card bordered={false} className={adjustedStyles.choreList}>
+            <Title className={adjustedStyles.title}>{currentUserFirstName}&apos;s Chores</Title>
             {loading ? (
               <Skeleton active />
             ) : (
@@ -49,7 +49,7 @@ const ChildInner = () => {
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.earningsCard}>
-            <Title className={adjustedStyles.title} level={2}>My Balance</Title>
+            <Title className={adjustedStyles.title} level={2}>My wallet</Title>
             <Earnings />
           </Card>
         </Col>

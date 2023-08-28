@@ -2,6 +2,7 @@
   --white: #fff;
   --black: #000;
   --light-gray: #c3c3c3;
+  --gray: #999;
   --logo-green: #01ca68;
   --dark: #353d3f;
   --darker: #212628;
@@ -74,4 +75,36 @@ main {
 }
 .ant-checkbox-wrapper-checked {
   text-decoration: line-through;
+  color: var(--gray);
+}
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
+.ant-btn-link,
+.ant-tabs .ant-tabs-tab:hover {
+  color: var(--logo-green) !important;
+}
+.ant-list-item-action .ant-btn-link:hover {
+  color: var(--red-dark) !important;
+}
+.ant-tabs-ink-bar {
+  background-color: var(--logo-green) !important;
+}
+.ant-checkbox-checked .ant-checkbox-inner,
+.ant-checkbox-checked:not(.ant-checkbox-disabled):hover .ant-checkbox-inner,
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
+  background-color: var(--logo-green);
+  border-color: var(--logo-green);
+}
+.ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner,
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner {
+  border-color: var(--logo-green) !important;
+}
+/*----- dark mode overrides for antd comps-----*/
+.dark {
+  & .ant-tabs .ant-tabs-tab-btn {
+    color: var(--light-gray);
+  }
+  & .ant-tabs-top >.ant-tabs-nav::before,
+  & .ant-list-split .ant-list-item {
+    border-block-end: 1px solid rgba(5, 5, 5, 0.2);
+  }
 }

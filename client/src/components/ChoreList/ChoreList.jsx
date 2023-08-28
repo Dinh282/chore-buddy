@@ -1,12 +1,16 @@
 import { useContext } from 'react';
 import { List, Checkbox, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import { ChoreContext } from '../../context/ChoreContext';
+import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_CHILD_CHORES } from '../../graphql/queries';
 import { TOGGLE_AND_COMPLETE_CHORE } from '../../graphql/mutations';
+import styles from './ChoreList.module.css';
 
 const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     const { users, activeUser, setUsers } = useContext(ChoreContext);
+    const adjustedStyles = useDarkModeStyles(styles);
 
     const { loading, data, error } = useQuery(QUERY_CHILD_CHORES, {
         variables: { childId: choreBuddies._id }
@@ -59,7 +63,6 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
 
     return (
         <List
-            bordered
             dataSource={childchores}
             renderItem={chore => (
                 <List.Item
@@ -71,7 +74,7 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
                                 type="link"
                                 onClick={() => deleteChore(chore)}
                             >
-                                Delete
+                                <DeleteOutlined />
                             </Button>
                         ),
                     ]}
@@ -79,6 +82,7 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
                     <Checkbox
                         checked={chore.isComplete}
                         onChange={() => toggleChoreChecked(chore)}
+                        className={adjustedStyles.checkBox}
                     >
                         {chore.title} - ${chore.rewardAmount}
                     </Checkbox>

@@ -1,5 +1,8 @@
-.text {
+.text.text {
     color: var(--darkest);
+}
+.text.text:last-of-type {
+    margin-bottom: 0;
 }
 .textDark {
     color: var(--light-gray);
