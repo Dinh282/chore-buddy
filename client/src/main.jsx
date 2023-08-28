@@ -7,7 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
-
+import { ThemeProvider } from "./context/ThemeContext";
 import { CurrentUserProvider } from "./context";
 
 import App from "./App";
@@ -17,14 +17,28 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-import ProtectedRoute from "./components/ProtectedRoute/";
+import {ProtectedRoute, ProtectedRoute2 } from "./components/ProtectedRoute/";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<Error />}>
       <Route index element={<Landing />} />
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
+      <Route 
+        path="login" 
+        element={
+          <ProtectedRoute2> 
+            <Login />
+          </ProtectedRoute2>
+      } 
+      />
+      <Route 
+        path="register" 
+        element={
+          <ProtectedRoute2>
+            <Register />
+          </ProtectedRoute2>
+      } 
+      />
       <Route
         path="dashboard"
         element={
@@ -41,7 +55,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <CookiesProvider>
       <CurrentUserProvider>
-        <RouterProvider router={router} />
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </CurrentUserProvider>
     </CookiesProvider>
   </React.StrictMode>

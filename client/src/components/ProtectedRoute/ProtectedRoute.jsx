@@ -2,7 +2,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 import { useCurrentUserContext } from "../../context/CurrentUser";
 
-function ProtectedRoute({ children }) {
+ export function ProtectedRoute({ children }) {
   const { isLoggedIn } = useCurrentUserContext();
   const location = useLocation();
   if (!isLoggedIn()) {
@@ -12,8 +12,16 @@ function ProtectedRoute({ children }) {
     // than dropping them off on the home page.
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
+  return children;
+}
+
+ export function ProtectedRoute2({ children }) {
+  const { isLoggedIn } = useCurrentUserContext();
+  const location = useLocation();
+  if (isLoggedIn()) {
+    return <Navigate to="/dashboard" state={{ from: location }} replace />;
+  }
 
   return children;
 }
 
-export default ProtectedRoute;

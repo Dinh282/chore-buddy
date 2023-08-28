@@ -1,5 +1,4 @@
 .title {
-    color: blue;
     text-align: left;
 }
 .wrapper {
@@ -10,8 +9,27 @@
 .gutterRow {
     padding: 0 8px;
 }
-.title {
+.title,
+.text {
     margin-top: 0;
+}
+.titleDark {
+    color: var(--white) !important;
+}
+.textDark {
+    color: var(--light-gray);
+}
+.choreListDark {
+    background-color: var(--dark);
+}
+.choreListDark .ant-typography {
+    color: var(--white);
+}
+.earningsCard {
+    background-color: var(--white);
+}
+.earningsCardDark {
+    background-color: var(--dark);
 }
 @media screen and (max-width: 768px) {
     .wrapper {

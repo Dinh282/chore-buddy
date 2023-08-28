@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { ChoreContext, ChoreProvider } from '../../context/ChoreContext';
+import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import CreateChoreList from '../CreateChoreList/';
 import ChoreList from '../ChoreList/';
 import Earnings from '../Earnings/';
@@ -15,9 +16,10 @@ import {
   FloatButton,
   Modal,
   Tooltip,
-  Typography
+  Typography,
+  Spin
 } from 'antd';
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 import { PlusOutlined, UserAddOutlined, CheckSquareOutlined } from '@ant-design/icons';
 import styles from "./Parent.module.css";
 
@@ -33,12 +35,22 @@ const ParentInner = () => {
   const { loading, data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const { users, setActiveUser } = useContext(ChoreContext);
+  const { activeUser, setActiveUser } = useContext(ChoreContext);
+  const adjustedStyles = useDarkModeStyles(styles);
+  const choreBuddies = data?.getChildrenInFamily;
+
+  console.log('Parent choreBuddies>>>>.', choreBuddies)
   
-  if(loading) return console.log("loading...");
-    const choreBuddies = data.getChildrenInFamily
-    console.log(choreBuddies)
-    
+  console.log('Parent data>>>>.', data)
+
+  if(loading) return <Spin />;
+
+  const handleTabChange = (key) => {
+    const activeBuddy = choreBuddies[parseInt(key)];
+    setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[] });
+    console.log("Tab active user:", activeUser);
+  };
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -68,42 +80,28 @@ const ParentInner = () => {
     <>
       <Row className={styles.wrapper} justify="center">
 
-        <Col xs={24} sm={16} className={styles.gutterRow}>
-          <Card bordered={false} className={styles.choreList}>
-            <Title className={styles.title}>Chores</Title>
-            {Object.keys(users).length ? (
+      <Col xs={24} sm={16} className={styles.gutterRow}>
+          <Card bordered={false} className={adjustedStyles.choreList}>
+            <Title className={adjustedStyles.title}>Chores</Title>
+            {Object.keys(choreBuddies).length ? (
               <Tabs
                 defaultActiveKey="1"
-                onChange={key => setActiveUser(Object.keys(users)[key])}
-                items={Object.keys(users).map((userName, index) => ({
-                  label: userName,
+                onChange={handleTabChange}
+                items={Object.keys(choreBuddies).map((buddies, index) => ({
+                  label: choreBuddies[index].firstName,
                   key: String(index),
-                  children: <ChoreList />
-                }))}
+                  children: <ChoreList choreBuddies={choreBuddies[index]} />
+               }))}
               />
             ) : (
-              <p>Create a ChoreBuddy and add some chores to get started!</p>
+              <Paragraph className={adjustedStyles.text}>Create a ChoreBuddy and add some chores to get started!</Paragraph>
             )}
-            {/* {!loading ? 
-            Object.keys(users) ? (
-              <Tabs
-                defaultActiveKey="1"
-                onChange={key => setActiveUser(Object.keys(choreBuddies[0].firstName)[key])}
-                items={Object.keys(choreBuddies).map((choreBuddy, index) => ({
-                  label: choreBuddy.firstName,
-                  key: String(index),
-                  children: <ChoreList />
-                }))}
-              />
-            ) : (
-              <p>Create a ChoreBuddy and add some chores to get started!</p>
-            ) : <p>loading...</p>} */}
           </Card>
         </Col>
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
-          <Card bordered={false}>
-            <Title className={styles.title} level={2}>My balance</Title>
+          <Card bordered={false} className={adjustedStyles.earningsCard}>
+            <Title className={adjustedStyles.title} level={2}>My balance</Title>
             <Earnings />
           </Card>
         </Col>
@@ -118,7 +116,7 @@ const ParentInner = () => {
         }}
         icon={<PlusOutlined />}
       >
-        {!isObjectEmpty(users) && (
+        {!isObjectEmpty(choreBuddies) && (
           <Tooltip placement="left" title='Add a chore'>
             <FloatButton
               onClick={showModal}
@@ -140,7 +138,7 @@ const ParentInner = () => {
         onCancel={handleCancel2}
         footer={null}
         >
-        <RegisterChoreBuddy onCloseModal2={handleOk2} setIsModalOpen2={setIsModalOpen2}/>
+        <RegisterChoreBuddy onCloseModal2={handleOk2} />
       </Modal>
 
       <Modal title="Add a chore"

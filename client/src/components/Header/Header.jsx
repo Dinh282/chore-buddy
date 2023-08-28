@@ -1,6 +1,10 @@
 import { Link} from 'react-router-dom';
 import { useCurrentUserContext } from '../../context/CurrentUser';
-import { Button, Dropdown, Typography, Tooltip, } from 'antd';
+import { useTheme } from '../../context/ThemeContext';
+import useDarkModeStyles from '../../hooks/useDarkModeStyles';
+import DarkIcon from '../Icons/DarkIcon';
+import LightIcon from '../Icons/LightIcon';
+import { Button, Dropdown, Typography, Tooltip, Space } from 'antd';
 import { UserOutlined, LoginOutlined } from '@ant-design/icons';
 import Logo from '../Logo';
 const { Text } = Typography;
@@ -9,7 +13,9 @@ import styles from './Header.module.css';
 
 
 function Header() {
+  const [darkMode, setDarkMode] = useTheme();
   const { isLoggedIn, logoutUser } = useCurrentUserContext();
+  const adjustedStyles = useDarkModeStyles(styles);
 
   const items = [
     {
@@ -29,29 +35,43 @@ function Header() {
   ];
 
   const isDashboard = location.pathname === '/dashboard';
-  const navClass = isDashboard ? `${styles.navStyles} ${styles.onDashboard}` : styles.navStyles;
+  const navClass = isDashboard ? `${adjustedStyles.navStyles} ${adjustedStyles.onDashboard}` : adjustedStyles.navStyles;
 
   return (
-    <nav className={navClass}>
-      <div className={styles.navInner}>
+    <nav className={navClass} >
+      <div className={styles.navInner} >
         <Tooltip placement='bottom' title='Home'>
           <Link className={styles.logoLink} to={'/'}>
             <Logo type='minimal' className={styles.logo} />
           </Link>
         </Tooltip>
+        
+        <Space> 
+          <Tooltip placement='bottom' title={darkMode ? 'Light mode' : 'Dark mode'}>
+            <Button
+              type='text'
+              onClick={() => {
+                setDarkMode(!darkMode);
+              }}
+              className={adjustedStyles.themeBtn}
+            >
+              {darkMode ? <LightIcon /> : <DarkIcon />}
+            </Button>
+          </Tooltip>
         {isLoggedIn() ? (
           <>
             <Dropdown menu={{ items }} placement='bottomRight'>
-              <UserOutlined className={styles.btn} />
+              <UserOutlined className={adjustedStyles.btn} />
             </Dropdown>
           </>
         ) : (
           <>
             <Link to='/login'>
-              <LoginOutlined className={styles.btn}/>
+              <LoginOutlined className={adjustedStyles.btn}/>
             </Link>
           </>
         )}
+        </Space>
       </div>
     </nav>
   );
