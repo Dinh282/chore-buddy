@@ -5,7 +5,7 @@ const resolvers = {
   Query: {
     getCurrentUser: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findOne({_id: context.user._id})
+        const user = await User.findOne({ _id: context.user._id })
         return user;
       }
     },
@@ -13,6 +13,7 @@ const resolvers = {
       const chores = await Chore.find({ assignee: childId }).populate(
         "assignee"
       );
+      console.log("Fetched Chores:", chores);
       return chores;
     },
     getChildrenInFamily: async (parent, args, context) => {
@@ -140,6 +141,7 @@ const resolvers = {
           email,
           password,
           isChoreBuddy: true,
+          balance: 0,
         });
         await Family.findOneAndUpdate(
           { _id: usersFam._id },
@@ -149,15 +151,6 @@ const resolvers = {
         return newChild;
       }
       throw AuthenticationError;
-    },
-
-    completeChore: async (parent, { choreId }) => {
-      const completedChore = await Chore.findOneAndUpdate(
-        { _id: choreId },
-        { isComplete: true },
-        { new: true }
-      );
-      return completedChore;
     },
     editChild: async (parent, { childId, balance }, context) => {
       if (context.user) {
@@ -176,18 +169,24 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    createChore: async (parent, { title, rewardAmount }, context) => {
-      console.log("LOGGED")
+    createChore: async (parent, { title, rewardAmount, assignee }, context) => {
+      console.log("LOGGED");
+
       if (context.user) {
         const usersFam = await Family.findOne({
           members: { $in: context.user._id },
         });
+
+        if (usersFam && !usersFam.members.includes(assignee)) {
+          throw new Error("Assignee is not part of the family!");
+        }
 
         const chore = await Chore.create({
           title,
           family: usersFam._id,
           rewardAmount,
           isComplete: false,
+          assignee
         });
 
         return chore;
@@ -202,6 +201,30 @@ const resolvers = {
           { new: true }
         );
         return chore;
+      }
+      throw AuthenticationError;
+    },
+    toggleAndCompleteChore: async (_, { choreId, isComplete }, context) => {
+      if (context.user) {
+        try {
+          // Fetch the chore by its ID
+          const chore = await Chore.findById(choreId);
+          
+          if (!chore) {
+            throw new Error('Chore not found');
+          }
+
+          // Update the chore's completion status
+          chore.isComplete = isComplete;
+
+          // Save the updated chore
+          await chore.save();
+          
+          return chore;
+        } catch (error) {
+          console.error('Error toggling and completing chore:', error);
+          throw new Error('Failed to toggle and complete chore');
+        }
       }
       throw AuthenticationError;
     },

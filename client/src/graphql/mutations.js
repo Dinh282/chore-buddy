@@ -78,11 +78,16 @@ export const DELETE_CHILD = gql`
 `;
 
 export const CREATE_CHORE = gql`
-  mutation createChore($title: String, $rewardAmount: Int) {
-    createChore(title: $title, rewardAmount: $rewardAmount) {
+  mutation createChore($title: String, $rewardAmount: Int, $assignee: ID!) {
+    createChore(title: $title, rewardAmount: $rewardAmount, assignee: $assignee) {
       _id
       title
-      assignee
+      assignee {
+        _id
+        firstName
+        lastName
+        email
+      }
       rewardAmount
       isComplete
     }
@@ -103,9 +108,9 @@ export const CHORE_ASSIGNMENT = gql`
   }
 `;
 
-export const COMPLETE_CHORE = gql`
-  mutation completeChore($choreId: ID!) {
-    completeChore(choreId: $choreId) {
+export const TOGGLE_AND_COMPLETE_CHORE = gql`
+  mutation toggleAndCompleteChore($choreId: ID!, $isComplete: Boolean!) {
+    toggleAndCompleteChore(choreId: $choreId, isComplete: $isComplete) {
       _id
       title
       description

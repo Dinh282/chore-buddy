@@ -72,3 +72,6 @@ main {
 .ant-float-btn-primary .ant-float-btn-body:hover {
   background-color: var(--red);
 }
+.ant-checkbox-wrapper-checked {
+  text-decoration: line-through;
+}

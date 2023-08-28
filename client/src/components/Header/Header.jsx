@@ -41,7 +41,7 @@ function Header() {
     <nav className={navClass} >
       <div className={styles.navInner} >
         <Tooltip placement='bottom' title='Home'>
-          <Link className={styles.logoLink} to={'/'}>
+          <Link className={styles.logoLink} to={isLoggedIn() ? '/dashboard' : '/'}>
             <Logo type='minimal' className={styles.logo} />
           </Link>
         </Tooltip>

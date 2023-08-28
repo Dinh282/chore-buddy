@@ -6,7 +6,7 @@ import ChoreList from '../ChoreList/';
 import Earnings from '../Earnings/';
 import RegisterChoreBuddy from '../RegisterChoreBuddy';
 import { useQuery } from '@apollo/client';
-import { QUERY_CHILDREN_IN_FAMILY, QUERY_CHILD_CHORES } from '../../graphql/queries';
+import { QUERY_CHILDREN_IN_FAMILY } from '../../graphql/queries';
 
 import {
   Col,
@@ -16,7 +16,8 @@ import {
   FloatButton,
   Modal,
   Tooltip,
-  Typography
+  Typography,
+  Spin
 } from 'antd';
 const { Title, Paragraph } = Typography;
 import { PlusOutlined, UserAddOutlined, CheckSquareOutlined } from '@ant-design/icons';
@@ -34,20 +35,22 @@ const ParentInner = () => {
   const { loading, data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const { users, setActiveUser } = useContext(ChoreContext);
+  const { activeUser, setActiveUser } = useContext(ChoreContext);
   const adjustedStyles = useDarkModeStyles(styles);
-  // const [chores, setChores] = useState({ title: ""})
+  const choreBuddies = data?.getChildrenInFamily;
 
-  if(loading) return 'loading...';
-    const choreBuddies = data.getChildrenInFamily
-    // console.log(choreBuddies)
+  // if(loading) return console.log('loading...')
+  // console.log('Parent choreBuddies>>>>.', choreBuddies)
+  
+  // console.log('Parent data>>>>.', data)
 
-    // const childrenchores = choreBuddies.map((buddies)=>{
-    //   const{loading,data} = useQuery(QUERY_CHILD_CHORES,{
-    //     variables:{childId:buddies._id}
-    //   })
-    //   console.log(data)
-    // })
+  if(loading) return <Spin />;
+
+  const handleTabChange = (key) => {
+    const activeBuddy = choreBuddies[parseInt(key)];
+    setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName });
+    // console.log("Tab active user:", activeUser);
+  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -84,12 +87,12 @@ const ParentInner = () => {
             {Object.keys(choreBuddies).length ? (
               <Tabs
                 defaultActiveKey="1"
-                onChange={key => setActiveUser(Object.keys(users)[key])}
+                onChange={handleTabChange}
                 items={Object.keys(choreBuddies).map((buddies, index) => ({
                   label: choreBuddies[index].firstName,
                   key: String(index),
-                  children: <ChoreList choreBuddies={choreBuddies[index]} />
-                }))}
+                  children: <ChoreList choreBuddies={choreBuddies[index]} showDeleteButton={true} />
+               }))}
               />
             ) : (
               <Paragraph className={adjustedStyles.text}>Create a ChoreBuddy and add some chores to get started!</Paragraph>
@@ -99,7 +102,7 @@ const ParentInner = () => {
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.earningsCard}>
-            <Title className={adjustedStyles.title} level={2}>My balance</Title>
+            <Title className={adjustedStyles.title} level={2}>Children's Balance</Title>
             <Earnings />
           </Card>
         </Col>
