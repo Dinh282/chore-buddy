@@ -9,6 +9,8 @@ import {
 const { Title } = Typography;
 import Earnings from '../Earnings/';
 import styles from "./Child.module.css";
+import { useQuery } from '@apollo/client';
+import { QUERY_CURRENT_USER } from '../../graphql/queries';
 
 function Child() {
   return (
@@ -18,7 +20,12 @@ function Child() {
   )
 }
 
+
+
 const ChildInner = () => {
+const { loading, data } = useQuery(QUERY_CURRENT_USER)
+const currentUserFirstName = data.getCurrentUser.firstName;
+
   const adjustedStyles = useDarkModeStyles(styles);
   return (
     <>
@@ -26,14 +33,14 @@ const ChildInner = () => {
 
         <Col xs={24} sm={16} className={styles.gutterRow}>
           <Card bordered={false} className={styles.choreList}>
-            <Title className={styles.title}>Chores</Title>
+            <Title className={styles.title}>{currentUserFirstName}'s Chores</Title>
           </Card>
         </Col>
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.earningsCard}>
-            <Title className={adjustedStyles.title} level={2}>My balance</Title>
-            {/* <Earnings /> */}
+            <Title className={adjustedStyles.title} level={2}>My Balance</Title>
+            <Earnings />
           </Card>
         </Col>
 

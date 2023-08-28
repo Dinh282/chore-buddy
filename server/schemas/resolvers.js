@@ -140,6 +140,7 @@ const resolvers = {
           email,
           password,
           isChoreBuddy: true,
+          balance: 0,
         });
         await Family.findOneAndUpdate(
           { _id: usersFam._id },
