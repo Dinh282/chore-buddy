@@ -14,11 +14,11 @@ const Earnings = () => {
     const balance = data.getCurrentUser.balance;
 
     if(!isChoreBuddy){
-    const { loading, data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
+    const { loading, data, error } = useQuery(QUERY_CHILDREN_IN_FAMILY)
     const adjustedStyles = useDarkModeStyles(styles);
     // const { users } = useContext(ChoreContext);
     if (loading) return console.log("loading...");
-    const choreBuddies = data.getChildrenInFamily;
+    const choreBuddies = data.getChildrenInFamily || [];
     // console.log(data)
  
     // if (loading) {
@@ -32,13 +32,13 @@ const Earnings = () => {
     // const choreBuddies = data?.getChildrenInFamily || [];
 
     // // Function to compute the total earned by a chore buddy
-    // const computeTotalEarned = (chores) => {
-    //     if (!chores) return 0;
+    const computeTotalEarned = (chores) => {
+        if (!chores) return 0;
 
-    //     return chores.reduce((acc, chore) => {
-    //         return chore.isChecked ? acc + chore.rewardAmount : acc;
-    //     }, 0);
-    // }
+        return chores.reduce((acc, chore) => {
+            return chore.isChecked ? acc + chore.rewardAmount : acc;
+        }, 0);
+    }
 
     // Determine if a chorebuddy has earnings
     // const hasEarnings = Object.values(users).some(userData => computeTotalEarned(userData.chores) > 0);
@@ -46,10 +46,10 @@ const Earnings = () => {
     return (
         <>
             {choreBuddies.length > 0 ? (
-                choreBuddies.map((buddies, index) => (
+                choreBuddies.map((buddy, index) => (
                     <Paragraph key={index} className={adjustedStyles.text}>
-                        {/* {buddy.firstName}: ${computeTotalEarned(buddy.chores)} */}
-                        {buddies.firstName}: ${buddies.balance}
+                        {buddy.firstName}: ${computeTotalEarned(buddy.chores)}
+                        {/* {buddies.firstName}: ${buddies.balance} */}
                     </Paragraph>
                 ))
             ) : (
