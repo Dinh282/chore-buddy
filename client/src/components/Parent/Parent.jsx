@@ -39,16 +39,17 @@ const ParentInner = () => {
   const adjustedStyles = useDarkModeStyles(styles);
   const choreBuddies = data?.getChildrenInFamily;
 
-  console.log('Parent choreBuddies>>>>.', choreBuddies)
+  // if(loading) return console.log('loading...')
+  // console.log('Parent choreBuddies>>>>.', choreBuddies)
   
-  console.log('Parent data>>>>.', data)
+  // console.log('Parent data>>>>.', data)
 
   if(loading) return <Spin />;
 
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
     setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName });
-    console.log("Tab active user:", activeUser);
+    // console.log("Tab active user:", activeUser);
   };
 
   const showModal = () => {
