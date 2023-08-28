@@ -8,11 +8,16 @@ import {
 } from 'antd';
 const { Text } = Typography;
 import { CREATE_CHILD } from '../../graphql/mutations';
-
+import { QUERY_CHILDREN_IN_FAMILY } from '../../graphql/queries'
 function RegisterChoreBuddy( {onCloseModal2} ) {
     const [form] = Form.useForm();
     const [duplicateEmailError, setDuplicateEmailError] = useState(false);
-    const [register] = useMutation(CREATE_CHILD);
+    const [register] = useMutation(CREATE_CHILD, {
+    refetchQueries: [
+      QUERY_CHILDREN_IN_FAMILY,
+      'getChildrenInFamily'
+    ]
+  });
     
     const handleFormSubmit = async ( ) => {
     try {

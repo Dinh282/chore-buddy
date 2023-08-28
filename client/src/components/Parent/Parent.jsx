@@ -5,6 +5,8 @@ import CreateChoreList from '../CreateChoreList/';
 import ChoreList from '../ChoreList/';
 import Earnings from '../Earnings/';
 import RegisterChoreBuddy from '../RegisterChoreBuddy';
+import { useQuery } from '@apollo/client';
+import { QUERY_CHILDREN_IN_FAMILY, QUERY_CHILD_CHORES } from '../../graphql/queries';
 
 import {
   Col,
@@ -29,10 +31,23 @@ function Parent() {
 }
 
 const ParentInner = () => {
+  const { loading, data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
   const { users, setActiveUser } = useContext(ChoreContext);
   const adjustedStyles = useDarkModeStyles(styles);
+  // const [chores, setChores] = useState({ title: ""})
+
+  if(loading) return 'loading...';
+    const choreBuddies = data.getChildrenInFamily
+    // console.log(choreBuddies)
+
+    // const childrenchores = choreBuddies.map((buddies)=>{
+    //   const{loading,data} = useQuery(QUERY_CHILD_CHORES,{
+    //     variables:{childId:buddies._id}
+    //   })
+    //   console.log(data)
+    // })
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -66,14 +81,14 @@ const ParentInner = () => {
         <Col xs={24} sm={16} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.choreList}>
             <Title className={adjustedStyles.title}>Chores</Title>
-            {Object.keys(users).length ? (
+            {Object.keys(choreBuddies).length ? (
               <Tabs
                 defaultActiveKey="1"
                 onChange={key => setActiveUser(Object.keys(users)[key])}
-                items={Object.keys(users).map((userName, index) => ({
-                  label: userName,
+                items={Object.keys(choreBuddies).map((buddies, index) => ({
+                  label: choreBuddies[index].firstName,
                   key: String(index),
-                  children: <ChoreList />
+                  children: <ChoreList choreBuddies={choreBuddies[index]} />
                 }))}
               />
             ) : (
@@ -99,7 +114,7 @@ const ParentInner = () => {
         }}
         icon={<PlusOutlined />}
       >
-        {!isObjectEmpty(users) && (
+        {!isObjectEmpty(choreBuddies) && (
           <Tooltip placement="left" title='Add a chore'>
             <FloatButton
               onClick={showModal}

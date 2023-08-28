@@ -32,9 +32,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    currentUser(
-      email: String!
-    ): User
+
+    getCurrentUser: User
 
     unassignedChores: [Chore]
 
