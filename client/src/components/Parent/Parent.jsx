@@ -44,13 +44,13 @@ const ParentInner = () => {
   
   // console.log('Parent data>>>>.', data)
    
-  useEffect(() => {
-    if (choreBuddies[0]) {
-      const activeBuddy = choreBuddies[0]
-    setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[]})
-    return
-  }
-  }, [])
+  // useEffect(() => {
+  //   if (choreBuddies[0]) {
+  //     const activeBuddy = choreBuddies[0]
+  //   setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[]})
+  //   return
+  // }
+  // }, [])
   
   if(loading) return <Spin />;
 
