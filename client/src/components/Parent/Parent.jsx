@@ -7,7 +7,6 @@ import Earnings from '../Earnings/';
 import RegisterChoreBuddy from '../RegisterChoreBuddy';
 import { useQuery } from '@apollo/client';
 import { QUERY_CHILDREN_IN_FAMILY } from '../../graphql/queries';
-
 import {
   Col,
   Row,
@@ -20,8 +19,17 @@ import {
   Spin
 } from 'antd';
 const { Title, Paragraph } = Typography;
-import { PlusOutlined, UserAddOutlined, CheckSquareOutlined } from '@ant-design/icons';
+import { PlusOutlined, UserAddOutlined, CheckSquareOutlined, LoadingOutlined } from '@ant-design/icons';
 import styles from "./Parent.module.css";
+
+const loadingIcon = (
+  <LoadingOutlined
+    style={{
+      fontSize: 24,
+    }}
+    spin
+  />
+);
 
 function Parent() {
   return (
@@ -35,23 +43,16 @@ const ParentInner = () => {
   const { loading, data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const { activeUser, setActiveUser } = useContext(ChoreContext);
+  const { setActiveUser } = useContext(ChoreContext);
   const adjustedStyles = useDarkModeStyles(styles);
   const choreBuddies = data?.getChildrenInFamily;
 
-  // if(loading) return console.log('loading...')
-  // console.log('Parent choreBuddies>>>>.', choreBuddies)
-  
-  // console.log('Parent data>>>>.', data)
-
-  if(loading) return <Spin />;
+  if(loading) return <Spin indicator={loadingIcon} />;
 
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
-
     setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[] });
     console.log("Tab active user:", activeUser);
-
   };
 
   const showModal = () => {
@@ -104,7 +105,7 @@ const ParentInner = () => {
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.earningsCard}>
-            <Title className={adjustedStyles.title} level={2}>Children's Balance</Title>
+            <Title className={adjustedStyles.title} level={2}>Wallet</Title>
             <Earnings />
           </Card>
         </Col>

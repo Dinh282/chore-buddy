@@ -6,11 +6,23 @@
 .gutterRow {
     padding: 0 8px;
 }
+.textDark {
+    color: var(--light-gray);
+}
 .title {
     margin-top: 0;
 }
 .titleDark {
     color: var(--white) !important;
+}
+.choreList {
+    background-color: var(--white);
+}
+.choreListDark {
+    background-color: var(--dark);
+}
+.earningsCard {
+    background-color: var(--white);
 }
 .earningsCardDark {
     background-color: var(--dark);
