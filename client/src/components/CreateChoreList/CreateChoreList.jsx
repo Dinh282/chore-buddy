@@ -38,7 +38,6 @@ function CreateChoreList({ onCloseModal }) {
         }
     });
       
-    
     const currentUser = activeUser;
     
     // console.log("Active user in CreateChoreList:", currentUser);
