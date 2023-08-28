@@ -7,7 +7,7 @@ import { QUERY_CURRENT_USER } from '../graphql/queries'
 
 function Dashboard() {
   const { currentUser } = useCurrentUserContext();
-  console.log(currentUser)
+  // console.log(currentUser)
   const { loading, data } = useQuery(QUERY_CURRENT_USER)
 
    if (loading) {
