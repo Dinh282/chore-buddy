@@ -43,7 +43,7 @@ const ParentInner = () => {
   const { loading, data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const { activeUser, setActiveUser } = useContext(ChoreContext);
+  const { setActiveUser } = useContext(ChoreContext);
   const adjustedStyles = useDarkModeStyles(styles);
   const choreBuddies = data?.getChildrenInFamily;
 
