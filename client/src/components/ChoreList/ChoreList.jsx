@@ -8,7 +8,6 @@ import { QUERY_CHILD_CHORES } from '../../graphql/queries';
 import { TOGGLE_AND_COMPLETE_CHORE, DELETE_CHORE } from '../../graphql/mutations';
 import styles from './ChoreList.module.css';
 
-
 const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     const {  activeUser, setActiveUser } = useContext(ChoreContext);
     const adjustedStyles = useDarkModeStyles(styles);
@@ -88,6 +87,7 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     if (loading) return <p>Loading...</p>
 
     return (
+        <>
         <List
             dataSource={childchores}
             renderItem={chore => (
@@ -117,6 +117,7 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
             )}
             locale={{ emptyText: `No chores yet` }}
         />
+        </>
     );
 }
 

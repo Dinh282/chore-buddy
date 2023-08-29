@@ -164,7 +164,9 @@ const resolvers = {
     },
     deleteChild: async (parent, { childId }, context) => {
       if (context.user) {
-        return User.findOneAndDelete({ _id: childId });
+        const user = await User.findOneAndDelete({ _id: childId });
+        const chores = await Chore.deleteMany({assignee:childId})
+        return user;
       }
       throw AuthenticationError;
     },
@@ -239,6 +241,7 @@ const resolvers = {
           throw new Error('Failed to toggle and complete chore');
         }
       }
+
       throw AuthenticationError;
     },
     deleteChore: async (parent, { choreId }, context) => {
