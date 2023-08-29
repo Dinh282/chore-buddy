@@ -6,7 +6,7 @@
 
 The Chore Buddy App is a versatile platform designed to simplify chore management and foster responsibility within families. With a blend of modern technologies like JSX, CSS, React, Vite, Ant Design, GraphQL, MongoDB, JWT, and Framer Motion, the app ensures a seamless experience for parents and children. Its core purpose is to alleviate the common challenges of chore organization and allowance distribution in households.
 
-Through centralized chore management, the app empowers parents to effortlessly create, delegate, and oversee chores. By gamifying the experience, children can select tasks aligned with their interests, instilling a sense of achievement and teaching financial skills. Challenges in technology integration, mobile responsiveness, and data management were met head-on, resulting in an app that provides fluid animations, adaptable design, and robust privacy features.
+Through centralized chore management, the app empowers parents to effortlessly create, delegate, and oversee chores. By gamifying the experience, children can get assigned chores instilling a sense of achievement and teaching financial skills. Challenges in technology integration, mobile responsiveness, and data management were met head-on, resulting in an app that provides fluid animations, adaptable design, and robust privacy features.
 
 Throughout the app's development, our team encountered and successfully surmounted various challenges. We navigated the intricate landscape of integrating diverse technologies, seamlessly blending React, GraphQL, MongoDB, and JWT to ensure harmonious functionality. Overcoming the intricacies of ensuring mobile responsiveness across devices required meticulous testing and the artful utilization of Framer Motion, resulting in an aesthetically pleasing and adaptable design. Robust data management strategies were employed to secure user data and chore-related information, demonstrating our commitment to privacy and security.
 
@@ -87,11 +87,11 @@ Screenshot of :
 ## Questions
 Get in touch with the team members:
 
-- Lucas: Email - lucas.schvindt@gmai.com [GitHub](https://github.com/skywalkah)
-- Andrea: Email - anrobbins18@gmail.com [GitHub](https://github.com/anicrob)
-- Anu: Email - sahapri@gmail.com [GitHub](https://github.com/anup2307)
-- Felix: Email - fwillem90@gmail.com [GitHub](https://github.com/FelixW01)
-- Dinh: Email - nguyen_dinh282@yahoo.com [GitHub](https://github.com/Dinh282)
+- Lucas: [GitHub](https://github.com/skywalkah)
+- Andrea: [GitHub](https://github.com/anicrob)
+- Anu: [GitHub](https://github.com/anup2307)
+- Felix: [GitHub](https://github.com/FelixW01)
+- Dinh: [GitHub](https://github.com/Dinh282)
 
 Feel free to contact any of us if you have questions or want to know more about our project. We're also excited to share our various other projects on GitHub!
 
@@ -100,5 +100,9 @@ Feel free to contact any of us if you have questions or want to know more about 
 
 Please refer to the LICENSE section in the repository.
 
+## Links
 
+Repo: https://github.com/Dinh282/chore-buddy
+
+Deployed Application: https://chore-buddy-6e6d2559dc60.herokuapp.com/
 ---
