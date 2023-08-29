@@ -57,6 +57,7 @@ function CreateChoreList({ onCloseModal }) {
                 },
             });
             mutationResponse.data.createChore;
+            setShowCustomAmount(false);
             form.resetFields();
             onCloseModal && onCloseModal();
 

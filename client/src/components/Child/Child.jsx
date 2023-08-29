@@ -49,7 +49,7 @@ const ChildInner = () => {
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.earningsCard}>
-            <Title className={adjustedStyles.title} level={2}>My wallet</Title>
+            <Title className={adjustedStyles.earningsTitle} level={2}>My wallet</Title>
             <Earnings />
           </Card>
         </Col>

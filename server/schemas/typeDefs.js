@@ -91,8 +91,8 @@ const typeDefs = gql`
       isComplete: Boolean!
     ): Chore
 
-    deleteChoreID(
-      choreId: ID!,
+    deleteChore(
+      choreId: ID!
     ): Chore
   }
 `;
