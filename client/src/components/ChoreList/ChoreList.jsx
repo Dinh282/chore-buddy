@@ -7,7 +7,10 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_CHILD_CHORES } from '../../graphql/queries';
 import { DELETE_CHORE, TOGGLE_AND_COMPLETE_CHORE } from '../../graphql/mutations';
 import styles from './ChoreList.module.css';
-
+import {
+  Typography,
+} from 'antd';
+const { Title } = Typography;
 
 const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     const {  activeUser, setActiveUser } = useContext(ChoreContext);
@@ -62,6 +65,8 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     if (error) return <p>Error: {error.message}</p>;
 
     return (
+        <>
+        <Title className={adjustedStyles.title}>Chores</Title>
         <List
             dataSource={childchores}
             renderItem={chore => (
@@ -91,6 +96,7 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
             )}
             locale={{ emptyText: 'No chores yet' }}
         />
+        </>
     );
 }
 
