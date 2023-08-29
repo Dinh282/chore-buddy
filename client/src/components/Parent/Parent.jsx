@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from 'react';
-import { Button } from 'antd';
 import { ChoreContext, ChoreProvider } from '../../context/ChoreContext';
 import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import CreateChoreList from '../CreateChoreList/';
@@ -51,19 +50,25 @@ const ParentInner = () => {
   })
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const { activeUser, setActiveUser } = useContext(ChoreContext);
+  const {activeUser, setActiveUser } = useContext(ChoreContext);
   const adjustedStyles = useDarkModeStyles(styles);
   const choreBuddies = data?.getChildrenInFamily;
 
+  
+ 
 
   useEffect(() => {
-    if (!loading && choreBuddies && choreBuddies.length > 0) {
+    if (!loading && choreBuddies.length && activeUser.id === null) {
       setActiveUser({ id: choreBuddies[0]._id, name: choreBuddies[0].firstName, chores: [] });
     }
-  }, [loading, choreBuddies]);
+  }, [loading, isModalOpen]);
+
 
   if (loading) return <Spin />;
 
+  // console.log('>>>>>>>>CHOREBUDDIES', choreBuddies)
+  console.log('>>>>>>>>ActiveUser', activeUser)
+  
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
     setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores: [] });
@@ -109,10 +114,11 @@ const ParentInner = () => {
 
         <Col xs={24} sm={16} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.choreList}>
-            <Title className={adjustedStyles.title}>Chores</Title>
+            <Title className={adjustedStyles.title}>Children</Title>
+            {choreBuddies.length <= 1  ? "" : <Paragraph>Please select a chorebuddy!</Paragraph>} 
             {Object.keys(choreBuddies).length ? (
               <Tabs
-                defaultActiveKey="1"
+                defaultActiveKey="0"
                 onChange={handleTabChange}
                 type="editable-card"
                 hideAdd
