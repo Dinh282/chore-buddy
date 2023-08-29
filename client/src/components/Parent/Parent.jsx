@@ -21,17 +21,8 @@ import {
   Spin
 } from 'antd';
 const { Title, Paragraph } = Typography;
-import { PlusOutlined, UserAddOutlined, CheckSquareOutlined, LoadingOutlined, EditOutlined } from '@ant-design/icons';
+import { PlusOutlined, UserAddOutlined, CheckSquareOutlined } from '@ant-design/icons';
 import styles from "./Parent.module.css";
-
-const loadingIcon = (
-  <LoadingOutlined
-    style={{
-      fontSize: 24,
-    }}
-    spin
-  />
-);
 
 function Parent() {
   return (
@@ -55,14 +46,17 @@ const ParentInner = () => {
   const adjustedStyles = useDarkModeStyles(styles);
   const choreBuddies = data?.getChildrenInFamily;
 
-
   useEffect(() => {
     if (!loading && choreBuddies && choreBuddies.length > 0) {
       setActiveUser({ id: choreBuddies[0]._id, name: choreBuddies[0].firstName, chores: [] });
     }
   }, [loading, choreBuddies]);
 
-  if (loading) return <Spin />;
+  if(loading) return (
+    <div className={adjustedStyles.mainSpinner}>
+      <Spin />
+    </div>
+  );
 
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
@@ -112,7 +106,7 @@ const ParentInner = () => {
             <Title className={adjustedStyles.title}>Chores</Title>
             {Object.keys(choreBuddies).length ? (
               <Tabs
-                defaultActiveKey="1"
+                defaultActiveKey="0"
                 onChange={handleTabChange}
                 type="editable-card"
                 hideAdd
@@ -131,7 +125,7 @@ const ParentInner = () => {
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.earningsCard}>
-            <Title className={adjustedStyles.title} level={2}>Wallet</Title>
+            <Title className={adjustedStyles.walletTitle} level={2}>Wallet</Title>
             <Earnings />
           </Card>
         </Col>

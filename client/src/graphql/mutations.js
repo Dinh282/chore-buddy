@@ -115,6 +115,19 @@ export const TOGGLE_AND_COMPLETE_CHORE = gql`
       title
       rewardAmount
       isComplete
+      assignee {
+        _id
+        balance
+      }
+    }
+  }
+`;
+
+export const DELETE_CHORE = gql`
+  mutation deleteChore($choreId: ID!) {
+    deleteChore(choreId: $choreId) {
+      _id
+      title
     }
   }
 `;
