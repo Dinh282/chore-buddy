@@ -244,12 +244,6 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-    deleteChoreID: async (parent, { choreId }, context) => {
-      if (context.user) {
-        return Chore.findOneAndDelete({ _id: choreId });
-      }
-      throw AuthenticationError;
-    },
     deleteChore: async (parent, { choreId }, context) => {
       if (!context.user) {
         throw new AuthenticationError("Not authenticated");
