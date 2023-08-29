@@ -22,7 +22,7 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
         setActiveUser({ ...activeUser, chores: childchores })
     }, [])
 
-    console.log("Child chores:", childchores);
+    // console.log("Child chores:", childchores);
 
     const toggleChoreChecked = async (e) => {
         console.log('activeuser>>>>>', activeUser)

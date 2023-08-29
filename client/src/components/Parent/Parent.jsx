@@ -7,7 +7,6 @@ import Earnings from '../Earnings/';
 import RegisterChoreBuddy from '../RegisterChoreBuddy';
 import { useQuery } from '@apollo/client';
 import { QUERY_CHILDREN_IN_FAMILY } from '../../graphql/queries';
-
 import {
   Col,
   Row,
@@ -35,24 +34,19 @@ const ParentInner = () => {
   const { loading, data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const { activeUser, setActiveUser } = useContext(ChoreContext);
+  const {activeUser, setActiveUser } = useContext(ChoreContext);
   const adjustedStyles = useDarkModeStyles(styles);
   const choreBuddies = data?.getChildrenInFamily;
 
-  // if(loading) return console.log('loading...')
-  // console.log('Parent choreBuddies>>>>.', choreBuddies)
-  
-  // console.log('Parent data>>>>.', data)
-   
-  // useEffect(() => {
-  //   if (choreBuddies[0]) {
-  //     const activeBuddy = choreBuddies[0]
-  //   setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[]})
-  //   return
-  // }
-  // }, [])
-  
-  if(loading) return <Spin />;
+
+  useEffect(() => {
+    if (!loading && choreBuddies && choreBuddies.length > 0) {
+    setActiveUser({ id: choreBuddies[0]._id, name: choreBuddies[0].firstName, chores:[]});
+  }
+  }, [loading, choreBuddies]);
+
+    if(loading) return <Spin />;
+
 
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
@@ -61,10 +55,6 @@ const ParentInner = () => {
     console.log("Tab active user:", activeUser);
  
   };
-  console.log(choreBuddies)
-    
-  
-  console.log('active user >>>>>', activeUser)
   
   const showModal = () => {
     setIsModalOpen(true);
