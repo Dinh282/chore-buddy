@@ -59,7 +59,7 @@ const ParentInner = () => {
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
     setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[] });
-    console.log("Tab active user:", activeUser);
+    // console.log("Tab active user:", activeUser);
   };
   
   const showModal = () => {

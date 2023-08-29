@@ -5,12 +5,12 @@ import { ChoreContext } from '../../context/ChoreContext';
 import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_CHILD_CHORES } from '../../graphql/queries';
-import { TOGGLE_AND_COMPLETE_CHORE } from '../../graphql/mutations';
+import { DELETE_CHORE, TOGGLE_AND_COMPLETE_CHORE } from '../../graphql/mutations';
 import styles from './ChoreList.module.css';
 
 
 const ChoreList = ({ choreBuddies, showDeleteButton }) => {
-    const { users, activeUser, setUsers, setActiveUser } = useContext(ChoreContext);
+    const {  activeUser, setActiveUser } = useContext(ChoreContext);
     const adjustedStyles = useDarkModeStyles(styles);
 
     const { loading, data, error } = useQuery(QUERY_CHILD_CHORES, {
@@ -18,6 +18,12 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     });
 
     const [toggleAndCompleteChore] = useMutation(TOGGLE_AND_COMPLETE_CHORE);
+    const [deleteChoreID] = useMutation(DELETE_CHORE, {
+        refetchQueries: [
+            QUERY_CHILD_CHORES,
+          'getChildChores'
+        ]
+      })
 
 
     const childchores = data?.getChildChores || [];
@@ -26,13 +32,10 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
         setActiveUser({ ...activeUser, chores: childchores })
     }, [])
 
-    // console.log("Child chores:", childchores);
-
     const toggleChoreChecked = async (e) => {
         console.log('activeuser>>>>>', activeUser)
         console.log('choreToToggle>>>>>>>', e)
         const updatedChores = activeUser.chores.map(chore => (chore._id === e.target.id) ? { ...chore, isComplete: !e.target.checked } : chore)
-        // const toggledChore = updatedChores.find(chore => chore._id === choreToToggle._id)
         setActiveUser({ ...activeUser, chores: [updatedChores] })
 
         toggleAndCompleteChore({
@@ -41,17 +44,16 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
                 isComplete: e.target.checked
             }
         });
-
-        console.log('set active user2', activeUser)
-
     };
 
     const deleteChore = (choreToDelete) => {
-        setActiveUser({ chores: [childchores] })
-        console.log('delete>>>>', activeUser)
-        console.log(users)
         const choreswithchoreremoved = activeUser.chores.filter(chore => chore._id !== choreToDelete._id)
         setActiveUser({ ...activeUser, chores: [choreswithchoreremoved] })
+        deleteChoreID ({
+            variables:{
+                choreId:choreToDelete._id
+            }
+        })
     };
 
 
