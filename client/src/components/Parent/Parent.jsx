@@ -5,8 +5,9 @@ import CreateChoreList from '../CreateChoreList/';
 import ChoreList from '../ChoreList/';
 import Earnings from '../Earnings/';
 import RegisterChoreBuddy from '../RegisterChoreBuddy';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_CHILDREN_IN_FAMILY } from '../../graphql/queries';
+import { DELETE_CHILD } from '../../graphql/mutations';
 import {
   Col,
   Row,
@@ -19,17 +20,8 @@ import {
   Spin
 } from 'antd';
 const { Title, Paragraph } = Typography;
-import { PlusOutlined, UserAddOutlined, CheckSquareOutlined, LoadingOutlined } from '@ant-design/icons';
+import { PlusOutlined, UserAddOutlined, CheckSquareOutlined } from '@ant-design/icons';
 import styles from "./Parent.module.css";
-
-const loadingIcon = (
-  <LoadingOutlined
-    style={{
-      fontSize: 24,
-    }}
-    spin
-  />
-);
 
 function Parent() {
   return (
@@ -41,6 +33,12 @@ function Parent() {
 
 const ParentInner = () => {
   const { loading, data } = useQuery(QUERY_CHILDREN_IN_FAMILY)
+  const [deleteChild] = useMutation(DELETE_CHILD, {
+    refetchQueries: [
+      QUERY_CHILDREN_IN_FAMILY,
+      'getChildrenInFamily'
+    ]
+  })
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
   const {activeUser, setActiveUser } = useContext(ChoreContext);
@@ -49,23 +47,36 @@ const ParentInner = () => {
 
 
   useEffect(() => {
-    if (!loading && choreBuddies && choreBuddies.length > 0) {
-    setActiveUser({ id: choreBuddies[0]._id, name: choreBuddies[0].firstName, chores:[]});
-  }
-  }, [loading, choreBuddies]);
+    if (!loading && choreBuddies.length && activeUser.id === null) {
+      setActiveUser({ id: choreBuddies[0]._id, name: choreBuddies[0].firstName, chores: [] });
+    }
+  }, [loading, isModalOpen]);
 
-    if(loading) return <Spin />;
+
+  if(loading) return (
+    <div className={adjustedStyles.mainSpinner}>
+      <Spin />
+    </div>
+  );
 
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
-    setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores:[] });
-    console.log("Tab active user:", activeUser);
+    setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores: [] });
+
   };
-  
+  const onEdit = (key) => {
+    const activeBuddy = choreBuddies[parseInt(key)];
+    deleteChild({
+      variables: {
+        childId: activeBuddy._id
+      }
+    })
+  };
+
   const showModal = () => {
     setIsModalOpen(true);
   };
-    const showModal2 = () => {
+  const showModal2 = () => {
     setIsModalOpen2(true);
   };
 
@@ -79,7 +90,7 @@ const ParentInner = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-   const handleCancel2 = () => {
+  const handleCancel2 = () => {
     setIsModalOpen2(false);
   };
 
@@ -91,18 +102,22 @@ const ParentInner = () => {
     <>
       <Row className={styles.wrapper} justify="center">
 
-      <Col xs={24} sm={16} className={styles.gutterRow}>
+        <Col xs={24} sm={16} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.choreList}>
-            <Title className={adjustedStyles.title}>Chores</Title>
+            <Title className={adjustedStyles.title}>Children</Title>
+            {choreBuddies.length <= 1  ? "" : <Paragraph>Please select a chorebuddy!</Paragraph>} 
             {Object.keys(choreBuddies).length ? (
               <Tabs
-                defaultActiveKey="1"
+                defaultActiveKey="0"
                 onChange={handleTabChange}
+                type="editable-card"
+                hideAdd
+                onEdit={onEdit}
                 items={Object.keys(choreBuddies).map((buddies, index) => ({
                   label: choreBuddies[index].firstName,
                   key: String(index),
                   children: <ChoreList choreBuddies={choreBuddies[index]} showDeleteButton={true} />
-               }))}
+                }))}
               />
             ) : (
               <Paragraph className={adjustedStyles.text}>Create a ChoreBuddy and add some chores to get started!</Paragraph>
@@ -112,7 +127,7 @@ const ParentInner = () => {
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.earningsCard}>
-            <Title className={adjustedStyles.title} level={2}>Wallet</Title>
+            <Title className={adjustedStyles.walletTitle} level={2}>Wallet</Title>
             <Earnings />
           </Card>
         </Col>
@@ -142,13 +157,13 @@ const ParentInner = () => {
           />
         </Tooltip>
       </FloatButton.Group>
-      
+
       <Modal title="Add a chorebuddy"
         open={isModalOpen2}
         onOk={handleOk2}
         onCancel={handleCancel2}
         footer={null}
-        >
+      >
         <RegisterChoreBuddy onCloseModal2={handleOk2} />
       </Modal>
 
@@ -160,7 +175,7 @@ const ParentInner = () => {
       >
         <CreateChoreList onCloseModal={handleOk} />
       </Modal>
-      
+
     </>
   );
 }

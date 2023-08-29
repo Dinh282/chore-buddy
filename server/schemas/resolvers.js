@@ -164,7 +164,9 @@ const resolvers = {
     },
     deleteChild: async (parent, { childId }, context) => {
       if (context.user) {
-        return User.findOneAndDelete({ _id: childId });
+        const user = await User.findOneAndDelete({ _id: childId });
+        const chores = await Chore.deleteMany({assignee:childId})
+        return user;
       }
       throw AuthenticationError;
     },
@@ -207,15 +209,29 @@ const resolvers = {
       if (context.user) {
         try {
           // Fetch the chore by its ID
-          const chore = await Chore.findById(choreId);
+          const chore = await Chore.findById(choreId).populate("assignee");
           
           if (!chore) {
             throw new Error('Chore not found');
           }
-
-          // Update the chore's completion status
+    
+          // If the chore is being marked as complete
+          if (isComplete && !chore.isComplete) {
+            chore.assignee.balance += chore.rewardAmount;
+          }
+          // If the chore is being unmarked as complete
+          else if (!isComplete && chore.isComplete) {
+            if (chore.assignee.balance >= chore.rewardAmount) {
+              chore.assignee.balance -= chore.rewardAmount;
+            } else {
+              // This is an additional safety check to ensure balance does not go negative
+              throw new Error('Insufficient balance to deduct reward amount.');
+            }
+          }
+    
           chore.isComplete = isComplete;
-
+          await chore.assignee.save();
+    
           // Save the updated chore
           await chore.save();
           
@@ -225,7 +241,27 @@ const resolvers = {
           throw new Error('Failed to toggle and complete chore');
         }
       }
+
       throw AuthenticationError;
+    },
+    deleteChore: async (parent, { choreId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("Not authenticated");
+      }
+  
+      try {
+        const result = await Chore.deleteOne({ _id: choreId });
+
+        if (result.deletedCount === 0) {
+            throw new Error("Chore not found or failed to delete.");
+        }
+
+        return { _id: choreId, message: "Chore deleted successfully" };
+  
+      } catch (err) {
+        console.error("Error in deleteChore resolver:", err);
+        throw err;
+      }
     },
   },
 };

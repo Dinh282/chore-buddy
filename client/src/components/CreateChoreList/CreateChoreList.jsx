@@ -39,13 +39,12 @@ function CreateChoreList({ onCloseModal }) {
     });
       
     const currentUser = activeUser;
-    
-    // console.log("Active user in CreateChoreList:", currentUser);
-    console.log(currentUser)
+
     const handleAddChore = async () => {
         try {
             const formValues = await form.validateFields();
             const { title, rewardAmount, customRewardAmount } = formValues;
+
             if (!currentUser || !currentUser.id) {
                 console.error("Current user ID is not available!");
                 return;
@@ -53,11 +52,12 @@ function CreateChoreList({ onCloseModal }) {
             const mutationResponse = await createChore({
                 variables: {
                     title,
-                    rewardAmount: rewardAmount || customRewardAmount,
+                    rewardAmount: rewardAmount === 'custom' ? customRewardAmount: rewardAmount ,
                     assignee: currentUser.id,
                 },
             });
             mutationResponse.data.createChore;
+            setShowCustomAmount(false);
             form.resetFields();
             onCloseModal && onCloseModal();
 
