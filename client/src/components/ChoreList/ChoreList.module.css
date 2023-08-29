@@ -3,8 +3,14 @@
     margin: '0 auto';
 }
 
-.ant-checkbox-checked {
-    background-color: #1890ff;
-    border-color: #1890ff;
-    text-decoration: line-through;
+.checkBox {
+    color: inherit;
+}
+
+.checkBoxDark {
+    color: var(--white);
+}
+
+.ant-checkbox-wrapper-checked span:last-child {
+    color: var(--gray) !important;
 }

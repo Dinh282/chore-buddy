@@ -62,7 +62,7 @@ const Earnings = () => {
           </Paragraph>
         ))
       ) : (
-        <Paragraph className={adjustedStyles.text}>No earnings yet.</Paragraph>
+        <Paragraph className={adjustedStyles.text}>An empty wallet is a sad wallet.</Paragraph>
       )}
     </>
   );
