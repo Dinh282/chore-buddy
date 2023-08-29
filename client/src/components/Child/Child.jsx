@@ -55,11 +55,6 @@ const ChildInner = () => {
         </Col>
 
       </Row>
-      <Col xs={20} sm={14} className={styles.gutterRow}>
-          <Card bordered={false} className={styles.choreList}>
-            <Title className={styles.title}> Earn More</Title>
-          </Card>
-        </Col>
     </>
   )
 }
