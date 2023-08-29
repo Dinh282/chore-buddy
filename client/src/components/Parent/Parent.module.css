@@ -1,3 +1,9 @@
+.mainSpinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
 .title {
     text-align: left;
 }
@@ -10,7 +16,8 @@
     padding: 0 8px;
 }
 .title,
-.text {
+.text,
+.walletTitle {
     margin-top: 0;
 }
 .titleDark {
@@ -25,11 +32,11 @@
 .choreListDark .ant-typography {
     color: var(--white);
 }
-.earningsCard {
-    background-color: var(--white);
+.walletTitle {
+    color: var(--white) !important;
 }
-.earningsCardDark {
-    background-color: var(--dark);
+.earningsCard {
+    background-color: var(--logo-green);
 }
 @media screen and (max-width: 768px) {
     .wrapper {
