@@ -58,7 +58,7 @@ const ParentInner = () => {
  
 
   useEffect(() => {
-    if (!loading && choreBuddies && activeUser === null) {
+    if (!loading && choreBuddies.length && activeUser.id === null) {
       setActiveUser({ id: choreBuddies[0]._id, name: choreBuddies[0].firstName, chores: [] });
     }
   }, [loading, isModalOpen]);
