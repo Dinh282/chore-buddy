@@ -113,10 +113,9 @@ const ParentInner = () => {
         <Col xs={24} sm={16} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.choreList}>
             <Title className={adjustedStyles.title}>Children</Title>
-            {/* {!loading ? choreBuddies.length <= 1  ? console.log(choreBuddies) : <Paragraph>Please select one of the chorebuddy!</Paragraph> : 'loading...'}  */}
+            {choreBuddies.length <= 1  ? console.log(choreBuddies) : <Paragraph>Please select a chorebuddy!</Paragraph>} 
             {Object.keys(choreBuddies).length ? (
               <Tabs
-                defaultActiveKey="0"
                 onChange={handleTabChange}
                 type="editable-card"
                 hideAdd
