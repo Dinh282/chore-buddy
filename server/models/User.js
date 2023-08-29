@@ -26,7 +26,7 @@ const userSchema = new Schema({
   },
   balance: {
     type: Number,
-    match: [/^[0-9]*\.[0-9]{2}$/, "Must be in dollar format with 2 decimal places!"],
+    match: [/^[0-9]*\.[0-9]{2}$/, "Must be in dollar format!"],
     default: 0.00
   },
   isChoreBuddy: {
