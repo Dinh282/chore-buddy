@@ -1,6 +1,40 @@
-.text {
-    color: var(--darkest);
+.text.text,
+.textRight.textRight {
+    color: var(--white);
+    vertical-align: top;
+    font-size: large;
 }
-.textDark {
-    color: var(--light-gray);
+.text.text:last-of-type,
+.textRight.textRight:last-of-type {
+    margin-bottom: 0;
+}
+.textRight {
+    text-align: right;
+    vertical-align: bottom;
+    font-weight: 700;
+}
+.textDark,
+.textRightDark {
+    color: var(--white) !important;
+}
+.walletRow {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.walletRow:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.title.title {
+    margin: 0;
+    color: var(--white) !important;
+}
+.myBalance.myBalance {
+    font-size: 3em;
+    margin: 0;
+    font-weight: 700;
+    color: var(--white) !important;
+    text-align: right;
 }

@@ -32,9 +32,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    currentUser(
-      email: String!
-    ): User
+
+    getCurrentUser: User
 
     unassignedChores: [Chore]
 
@@ -79,14 +78,20 @@ const typeDefs = gql`
 
     createChore(
       title:String, 
-      rewardAmount: Int
+      rewardAmount: Int,
+      assignee: ID!
     ): Chore
     
     choreAssignment(
       choreId: ID!
     ): Chore
     
-    completeChore(
+    toggleAndCompleteChore(
+      choreId: ID!,
+      isComplete: Boolean!
+    ): Chore
+
+    deleteChore(
       choreId: ID!
     ): Chore
   }

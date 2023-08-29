@@ -12,6 +12,11 @@ import { useCookies } from "react-cookie";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+
+
+  loadDevMessages();
+  loadErrorMessages();
 
 function App() {
   const location = useLocation();

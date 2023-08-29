@@ -6,14 +6,27 @@
 .gutterRow {
     padding: 0 8px;
 }
-.title {
+.title.title {
     margin-top: 0;
 }
-.titleDark {
+.textDark {
+    color: var(--light-gray);
+}
+.earningsTitle.earningsTitle {
+    margin-top: 0;
+    color: var(--white);
+}
+.earningsTitleDark {
     color: var(--white) !important;
 }
-.earningsCardDark {
+.choreList {
+    background-color: var(--white);
+}
+.choreListDark {
     background-color: var(--dark);
+}
+.earningsCard {
+    background-color: var(--logo-green);
 }
 @media screen and (max-width: 768px) {
     .wrapper {

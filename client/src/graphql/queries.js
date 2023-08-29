@@ -1,12 +1,14 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_CURRENT_USER = gql`
-  query getCurrentUser($email: String!) {
-    currentUser(email: $email) {
+  query getCurrentUser {
+    getCurrentUser {
       _id
       email
       firstName
       lastName
+      isChoreBuddy
+      balance
     }
   }
 `;
