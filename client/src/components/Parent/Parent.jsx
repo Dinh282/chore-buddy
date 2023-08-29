@@ -56,17 +56,19 @@ const ParentInner = () => {
 
   
  
+
   useEffect(() => {
-    if (!loading && choreBuddies && choreBuddies.length > 0) {
+    if (!loading && choreBuddies && activeUser === null) {
       setActiveUser({ id: choreBuddies[0]._id, name: choreBuddies[0].firstName, chores: [] });
     }
-  }, [loading, choreBuddies]);
+  }, [loading, isModalOpen]);
+
 
   if (loading) return <Spin />;
 
   // console.log('>>>>>>>>CHOREBUDDIES', choreBuddies)
   console.log('>>>>>>>>ActiveUser', activeUser)
-
+  
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
     setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores: [] });
@@ -113,9 +115,10 @@ const ParentInner = () => {
         <Col xs={24} sm={16} className={styles.gutterRow}>
           <Card bordered={false} className={adjustedStyles.choreList}>
             <Title className={adjustedStyles.title}>Children</Title>
-            {choreBuddies.length <= 1  ? console.log(choreBuddies) : <Paragraph>Please select a chorebuddy!</Paragraph>} 
+            {choreBuddies.length <= 1  ? "" : <Paragraph>Please select a chorebuddy!</Paragraph>} 
             {Object.keys(choreBuddies).length ? (
               <Tabs
+                defaultActiveKey="0"
                 onChange={handleTabChange}
                 type="editable-card"
                 hideAdd
