@@ -118,3 +118,11 @@ export const TOGGLE_AND_COMPLETE_CHORE = gql`
     }
   }
 `;
+
+export const DELETE_CHORE = gql`
+  mutation deleteChoreID($choreId: ID!) {
+    deleteChoreID(choreId: $choreId) {
+      _id
+    }
+  }
+`;
