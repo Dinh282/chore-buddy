@@ -2,15 +2,12 @@
     max-width: '600px';
     margin: '0 auto';
 }
-
 .checkBox {
     color: inherit;
 }
-
 .checkBoxDark {
     color: var(--white);
 }
-
 .ant-checkbox-wrapper-checked span:last-child {
     color: var(--gray) !important;
 }

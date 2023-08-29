@@ -122,3 +122,12 @@ export const TOGGLE_AND_COMPLETE_CHORE = gql`
     }
   }
 `;
+
+export const DELETE_CHORE = gql`
+  mutation deleteChore($choreId: ID!) {
+    deleteChore(choreId: $choreId) {
+      _id
+      title
+    }
+  }
+`;

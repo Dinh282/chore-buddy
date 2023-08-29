@@ -6,13 +6,17 @@
 .gutterRow {
     padding: 0 8px;
 }
+.title.title {
+    margin-top: 0;
+}
 .textDark {
     color: var(--light-gray);
 }
-.title {
+.earningsTitle.earningsTitle {
     margin-top: 0;
+    color: var(--white);
 }
-.titleDark {
+.earningsTitleDark {
     color: var(--white) !important;
 }
 .choreList {
@@ -22,10 +26,7 @@
     background-color: var(--dark);
 }
 .earningsCard {
-    background-color: var(--white);
-}
-.earningsCardDark {
-    background-color: var(--dark);
+    background-color: var(--logo-green);
 }
 @media screen and (max-width: 768px) {
     .wrapper {

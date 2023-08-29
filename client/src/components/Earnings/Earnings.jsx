@@ -1,7 +1,8 @@
+import React from 'react';
 import { useContext } from 'react';
 import { ChoreContext } from '../../context/ChoreContext';
 import useDarkModeStyles from '../../hooks/useDarkModeStyles';
-import { Typography, Skeleton } from 'antd';
+import { Typography, Skeleton, Row, Col } from 'antd';
 import styles from './Earnings.module.css';
 import { useQuery } from '@apollo/client';
 import { QUERY_CHILDREN_IN_FAMILY, QUERY_CURRENT_USER } from '../../graphql/queries';
@@ -36,7 +37,7 @@ const Earnings = () => {
   const balance = userData.getCurrentUser.balance;
 
   if (isChoreBuddy) {
-    return <Paragraph>${balance}</Paragraph>;
+    return <Paragraph className={adjustedStyles.myBalance}>${balance}</Paragraph>;
   }
 
   if (childrenError || !childrenData) {
@@ -45,21 +46,24 @@ const Earnings = () => {
 
   const choreBuddies = childrenData.getChildrenInFamily || [];
 
-  const computeTotalEarned = (chores) => {
-    if (!chores) return 0;
-
-    return chores.reduce((acc, chore) => {
-      return chore.isChecked ? acc + chore.rewardAmount : acc;
-    }, 0);
-  };
-
   return (
     <>
       {choreBuddies.length > 0 ? (
         choreBuddies.map((buddy, index) => (
-          <Paragraph key={index} className={adjustedStyles.text}>
-            {buddy.firstName}: ${computeTotalEarned(buddy.chores)}
-          </Paragraph>
+          <React.Fragment key={index}>
+            <Row className={adjustedStyles.walletRow}>
+              <Col span={12}>
+                <Paragraph key={index} className={adjustedStyles.text}>
+                  {buddy.firstName}:
+                </Paragraph>
+              </Col>
+              <Col span={12}>
+                <Paragraph key={index} className={adjustedStyles.textRight}>
+                  ${buddy.balance}
+                </Paragraph>
+              </Col>
+            </Row>
+          </React.Fragment>
         ))
       ) : (
         <Paragraph className={adjustedStyles.text}>An empty wallet is a sad wallet.</Paragraph>
