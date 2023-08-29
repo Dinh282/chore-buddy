@@ -29,21 +29,25 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     // console.log("Child chores:", childchores);
 
     const toggleChoreChecked = async (e) => {
-        console.log('activeuser>>>>>', activeUser)
-        console.log('choreToToggle>>>>>>>', e)
-        const updatedChores = activeUser.chores.map(chore => (chore._id === e.target.id) ? { ...chore, isComplete: !e.target.checked } : chore)
-        // const toggledChore = updatedChores.find(chore => chore._id === choreToToggle._id)
-        setActiveUser({ ...activeUser, chores: [updatedChores] })
-
-        toggleAndCompleteChore({
+        const [response] = await toggleAndCompleteChore({
             variables: {
                 choreId: e.target.id,
                 isComplete: e.target.checked
             }
         });
+        
+        const updatedChore = response.data.toggleAndCompleteChore;
 
-        console.log('set active user2', activeUser)
+        const updatedChoresList = activeUser.chores.map(chore => 
+            chore._id === updatedChore._id ? updatedChore : chore
+        );
 
+        setActiveUser(prev => ({
+            ...prev, 
+            chores: updatedChoresList,
+            // Optionally, update the balance if you included it in the mutation response
+            // balance: updatedChore.assignee.balance 
+        }));
     };
 
     const deleteChore = (choreToDelete) => {

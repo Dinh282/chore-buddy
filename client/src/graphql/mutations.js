@@ -115,6 +115,10 @@ export const TOGGLE_AND_COMPLETE_CHORE = gql`
       title
       rewardAmount
       isComplete
+      assignee {
+        _id
+        balance
+      }
     }
   }
 `;

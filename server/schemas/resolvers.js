@@ -207,7 +207,7 @@ const resolvers = {
       if (context.user) {
         try {
           // Fetch the chore by its ID
-          const chore = await Chore.findById(choreId);
+          const chore = await Chore.findById(choreId).populate("assignee");
           
           if (!chore) {
             throw new Error('Chore not found');
@@ -215,6 +215,11 @@ const resolvers = {
 
           // Update the chore's completion status
           chore.isComplete = isComplete;
+
+          if (isComplete) {
+            chore.assignee.balance += chore.rewardAmount;
+            await chore.assignee.save();
+          }
 
           // Save the updated chore
           await chore.save();
