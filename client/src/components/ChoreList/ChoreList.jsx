@@ -1,12 +1,17 @@
 import { useContext, useEffect } from 'react';
 import { List, Checkbox, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import { ChoreContext } from '../../context/ChoreContext';
+import useDarkModeStyles from '../../hooks/useDarkModeStyles';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_CHILD_CHORES } from '../../graphql/queries';
 import { TOGGLE_AND_COMPLETE_CHORE } from '../../graphql/mutations';
+import styles from './ChoreList.module.css';
+
 
 const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     const { users, activeUser, setUsers, setActiveUser } = useContext(ChoreContext);
+    const adjustedStyles = useDarkModeStyles(styles);
 
     const { loading, data, error } = useQuery(QUERY_CHILD_CHORES, {
         variables: { childId: choreBuddies._id }
@@ -47,15 +52,6 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
         console.log(users)
         const choreswithchoreremoved = activeUser.chores.filter(chore => chore._id !== choreToDelete._id)
         setActiveUser({ ...activeUser, chores: [choreswithchoreremoved] })
-        // const updatedUsers = {
-        //     ...users,
-        //     [activeUser.id]: {
-        //         ...activeUser,
-        //         chores: activeUser.chores.filter(chore => chore._id !== choreToDelete._id)
-        //     }
-        // };
-        // console.log('updatedusers>>>>', updatedUsers)
-        // setUsers(updatedUsers);
     };
 
 
@@ -65,7 +61,6 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
 
     return (
         <List
-            bordered
             dataSource={childchores}
             renderItem={chore => (
                 <List.Item
@@ -77,13 +72,14 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
                                 type="link"
                                 onClick={() => deleteChore(chore)}
                             >
-                                Delete
+                                <DeleteOutlined />
                             </Button>
                         ),
                     ]}
                 >
                     <Checkbox
                         checked={chore.isComplete}
+                        className={adjustedStyles.checkBox}
                         id={chore._id}
                         onChange={(e) => toggleChoreChecked(e)}
                     >
