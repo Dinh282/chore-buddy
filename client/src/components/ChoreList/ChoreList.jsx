@@ -10,7 +10,7 @@ import styles from './ChoreList.module.css';
 
 
 const ChoreList = ({ choreBuddies, showDeleteButton }) => {
-    const { users, activeUser, setUsers, setActiveUser } = useContext(ChoreContext);
+    const {  activeUser, setActiveUser } = useContext(ChoreContext);
     const adjustedStyles = useDarkModeStyles(styles);
 
     const { loading, data, error } = useQuery(QUERY_CHILD_CHORES, {
@@ -18,7 +18,12 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     });
 
     const [toggleAndCompleteChore] = useMutation(TOGGLE_AND_COMPLETE_CHORE);
-    const [deleteChoreID] = useMutation(DELETE_CHORE)
+    const [deleteChoreID] = useMutation(DELETE_CHORE, {
+        refetchQueries: [
+            QUERY_CHILD_CHORES,
+          'getChildChores'
+        ]
+      })
 
 
     const childchores = data?.getChildChores || [];
@@ -27,13 +32,10 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
         setActiveUser({ ...activeUser, chores: childchores })
     }, [])
 
-    // console.log("Child chores:", childchores);
-
     const toggleChoreChecked = async (e) => {
         console.log('activeuser>>>>>', activeUser)
         console.log('choreToToggle>>>>>>>', e)
         const updatedChores = activeUser.chores.map(chore => (chore._id === e.target.id) ? { ...chore, isComplete: !e.target.checked } : chore)
-        // const toggledChore = updatedChores.find(chore => chore._id === choreToToggle._id)
         setActiveUser({ ...activeUser, chores: [updatedChores] })
 
         toggleAndCompleteChore({
@@ -45,7 +47,6 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     };
 
     const deleteChore = (choreToDelete) => {
-        console.log('delete>>>>', choreToDelete)
         const choreswithchoreremoved = activeUser.chores.filter(chore => chore._id !== choreToDelete._id)
         setActiveUser({ ...activeUser, chores: [choreswithchoreremoved] })
         deleteChoreID ({
