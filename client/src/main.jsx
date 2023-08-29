@@ -22,7 +22,13 @@ import {ProtectedRoute, ProtectedRoute2 } from "./components/ProtectedRoute/";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<Error />}>
-      <Route index element={<Landing />} />
+      <Route 
+      index 
+      element={
+          <ProtectedRoute2>   
+            <Landing />
+          </ProtectedRoute2> 
+      } />
       <Route 
         path="login" 
         element={
