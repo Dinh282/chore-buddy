@@ -85,14 +85,14 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
         console.error("GraphQL Error:", error);
         return <p>Error: {error.message}</p>;
     }
-    if (loading) return <p>Loading...</p>
+     if(loading) return ""
 
     return (
         <>
     <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    transition={{ duration: .5, delay:  .4 }}
+    transition={{ duration: .3, delay:  .4 }}
     >
         <List
             dataSource={childchores}
