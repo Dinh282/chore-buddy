@@ -20,10 +20,12 @@ const Earnings = () => {
   const [updateBalance] = useMutation(UPDATE_BALANCE)
 
   useEffect(() => {
+    if(isModalOpen){
     form.setFieldsValue({
       balance: currentUser.balance
     });
-  }, [currentUser, form]);
+  }
+  }, [currentUser, form, isModalOpen]);
 
   const showModal = (index) => {
     const currentUserBalance = choreBuddies[index].balance
