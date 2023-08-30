@@ -151,17 +151,7 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    editChild: async (parent, { childId, balance }, context) => {
-      if (context.user) {
-        const child = await User.findOneAndUpdate(
-          { _id: childId },
-          { balance },
-          { new: true }
-        );
-        return child;
-      }
-      throw AuthenticationError;
-    },
+
     deleteChild: async (parent, { childId }, context) => {
       if (context.user) {
         const user = await User.findOneAndDelete({ _id: childId });
@@ -262,6 +252,17 @@ const resolvers = {
         console.error("Error in deleteChore resolver:", err);
         throw err;
       }
+    },
+    updateBalance: async (parent, { userId, balance }, context) => {
+      if (context.user) {
+        const child = await User.findOneAndUpdate(
+          { _id: userId },
+          { balance },
+          { new: true }
+        );
+        return child;
+      }
+      throw AuthenticationError;
     },
   },
 };
