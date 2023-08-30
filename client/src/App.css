@@ -101,13 +101,25 @@ main {
 /*----- dark mode overrides for antd comps-----*/
 .dark {
   & .ant-tabs .ant-tabs-tab-btn {
-    color: var(--light-gray);
+    color: var(--gray);
   }
   & .ant-tabs-top >.ant-tabs-nav::before,
   & .ant-list-split .ant-list-item {
-    border-block-end: 1px solid rgba(5, 5, 5, 0.2);
+    border-block-end: 1px solid var(--darker);
   }
-  & .ant-list-empty-text {
+  & .ant-tabs-card >.ant-tabs-nav .ant-tabs-tab {
+    border: 1px solid var(--darker);
+  }
+  & .ant-list-empty-text,
+  & .ant-tabs .ant-tabs-tab-remove {
     color: var(--gray);
+  }
+  & .ant-tabs-card >.ant-tabs-nav .ant-tabs-tab {
+    background-color: var(--darker);
+    color: var(--dark);
+  }
+  & .ant-tabs-card >.ant-tabs-nav .ant-tabs-tab-active {
+    background-color: var(--dark);
+    border-bottom-color: var(--dark);
   }
 }
