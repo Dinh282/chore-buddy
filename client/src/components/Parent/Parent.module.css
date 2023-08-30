@@ -1,48 +1,51 @@
 .mainSpinner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
 }
 .title {
-    text-align: left;
+  text-align: left;
 }
 .wrapper {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0px 50px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0px 50px;
 }
 .gutterRow {
-    padding: 0 8px;
+  padding: 0 8px;
 }
 .title,
 .text,
 .walletTitle {
-    margin-top: 0;
+  margin-top: 0;
 }
 .titleDark {
-    color: var(--white) !important;
+  color: var(--white) !important;
 }
 .textDark {
-    color: var(--light-gray);
+  color: var(--light-gray);
 }
 .choreListDark {
-    background-color: var(--dark);
+  background-color: var(--dark);
 }
 .choreListDark .ant-typography {
-    color: var(--white);
+  color: var(--white);
 }
 .walletTitle {
-    color: var(--white) !important;
+  color: var(--white) !important;
 }
 .earningsCard {
-    background-color: var(--logo-green);
+  background-color: var(--logo-green);
+}
+.modalText {
+  color: var(--darker) !important;
 }
 @media screen and (max-width: 768px) {
-    .wrapper {
-        padding: 0px 20px;
-    }
-    .choreList {
-        margin-bottom: 20px;
-    }
+  .wrapper {
+    padding: 0px 20px;
+  }
+  .choreList {
+    margin-bottom: 20px;
+  }
 }

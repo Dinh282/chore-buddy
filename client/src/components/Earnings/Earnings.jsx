@@ -102,7 +102,7 @@ const Earnings = () => {
             <Row className={adjustedStyles.walletRow}>
               <Col span={12}>
                 <Paragraph key={index} className={adjustedStyles.text}>
-                  {buddy.firstName}:
+                  {buddy.firstName}
                 </Paragraph>
               </Col>
               <Row>
