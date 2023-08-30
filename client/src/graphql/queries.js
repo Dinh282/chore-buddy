@@ -44,9 +44,6 @@ export const QUERY_CHILD_CHORES = gql`
         firstName
         lastName
       }
-      family {
-        _id
-      }
       isComplete
       rewardAmount
       title

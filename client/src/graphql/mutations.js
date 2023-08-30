@@ -51,19 +51,6 @@ export const CREATE_CHILD = gql`
   }
 `;
 
-export const EDIT_CHILD = gql`
-  mutation editChild($childId: ID!, $balance: Int) {
-    editChild(childId: $childId, balance: $balance) {
-      _id
-      firstName
-      lastName
-      email
-      balance
-      isChoreBuddy
-    }
-  }
-`;
-
 export const DELETE_CHILD = gql`
   mutation deleteChild($childId: ID!) {
     deleteChild(childId: $childId) {
@@ -128,6 +115,16 @@ export const DELETE_CHORE = gql`
     deleteChore(choreId: $choreId) {
       _id
       title
+    }
+  }
+`;
+
+export const UPDATE_BALANCE = gql`
+  mutation deleteChore($userId: ID!, $balance:Int!) {
+    updateBalance(userId: $userId, balance:$balance) {
+      _id
+      firstName
+      balance
     }
   }
 `;

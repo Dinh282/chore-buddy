@@ -67,11 +67,6 @@ const typeDefs = gql`
       password: String!
     ): User
     
-    editChild(
-      childId: ID!, 
-      balance: Int
-    ): User
-
     deleteChild(
       childId: ID!
     ): User
@@ -94,6 +89,11 @@ const typeDefs = gql`
     deleteChore(
       choreId: ID!
     ): Chore
+
+    updateBalance(
+      userId: ID!,
+      balance: Int!
+    ): User
   }
 `;
 
