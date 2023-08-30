@@ -24,13 +24,6 @@ export default function CurrentUserContextProvider({ children }) {
     const decodedToken = decode(cookies.auth_token);
     initialUser = { ...decodedToken.data, isAuthenticated: true }
   }
-  //   const { loading, data } = useQuery(QUERY_CURRENT_USER, {
-  //   variables: { email: initialUser.email }
-  // })
-  // console.log('data>>>>.', data)
-  // const user = data?.getCurrentUser || []
-  // console.log('cureentuserisChoreBuddy>>>>>', user.isChoreBuddy)
-  // console.log(initialUser.email)
   const [currentUser, setCurrentUser] = useState(initialUser);
 
   const loginUser = useCallback((user, token) => {
@@ -41,15 +34,9 @@ export default function CurrentUserContextProvider({ children }) {
   const logoutUser = useCallback(() => {
     removeCookies('auth_token');
     setCurrentUser({ isAuthenticated: false });
-    console.log('logged OUT')
   }, [setCurrentUser, removeCookies]);
 
   const isLoggedIn = useCallback(() => currentUser.isAuthenticated, [currentUser.isAuthenticated]);
-
-
-  // console.log('data>>>>.', data)
-  // const user = data?.getCurrentUser || []
-  // console.log('cureentuserisChoreBuddy>>>>>', user.isChoreBuddy)
 
   const contextValue = useMemo(() =>
   ({
@@ -60,7 +47,6 @@ export default function CurrentUserContextProvider({ children }) {
   }),
     [currentUser, isLoggedIn, loginUser, logoutUser]);
 
-    // console.log(currentUser)
   return (
     <CurrentUserContext.Provider value={contextValue}>
       {children}
