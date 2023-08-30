@@ -45,7 +45,7 @@ const Earnings = () => {
   }
 
   const choreBuddies = childrenData.getChildrenInFamily || [];
-
+  console.log(choreBuddies)
   return (
     <>
       {choreBuddies.length > 0 ? (

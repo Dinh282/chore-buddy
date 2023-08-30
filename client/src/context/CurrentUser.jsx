@@ -41,6 +41,7 @@ export default function CurrentUserContextProvider({ children }) {
   const logoutUser = useCallback(() => {
     removeCookies('auth_token');
     setCurrentUser({ isAuthenticated: false });
+    console.log('logged OUT')
   }, [setCurrentUser, removeCookies]);
 
   const isLoggedIn = useCallback(() => currentUser.isAuthenticated, [currentUser.isAuthenticated]);
