@@ -22,7 +22,7 @@ import {
 const { Title, Paragraph } = Typography;
 import { PlusOutlined, UserAddOutlined, CheckSquareOutlined } from '@ant-design/icons';
 import styles from "./Parent.module.css";
-
+import { motion } from 'framer-motion';
 function Parent() {
   return (
     <ChoreProvider>
@@ -103,6 +103,11 @@ const ParentInner = () => {
       <Row className={styles.wrapper} justify="center">
 
         <Col xs={24} sm={16} className={styles.gutterRow}>
+        <motion.div
+        initial={{ scale: .5, opacity: 0}}
+        animate={{ scale: 1, opacity: 1}}
+        transition={{ duration: .3, delay:  .2 }}
+        >
           <Card bordered={false} className={adjustedStyles.choreList}>
             <Title className={adjustedStyles.title}>Children</Title>
             {choreBuddies.length <= 1  ? "" : <Paragraph>Please select a chorebuddy!</Paragraph>} 
@@ -123,13 +128,20 @@ const ParentInner = () => {
               <Paragraph className={adjustedStyles.text}>Create a ChoreBuddy and add some chores to get started!</Paragraph>
             )}
           </Card>
+        </motion.div>
         </Col>
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
+        <motion.div
+        initial={{ scale: .5, opacity: 0}}
+        animate={{ scale: 1, opacity: 1}}
+        transition={{ duration: .3, delay:  .3 }}
+        >
           <Card bordered={false} className={adjustedStyles.earningsCard}>
             <Title className={adjustedStyles.walletTitle} level={2}>Wallet</Title>
             <Earnings />
           </Card>
+        </motion.div>
         </Col>
 
       </Row>
