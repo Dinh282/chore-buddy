@@ -92,7 +92,7 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
     <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    transition={{ duration: .3, delay:  .4 }}
+    transition={{ duration: .3, delay:  .25 }}
     >
         <List
             dataSource={childchores}

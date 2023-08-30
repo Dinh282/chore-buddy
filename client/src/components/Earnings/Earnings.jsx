@@ -45,7 +45,7 @@ const Earnings = () => {
   }
 
   const choreBuddies = childrenData.getChildrenInFamily || [];
-
+  console.log
   return (
     <>
       {choreBuddies.length > 0 ? (
@@ -54,7 +54,7 @@ const Earnings = () => {
             <Row className={adjustedStyles.walletRow}>
               <Col span={12}>
                 <Paragraph key={index} className={adjustedStyles.text}>
-                  {buddy.firstName}:
+                  {buddy.firstName}
                 </Paragraph>
               </Col>
               <Col span={12}>
