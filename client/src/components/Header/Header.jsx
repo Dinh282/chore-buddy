@@ -29,7 +29,7 @@ function Header() {
     {
       key: '2',
       label: (
-        <Button type='text' onClick={logoutUser} className={styles.logoutButton}>Logout</Button>
+        <a type='text' onClick={logoutUser} className={styles.logoutButton}>Logout</a>
       ),
     },
   ];

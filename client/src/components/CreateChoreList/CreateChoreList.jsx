@@ -39,9 +39,7 @@ function CreateChoreList({ onCloseModal }) {
     });
       
     const currentUser = activeUser;
-    
-    // console.log("Active user in CreateChoreList:", currentUser);
-    console.log(currentUser)
+
     const handleAddChore = async () => {
         try {
             const formValues = await form.validateFields();
@@ -59,6 +57,7 @@ function CreateChoreList({ onCloseModal }) {
                 },
             });
             mutationResponse.data.createChore;
+            setShowCustomAmount(false);
             form.resetFields();
             onCloseModal && onCloseModal();
 

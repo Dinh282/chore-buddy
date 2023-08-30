@@ -7,10 +7,10 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_CHILD_CHORES } from '../../graphql/queries';
 import { TOGGLE_AND_COMPLETE_CHORE, DELETE_CHORE } from '../../graphql/mutations';
 import styles from './ChoreList.module.css';
-
+import { motion } from 'framer-motion';
 
 const ChoreList = ({ choreBuddies, showDeleteButton }) => {
-    const { users, activeUser, setUsers, setActiveUser } = useContext(ChoreContext);
+    const {  activeUser, setActiveUser } = useContext(ChoreContext);
     const adjustedStyles = useDarkModeStyles(styles);
 
     const { loading, data, error } = useQuery(QUERY_CHILD_CHORES, {
@@ -85,9 +85,15 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
         console.error("GraphQL Error:", error);
         return <p>Error: {error.message}</p>;
     }
-    if (loading) return <p>Loading...</p>
+     if(loading) return ""
 
     return (
+        <>
+    <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: .3, delay:  .25 }}
+    >
         <List
             dataSource={childchores}
             renderItem={chore => (
@@ -114,9 +120,12 @@ const ChoreList = ({ choreBuddies, showDeleteButton }) => {
                         {chore.title} - ${chore.rewardAmount}
                     </Checkbox>
                 </List.Item>
+                
             )}
             locale={{ emptyText: `No chores yet` }}
         />
+        </motion.div>
+        </>
     );
 }
 

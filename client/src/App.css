@@ -3,7 +3,7 @@
   --black: #000;
   --light-gray: #c3c3c3;
   --gray: #999;
-  --logo-green: #01ca68;
+  --logo-green: #00b86c;
   --dark: #353d3f;
   --darker: #212628;
   --darkest: #101213;
@@ -90,24 +90,39 @@ main {
 }
 .ant-checkbox-checked .ant-checkbox-inner,
 .ant-checkbox-checked:not(.ant-checkbox-disabled):hover .ant-checkbox-inner,
-.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+  .ant-checkbox-checked:not(.ant-checkbox-disabled)
+  .ant-checkbox-inner {
   background-color: var(--logo-green);
   border-color: var(--logo-green);
 }
 .ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner,
-.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner {
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+  .ant-checkbox-inner {
   border-color: var(--logo-green) !important;
 }
 /*----- dark mode overrides for antd comps-----*/
 .dark {
   & .ant-tabs .ant-tabs-tab-btn {
-    color: var(--light-gray);
-  }
-  & .ant-tabs-top >.ant-tabs-nav::before,
-  & .ant-list-split .ant-list-item {
-    border-block-end: 1px solid rgba(5, 5, 5, 0.2);
-  }
-  & .ant-list-empty-text {
     color: var(--gray);
+  }
+  & .ant-tabs-top > .ant-tabs-nav::before,
+  & .ant-list-split .ant-list-item {
+    border-block-end: 1px solid var(--darker);
+  }
+  & .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
+    border: 1px solid var(--darker);
+  }
+  & .ant-list-empty-text,
+  & .ant-tabs .ant-tabs-tab-remove {
+    color: var(--gray);
+  }
+  & .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
+    background-color: var(--darker);
+    color: var(--dark);
+  }
+  & .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active {
+    background-color: var(--dark);
+    border-bottom-color: var(--dark);
   }
 }
