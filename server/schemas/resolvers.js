@@ -208,61 +208,53 @@ const resolvers = {
     toggleAndCompleteChore: async (_, { choreId, isComplete }, context) => {
       if (context.user) {
         try {
-          // Fetch the chore by its ID
           const chore = await Chore.findById(choreId).populate("assignee");
-          
+    
           if (!chore) {
             throw new Error('Chore not found');
           }
     
-          // If the chore is being marked as complete
-          if (isComplete && !chore.isComplete) {
-            chore.assignee.balance += chore.rewardAmount;
-          }
-          // If the chore is being unmarked as complete
-          else if (!isComplete && chore.isComplete) {
-            if (chore.assignee.balance >= chore.rewardAmount) {
-              chore.assignee.balance -= chore.rewardAmount;
-            } else {
-              // This is an additional safety check to ensure balance does not go negative
-              throw new Error('Insufficient balance to deduct reward amount.');
-            }
-          }
+          const balanceChange = chore.rewardAmount * (isComplete ? 1 : -1);
     
+          chore.assignee.balance += balanceChange;
           chore.isComplete = isComplete;
-          await chore.assignee.save();
     
-          // Save the updated chore
+          await chore.assignee.save();
           await chore.save();
-          
+    
           return chore;
         } catch (error) {
           console.error('Error toggling and completing chore:', error);
           throw new Error('Failed to toggle and complete chore');
         }
       }
-
+    
       throw AuthenticationError;
-    },
-    deleteChore: async (parent, { choreId }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("Not authenticated");
-      }
-  
-      try {
-        const result = await Chore.deleteOne({ _id: choreId });
+    }
+    ,
+   deleteChore: async (parent, { choreId }, context) => {
+  if (!context.user) {
+    throw new AuthenticationError("Not authenticated");
+  }
 
-        if (result.deletedCount === 0) {
-            throw new Error("Chore not found or failed to delete.");
-        }
+  try {
+    const chore = await Chore.findOne({ _id: choreId }).populate("assignee");
+    if (!chore) {
+      throw new Error("Chore not found");
+    }
 
-        return { _id: choreId, message: "Chore deleted successfully" };
-  
-      } catch (err) {
-        console.error("Error in deleteChore resolver:", err);
-        throw err;
-      }
-    },
+    const balanceChange = chore.isComplete ? -chore.rewardAmount : 0;
+    chore.assignee.balance += balanceChange;
+
+    await chore.assignee.save();
+    await Chore.deleteOne({ _id: choreId });
+
+    return { _id: choreId, message: "Chore deleted successfully" };
+  } catch (err) {
+    console.error("Error in deleteChore resolver:", err);
+    throw err;
+  }
+},
   },
 };
 
