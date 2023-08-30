@@ -44,14 +44,14 @@ const ParentInner = () => {
   const {activeUser, setActiveUser } = useContext(ChoreContext);
   const adjustedStyles = useDarkModeStyles(styles);
   const choreBuddies = data?.getChildrenInFamily;
-
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // manage visibility of Modal
+  const [childToDelete, setChildToDelete] = useState(null);
 
   useEffect(() => {
     if (!loading && choreBuddies.length && activeUser.id === null) {
       setActiveUser({ id: choreBuddies[0]._id, name: choreBuddies[0].firstName, chores: [] });
     }
   }, [loading, isModalOpen]);
-
 
   if(loading) return (
     <div className={adjustedStyles.mainSpinner}>
@@ -62,8 +62,8 @@ const ParentInner = () => {
   const handleTabChange = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
     setActiveUser({ id: activeBuddy._id, name: activeBuddy.firstName, chores: [] });
-
   };
+
   const onEdit = (key) => {
     const activeBuddy = choreBuddies[parseInt(key)];
     deleteChild({
@@ -71,6 +71,23 @@ const ParentInner = () => {
         childId: activeBuddy._id
       }
     })
+  };
+
+  const handleTabDeleteClick = (key) => {
+    setChildToDelete(choreBuddies[parseInt(key)]); 
+    setShowDeleteModal(true); // show the Modal when delete icon is clicked
+  };
+  
+  const confirmDeleteChild = () => {
+    if (childToDelete) {
+      deleteChild({
+        variables: {
+          childId: childToDelete._id
+        }
+      });
+      setShowDeleteModal(false); // hide the Modal after deletion
+      setChildToDelete(null); // reset the childToDelete
+    }
   };
 
   const showModal = () => {
@@ -103,32 +120,48 @@ const ParentInner = () => {
       <Row className={styles.wrapper} justify="center">
 
         <Col xs={24} sm={16} className={styles.gutterRow}>
-        <motion.div
-        initial={{ scale: .5, opacity: 0}}
-        animate={{ scale: 1, opacity: 1}}
-        transition={{ duration: .3, delay:  .2 }}
-        >
-          <Card bordered={false} className={adjustedStyles.choreList}>
-            <Title className={adjustedStyles.title}>Children</Title>
-            {choreBuddies.length <= 1  ? "" : <Paragraph>Please select a chorebuddy!</Paragraph>} 
-            {Object.keys(choreBuddies).length ? (
-              <Tabs
-                defaultActiveKey="0"
-                onChange={handleTabChange}
-                type="editable-card"
-                hideAdd
-                onEdit={onEdit}
-                items={Object.keys(choreBuddies).map((buddies, index) => ({
-                  label: choreBuddies[index].firstName,
-                  key: String(index),
-                  children: <ChoreList choreBuddies={choreBuddies[index]} showDeleteButton={true} />
-                }))}
-              />
-            ) : (
-              <Paragraph className={adjustedStyles.text}>Create a ChoreBuddy and add some chores to get started!</Paragraph>
+          <motion.div
+          initial={{ scale: .5, opacity: 0}}
+          animate={{ scale: 1, opacity: 1}}
+          transition={{ duration: .3, delay:  .2 }}
+          >
+            <Card bordered={false} className={adjustedStyles.choreList}>
+              <Title className={adjustedStyles.title}>Children</Title>
+              {choreBuddies.length <= 1  ? "" : <Paragraph>Please select a chorebuddy!</Paragraph>} 
+              {Object.keys(choreBuddies).length ? (
+                <Tabs
+                  defaultActiveKey="0"
+                  onChange={handleTabChange}
+                  type="editable-card"
+                  hideAdd
+                  onEdit={(editKey, action) => {
+                    if (action === "remove") {
+                      handleTabDeleteClick(editKey);
+                    }
+                  }}
+                  items={Object.keys(choreBuddies).map((buddies, index) => ({
+                    label: choreBuddies[index].firstName,
+                    key: String(index),
+                    children: <ChoreList choreBuddies={choreBuddies[index]} showDeleteButton={true} />
+                  }))}
+                />
+              ) : (
+                <Paragraph className={adjustedStyles.text}>Create a ChoreBuddy and add some chores to get started!</Paragraph>
+              )}
+            </Card>
+            {childToDelete && (
+              <Modal
+                title="Confirm Deletion"
+                open={showDeleteModal}
+                onOk={confirmDeleteChild}
+                onCancel={() => setShowDeleteModal(false)}
+                okText="Delete"
+                cancelText="Cancel"
+              >
+                <Paragraph className={adjustedStyles.modalText}>Are you sure you want to delete {childToDelete.firstName}? This action is irreversible.</Paragraph>
+              </Modal>
             )}
-          </Card>
-        </motion.div>
+          </motion.div>
         </Col>
 
         <Col xs={24} sm={8} className={styles.gutterRow}>
