@@ -129,6 +129,10 @@ export default function Registration({ isVisible}) {
               required: true,
               message: 'Please input your email address, this will be your username',
             },
+            {
+              type: 'email',
+              message: 'Please enter a valid email address',
+            },
           ]}
         >
           <Input
