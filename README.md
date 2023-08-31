@@ -68,6 +68,10 @@ Explore Demo: For a detailed walkthrough, watch our demo video below:
 
 
 
+https://github.com/Dinh282/chore-buddy/assets/112836220/0cab957e-c48a-4c4b-a782-fe3d33c6e71d
+
+
+
 
 The following screenshots are of 
 
