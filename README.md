@@ -69,10 +69,25 @@ Explore Demo: For a detailed walkthrough, watch our demo video below:
 
 
 
-The following screenshots are of 
+The following screenshots are of the App
 
-Screenshot of :
-![Screenshot of ]()
+Screenshot of the Landing Page:
+![Screenshot of Landing Page ](./client/public/images/ss-landing-page.jpg)
+
+Screenshot of Login Page:
+![Screenshot of Login Page ](./client/public/images/ss-login-page.jpg)
+
+Screenshot of Register Page:
+![Screenshot of Register Page ](./client/public/images//ss-register-page.jpg)
+
+Screenshot of Parent Dashboard Page:
+![Screenshot of Parent Dashboard Page ](./client/public/images/ss-parent-dashboard.jpg)
+
+Screenshot of Add a Chore Buddy:
+![Screenshot of Add a Chore Buddy ](./client/public/images/ss-add-chore-buddy.jpg)
+
+Screenshot of Child Dashboard Page:
+![Screenshot of Child Dashboard Page ](./client/public/images/ss-child-dashboard.jpg)
 
 
 ## Credits:
