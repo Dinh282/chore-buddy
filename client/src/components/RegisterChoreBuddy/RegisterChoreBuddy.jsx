@@ -85,7 +85,12 @@ function RegisterChoreBuddy( {onCloseModal2} ) {
                 name="email"
                 rules={[
                     { required: true, 
-                    message: 'Please enter your email' }
+                    message: 'Please enter your email' 
+                   },                
+                   {
+                    type: 'email',
+                    message: 'Please enter a valid email address',
+                   },
                 ]}
             >
             <Input placeholder="Email" />
