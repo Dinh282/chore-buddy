@@ -107,18 +107,14 @@ const Earnings = () => {
                   {buddy.firstName}
                 </Paragraph>
               </Col>
-              <Row>
-                <Col span={12}>
-                  <Paragraph key={index} className={adjustedStyles.textRight}>
-                    ${buddy.balance}
-                  </Paragraph>
-                </Col>
-                <Col span={8}>
-                  <Button key={index} type="link" className={adjustedStyles.textRight} style={{ fontSize: '16px' }} onClick={() => showModal(index)}>
-                    <EditOutlined style={{ fontSize: '16px', color: 'white' }} />
-                  </Button>
-                </Col>
-              </Row>
+              <Col span={12} className={styles.earningRightColumn}>
+                <Paragraph className={adjustedStyles.textRight}>
+                  ${buddy.balance}
+                </Paragraph>
+                <Button type="link" className={adjustedStyles.rightBtn} style={{ fontSize: '16px' }} onClick={() => showModal(index)}>
+                  <EditOutlined style={{ fontSize: '16px', color: 'white' }} />
+                </Button>
+              </Col>
             </Row>
             <Modal title="Balance"
               open={isModalOpen}
